@@ -14,82 +14,119 @@
     </div>
 
     <div class="container">
-      <!-- Container delle cards -->
-      <div class="card-deck">
-        <!-- Inizio "Mazzo" di carte -->
-        <div class="card"> <!-- card-img-top 277x180 -->
-          <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-          <div class="card-body">
-            <h4 class="card-title">Nome Progetto 1</h4>
-            <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-          <div class="card-body">
-            <h4 class="card-title">Nome Progetto 2</h4>
-            <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-          <div class="card-body">
-            <h4 class="card-title">Nome Progetto 3</h4>
-            <p class="card-text">Descrizione riassuntiva. Questo messaggio è corto di proposito.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <!-- fine carta --> 
-      </div>
-      <!-- fine primo mazzo di carte -->
-      <br>
-      <div class="card-deck">
-        <!-- Inizio "Mazzo" di carte -->
-        <div class="card"> <!-- card-img-top 277x180 -->
-          <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-          <div class="card-body">
-            <h4 class="card-title">Nome Progetto 1</h4>
-            <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-          <div class="card-body">
-            <h4 class="card-title">Nome Progetto 2</h4>
-            <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-          <div class="card-body">
-            <h4 class="card-title">Nome Progetto 3</h4>
-            <p class="card-text">Descrizione riassuntiva. Questo messaggio è corto di proposito.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <!-- fine carta --> 
-      </div>
+            <div>
+                <h1><p class="text-center">Progetti In Corso</p></h1>
+            </div>
+            <div class="list-group">
+                <#if progetti ??>
+                    <#list progetti as Progetto>
+                    <div class="list-group-item list-group-item-action">
+                        <p class="text-center">${Progetto.titolo}</p>
+                    </div>
+                    </#list>
+                </#if>
+            </div>
+            <div>
+                <h1><p class="text-center">Progetti Finiti</p></h1>
+            </div>
+    </div> <!-- /container -->
       <!-- fine secondo mazzo di carte -->
-        <script>
+    <script>
+        /* <!-- QUESTA E' LA PARTE CHE HO TOLTO -->
+        <!-- Container delle cards -->
+                <div class="card-deck">
+                  <!-- Inizio "Mazzo" di carte -->
+                    <div class="card prova_"> <!-- card-img-top 277x180 -->
+                        <giacomo>
+                                    <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
+                                    <div class="card-body">
+                                      <h4 class="card-title">Nome Progetto 1</h4>
+                                      <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                      <small class="text-muted">Last updated 3 mins ago</small>
+                                    </div>
+                        </giacomo>
+                    </div>
+                    <div class="card prova_">
+                        <div>
+                                <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
+                                <div class="card-body">
+                                  <h4 class="card-title">Nome Progetto 2</h4>
+                                  <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
+                                </div>
+                                <div class="card-footer">
+                                  <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                        </div>        
+                    </div>
+                    <div class="card prova_">
+                      <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
+                      <div class="card-body">
+                        <h4 class="card-title">Nome Progetto 3</h4>
+                        <p class="card-text">Descrizione riassuntiva. Questo messaggio è corto di proposito.</p>
+                      </div>
+                      <div class="card-footer">
+                        <small class="text-muted">Last updated 3 mins ago</small>
+                      </div>
+                    </div>
+                    <!-- fine carta --> 
+                </div>
+                    <!-- fine primo mazzo di carte -->
+                    <br>
+                    <div class="card-deck">
+                      <!-- Inizio "Mazzo" di carte -->
+                      <div class="card"> <!-- card-img-top 277x180 -->
+                        <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
+                        <div class="card-body">
+                          <h4 class="card-title">Nome Progetto 1</h4>
+                          <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
+                        </div>
+                        <div class="card-footer">
+                          <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
+                        <div class="card-body">
+                          <h4 class="card-title">Nome Progetto 2</h4>
+                          <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
+                        </div>
+                        <div class="card-footer">
+                          <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
+                        <div class="card-body">
+                          <h4 class="card-title">Nome Progetto 3</h4>
+                          <p class="card-text">Descrizione riassuntiva. Questo messaggio è corto di proposito.</p>
+                        </div>
+                        <div class="card-footer">
+                          <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                      </div>
+                      <!-- fine carta --> 
+                    </div>
+        
+        */
           // Javascript: Mi serve per rimandarmi al dettaglio del progetto specifico che ho cliccato in questa lista
-          
-        </script>
+          /*
+            var x= document.getElementsByClassName("prova_");
+            for(i=0;i<3; i++){
+                x[i].addEventListener("click",mouseScript);
+            }
+     
+            
+            
+            function mouseScript(event){
+                console.log("EVENTO?");
+                console.log(event.target);
+                var x = event.target.parentNode.nodeName;
+                console.log("ECCOLO >> " + x);
+            }
+          console.log("PROVA!!!!!");*/
+    </script>
 
 
     <#include "footer.html">

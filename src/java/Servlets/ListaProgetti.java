@@ -55,6 +55,8 @@ public class ListaProgetti extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
+            System.out.println("processRequest di listaProcessi!");
+            
             HttpSession s = SecurityLayer.checkSession(request);
             if(s != null){//condizione per vedere se la sessione esiste. 
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
@@ -66,7 +68,24 @@ public class ListaProgetti extends HttpServlet {
                 id = 0;
                 data.put("id", id);
             }     
-            
+            ArrayList<Progetto> prog = null;
+            try{//Prova la connessione al Database
+                Databasee.connect();
+                ResultSet co = Databasee.selectProgetto("progetto");
+                prog = new ArrayList<Progetto>();
+                while (co.next()) {
+                        String titolo = co.getString("titolo");
+                        String descrizione = co.getString("descrizione");
+                        Progetto lista = new Progetto(titolo, descrizione);
+                        prog.add(lista);            
+                }
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            data.put("progetti", prog);
             FreeMarker.process("listaProgetti.html", data, response, getServletContext());
     }
 
