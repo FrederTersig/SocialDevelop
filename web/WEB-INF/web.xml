@@ -58,6 +58,18 @@
         <servlet-name> CreaProgetto </servlet-name>
         <url-pattern> /creaProgetto </url-pattern>
     </servlet-mapping>
+    
+    
+    <!--backend-->
+       <servlet>
+        <servlet-name> Backend</servlet-name>
+        <servlet-class> Servlets.Backend </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> Backend </servlet-name>
+        <url-pattern> /backend </url-pattern>
+    </servlet-mapping>
 
     <!-- Dettagliprogetto -->
     <servlet>

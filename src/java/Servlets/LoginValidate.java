@@ -45,9 +45,31 @@ public class LoginValidate {
     */
         public static int validate(String name, String pswd){
             int id=0;
+            
+              
+            
+            
             if (!(null == name) && !(null == pswd)) {
                 try { // Checka l'esistenza della coppia email/password nel database per l'autenticazione
                     id = DataUtile.checkUser(name, pswd);
+                    System.out.println("ID---> " + id );
+                } catch (Exception e1) {
+                    System.out.println("Errore nel DataUtile.checkUser!");
+                    e1.printStackTrace();
+                }
+            }
+            return id;
+        }
+        
+         public static int validateOfficer(String name, String pswd){
+            int id=0;
+            
+              
+            
+            
+            if (!(null == name) && !(null == pswd)) {
+                try { // Checka l'esistenza della coppia email/password nel database per l'autenticazione
+                    id = DataUtile.checkOfficer(name, pswd);
                     System.out.println("ID---> " + id );
                 } catch (Exception e1) {
                     System.out.println("Errore nel DataUtile.checkUser!");

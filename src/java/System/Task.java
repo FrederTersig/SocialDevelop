@@ -20,6 +20,12 @@ public class Task {
         this.idAdmin=idAdmin;
     }
     
+       public Task(String nome){
+        
+        this.nome=nome;
+        
+    }
+    
         
 
     

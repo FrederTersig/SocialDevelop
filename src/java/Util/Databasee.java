@@ -79,6 +79,12 @@ public class Databasee {
        
      }
      
+        public static ResultSet selectTask() throws SQLException { //restituisce tutti i task presenti nel db
+        String query = "SELECT nome FROM task";
+        return Databasee.executeQuery(query);
+       
+     }
+     
       public static ResultSet selectRecord(String table, String condition) throws SQLException {
         // Generazione query
         String query = "SELECT * FROM " + table + " WHERE " + condition;

@@ -84,6 +84,39 @@ public class DataUtile {
         return w;
     }
     
+    
+       public static int checkOfficer(String email, String pass) throws Exception {
+        int w = 0;
+        try {
+
+            Databasee.connect();
+            if (!isNull(pass)) {
+                
+            }
+
+            System.out.println(email);
+            System.out.println(w);
+            System.out.println(pass);
+
+            String condition = "user = '" + email + "' AND pass = '" + pass + "'"; // da cambiare!!
+
+            System.out.println(condition);
+            ResultSet r = Databasee.selectRecord("admin", condition);
+            System.out.println("*************Risultato della chiamata al DATABASE******");
+            System.out.println(r);
+            
+            while (r.next()) {
+                w = r.getInt("id");
+            }
+            
+            //Databasee.close(); //??
+        } catch (NamingException e) {
+        } catch (SQLException e) {
+        }
+        System.out.println("FINE CHECKUSER, risultato >  " + w );
+        return w;
+    }
+    
     public static String crypt(String string) {
         MessageDigest md;
         try {

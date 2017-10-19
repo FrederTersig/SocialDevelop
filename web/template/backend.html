@@ -25,31 +25,14 @@
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="listaProgetti">PROGETTI</a>
+                            <a class="nav-link" href="listaProgetti">AGGIUNGI TASK</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="contattaci">CONTATTACI</a>
+                            <a class="nav-link" href="contattaci">AGGIUNGI SKILL</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="profilo">PROFILO</a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="listaCerca">RICERCA</a>
-                        </li>
-
-                      
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="creaProgetto">CREA PROGETTO</a>
-                        </li>
-
-                       <li class="nav-item">
-                            <a class="nav-link" href="panRichieste">PANNELLO RICHIESTE</a>
-                        </li>
-                  
                 </ul>
             <!-- Form Login veloce sulla barra -->
             <!-- Il tasto quando cliccato esegue la servlet LOGIN che userà il metodo presente in validate.java per poi dispatchare l'evento su di un'altra -->
@@ -66,3 +49,50 @@
             
       </div>
     </nav>
+
+        
+        <div class="container contenitore">
+            <div class="row">
+                <div class="col">
+                    <h2>TASK GIA' PRESENTI</h2>
+                    
+                    
+                    <ul>
+                        <#if task ??>
+                    <#list task as Task>
+                       <li>${Task.nome}</li>
+                       </#list>
+                       </#if>
+                    </ul>
+                    
+                </div>
+                <div class="col">
+                    <h2>AGGIUNGI UN TASK</h2>
+                    <form method="POST">
+                        <input type="text" class="form-control" name="nome" placeholder="NOME TASK">
+                        <button type="submit" class="btn btn-primary">AGGIUNGI</button>
+                    </form>
+                </div>
+            </div>
+        
+        
+        
+        
+        
+        
+        
+        
+         <hr>
+      <footer class="decorazione">
+        <p>© Company 2017</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  </body>
+</html>
