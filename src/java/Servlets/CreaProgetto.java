@@ -6,6 +6,7 @@
 package Servlets;
 
 import System.Progetto;
+import System.Sviluppatore;
 import Util.DataUtile;
 import Util.Databasee;
 import Util.FreeMarker;
@@ -119,7 +120,7 @@ public class CreaProgetto extends HttpServlet {
                         FreeMarker.process("creaprogetto.html", data, response, getServletContext());
                     }catch(Exception e2){
                         System.out.println("Errore nel creare la sessione");
-                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e2);
+                        Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
                     }
                 }   
             }else{// if("logout".equals(action)){ // Inizio del logout

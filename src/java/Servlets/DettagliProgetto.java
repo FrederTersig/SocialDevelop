@@ -120,7 +120,7 @@ public class DettagliProgetto extends HttpServlet {
                         FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
                     }catch(Exception e2){
                         System.out.println("Errore nel creare la sessione");
-                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e2);
+                        Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, e2);
                     }
                 }   
             }else{// if("logout".equals(action)){ // Inizio del logout
