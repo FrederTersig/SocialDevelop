@@ -16,6 +16,10 @@ body {
   overflow-y: scroll; 
 }
 
+/*footer*/
+.decorazione{
+    background-color: green;
+}
 
 footer {
 	margin-bottom: 0;
