@@ -6,6 +6,7 @@ package Servlets;
  * and open the template in the editor.
  */
 import System.Richieste;
+import System.Sviluppatore;
 import Util.DataUtile;
 import Util.Databasee;
 import Util.FreeMarker;
@@ -120,7 +121,7 @@ public class PanRichieste extends HttpServlet {
                         FreeMarker.process("panRichieste.html", data, response, getServletContext());
                     }catch(Exception e2){
                         System.out.println("Errore nel creare la sessione");
-                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e2);
+                        Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
                     }
                 }   
             }else{// if("logout".equals(action)){ // Inizio del logout
