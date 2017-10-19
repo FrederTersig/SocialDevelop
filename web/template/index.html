@@ -1,0 +1,62 @@
+<#if id == 0>
+    <#include "header.html">
+<#else>
+    <#include "logHeader.html">
+</#if>
+
+
+    
+    <!-- Parte di "descrizione" della pagina -->
+    <div class="jumbotron jumbotron-fluid">
+        <!-- inizio PROVA -->
+        <!-- Qui provo a usare le librerie: funzionano messe così -->    
+        <!-- FINE PROVA -->
+        
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+                <img src="template/img/LOGO_SD.png" class="pull-left"/>
+          </div>
+          <div class="col-8 display-7">
+                <h2>Benvenuti in SocialDevelop!</h2>
+                <br>
+                <h5>Questa piattaforma permette di pubblicizzare idee di sviluppo e di individuare gli sviluppatori freelance più adatti per renderle realtà!
+                <br>
+                Sfogliate la lista dei progetti in corso di sviluppo e iscrivetevi per poter avere la possibilità di essere invitati a lavorare per uno o più dei progetti presenti nel sito!
+                </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <!-- Container delle cards -->
+        <div class="card-deck">
+            <#if progetti ??>
+            <#list progetti as Progetto>
+            <!-- Inizio "Mazzo" di carte -->
+                <div class="card"> <!-- card-img-top 277x180 -->
+                    <img class="card-img-top" src="template/img/anteprima.png" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">${Progetto.titolo}</h4>
+                      <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
+                    </div>
+                    <div class="card-footer">
+                      <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </#list>
+            </#if>
+        <!-- fine carta --> 
+        </div>
+    </div>
+    
+    
+    <!-- fine primo mazzo di carte -->
+    <br>
+<!-- SCRIPT di prova! -->
+
+<#include "footer.html">
+
+
+     

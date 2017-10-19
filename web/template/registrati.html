@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<#if id == 0>
+    <#include "header.html">
+<#else>
+    <#include "logHeader.html">
+</#if>
+<div class="registrati">
+    <h1 class="centro">REGISTRATI</h1>
+    <p class="testoreg">Crea un nuovo account per poter usufruire di tutti i servizi che il nostro sito offre</p>
+  <hr>
+  <form method="post">
+        <input type="text" name="Nome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NOME"><br>
+        <input type="text" name="Cognome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="COGNOME"><br>
+        <input type="email" name="Email" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="E-MAIL"><br>
+        <input type="text" name="Username" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="USERNAME"><br>
+        <input type="password" name="Pass" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="PASSWORD"><br>
+        <input type="number" name="Telefono" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="TELEFONO"><br>
+        <input type="date" name="DataNascita" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="DATA DI NASCITA"><br>
+        <input type="hidden" name="value" value="registra">
+        <div class="form-row">
+            <div class="col-7">
+              <input type="text" name="Indirizzo" class="form-control" placeholder="RESIDENZA">
+            </div>
+            <div class="col">
+              <input type="text" name=" " class="form-control" placeholder="STATO">
+            </div>
+            <div class="col">
+              <input type="number" name=" " class="form-control" placeholder="CODICE POSTALE">
+            </div>
+        </div><br>
+        <select class="form-control">
+                <option>SKILL</option>
+                <option>java</option>
+                <option>html</option>
+                <option>php</option>
+                <option>c++</option>
+        </select><br>
+        <button type="submit" class="btn btn-primary">INVIA</button>
+    </form>
+</div>
+  <#include "footer.html">

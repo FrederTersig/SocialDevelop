@@ -1,0 +1,7 @@
+Nella cartella lib ci sono le librerie principali che ci servono. Quando fai l'import del progetto la cartella lib non la devi importare. Una volta che hai importato il progetto (senza la cartella lib), se non ci sono già, dentro netbeans clicchi col tasto destro sulla directory libraries che la trovi all'interno del progetto, e poi fai Add JAR e lì importi tutte le librerie che trovi dentro la cartella lib.
+
+Per quanto riguarda il progetto, una volta che l'hai caricato in netbeans, nella cartella Source Packages ci sono tutti i file JAVA. Nella Sottodirectory Servlets dobbiamo metterci tutte le servlet. Al momento ci sta solo Home, che è il file JAVA del progetto del compagno mio che hai anche tu e poi HOMEE che invece è il nostro su cui sto lavorando per far vedere la nostra homepage.
+
+Nella sottodirectory System ci sono tutti i file JAVA che corrispondo alle nostre entità. All'interno ci stanno solo metodo costruttore e metodi get e set.
+
+Infine in Util ci sta FreeMarker.java e SecurityLayer.java che ce l'ha dati il prof quindi non dobbiamo toccarle penso. Poi abbiamo Database.java e DataUtil.java che sono i file del progetto del compagno mio mentre DataUtile.java e Databasee.java che invece sono quelli su cui sto lavorando io. Databasee dovrà contenere tutte le query scritte proprio in sql (SELECT * FROM WHERE) e DataUtile diciamo che implementa delle funzioni del sito.

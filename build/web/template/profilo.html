@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<#if id == 0>
+    <#include "header.html">
+<#else>
+    <#include "logHeader.html">
+</#if>
+    <!-- Parte di "descrizione" della pagina -->
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <!-- Inizio Carta Profilo -->
+                <div class="col-3">
+                  <div class="card border-dark" style="max-width: 50rem;">
+              				<div class="card-header">
+                          <div class="row">
+                            <img src="./img/utenteA.png" alt="fotoUtente" class="rounded-circle col-sm- ml-3"/>
+                            <span class="col-sm- ml-3">
+                						  <h5 class="card-title">Dark Knight Dev</h5>
+                              <h7> Javascript Developer </h7>
+                						</span>
+              						</div>
+              				</div>
+              				<div class="card-body text-dark">
+              					    <!--Questo body si adatta ad ogni lunghezza di stringa, avendo la max width fissa però verrà aumentata SOLO l'altezza-->
+              					    <p class="card-text">Un esempio di stringa che può apparire sotto la card del profilo dell'utente. PS= Questo spazio potrebbe essere utilizzato anche per mostrare i "migliori punteggi nelle skill" che ha l'utente.</p>
+              				</div>
+                  </div>
+                </div>
+                <!-- Fine Carta Profilo -->
+                <!-- Inizio Dati Anagrafici -->
+                <div class="col-9">
+                    <h3 class="text-center">Dati Anagrafici</h3><br><br>
+                    <div class="row">
+                        <div class="col-6">
+                            <!-- due colonne con i dati anagrafici -->
+                            <p>Nome : Mario<br>
+                                Cognome : Merola<br>
+                                Indirizzo : Via Napoli,10</p>
+                        </div>
+                        <div class="col-6">
+                            <p>Nome : Mario<br>
+                                Cognome : Merola<br>
+                                Indirizzo : Via Napoli,10</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fine Dati Anagrafici -->
+            </div>
+            <!-- Creazione Altra row per il resto dei dati anagrafici (Descrizione, Skill, Link al CV, Coordinatore di tot progetti) -->
+            <div class="col-12">
+                <p><h3 class="text-center">Descrizione</h3><br>
+                Questa è una piccola descrizione del profilo dell'utente che ha a che fare con la piattaforma, ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi ma poi</p><br><br>
+            </div>
+            <div class="col-6 mx-auto">
+                <p><h3 class="text-center">Skills</h3><br>
+                <table class="table table-hover table-inverse">
+                  <thead class="thead">
+                      <tr>
+                        <th>Skill Conosciuta</th>
+                        <th>Grado</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                        <th scope="row">Javascript</th>
+                        <td>7</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">C++</th>
+                        <td>8</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Java</th>
+                        <td>5</td>
+                      </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Container della seconda parte di cose inerenti al profilo -->
+    <div class="container-fluid">
+      <div class="container">
+        <span class="text-center">
+            <h2 class="">Giudizi</h2>
+        </span>
+        <div class="row">
+
+              <div class="card-deck mt-4"> <!-- Carte da centrare -->
+                  <div class="card text-white bg-success mb-3" style="max-width: 15rem;">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                      <h4 class="card-title">Success card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                  </div>
+                  <div class="card text-white bg-danger mb-3" style="max-width: 15rem;">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                      <h4 class="card-title">Danger card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                  </div>
+                  <div class="card text-white bg-warning mb-3" style="max-width: 15rem;">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                      <h4 class="card-title">Success card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                  </div>
+                  <div class="card text-white bg-danger mb-3" style="max-width: 15rem;">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                      <h4 class="card-title">Danger card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                  </div>
+                  <div class="card text-white bg-success mb-3" style="max-width: 15rem;">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                      <h4 class="card-title">Success card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                  </div>
+                  
+              </div>
+        </div>
+      </div>
+    </div>
+
+ <#include "footer.html">
+ <!-- PIAZZARE IL FOOTER -->
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
+
+-->

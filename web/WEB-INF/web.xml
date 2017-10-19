@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    
+    <resource-ref>
+        <res-ref-name>jdbc/socialp</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+    
+    <display-name>SocialDevelop</display-name>
+    <description>Trova il progetto che fa per te!!</description>
+     
+    <welcome-file-list>
+        <welcome-file>index</welcome-file>
+    </welcome-file-list>
+    
+    <!-- HOMEE -->
+    <servlet>
+        <servlet-name> Homee </servlet-name>
+        <servlet-class> Servlets.Homee </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>  Homee </servlet-name>
+        <url-pattern> /index </url-pattern>
+    </servlet-mapping>
+    
+    <!-- REGISTRATI -->
+    <servlet>
+        <servlet-name> Registrati </servlet-name>
+        <servlet-class> Servlets.Registrati </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> Registrati </servlet-name>
+        <url-pattern> /registrati </url-pattern>
+    </servlet-mapping>
+    
+    <!-- CONTATTACI -->
+    <servlet>
+        <servlet-name> Contattaci </servlet-name>
+        <servlet-class> Servlets.Contattaci </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> Contattaci </servlet-name>
+        <url-pattern> /contattaci </url-pattern>
+    </servlet-mapping>
+    
+    <!-- CREAPROGETTO -->
+    <servlet>
+        <servlet-name> CreaProgetto </servlet-name>
+        <servlet-class> Servlets.CreaProgetto </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> CreaProgetto </servlet-name>
+        <url-pattern> /creaProgetto </url-pattern>
+    </servlet-mapping>
+
+    <!-- Dettagliprogetto -->
+    <servlet>
+        <servlet-name> DettagliProgetto </servlet-name>
+        <servlet-class> Servlets.DettagliProgetto </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> DettagliProgetto </servlet-name>
+        <url-pattern> /dettagliProgetto </url-pattern>
+    </servlet-mapping>
+    
+    <!-- listacerca -->
+    <servlet>
+        <servlet-name> ListaCerca </servlet-name>
+        <servlet-class> Servlets.ListaCerca </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> ListaCerca </servlet-name>
+        <url-pattern> /listaCerca </url-pattern>
+    </servlet-mapping>
+    
+
+    <!-- listaprogetti -->
+    <servlet>
+        <servlet-name> ListaProgetti </servlet-name>
+        <servlet-class> Servlets.ListaProgetti </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> ListaProgetti </servlet-name>
+        <url-pattern> /listaProgetti </url-pattern>
+    </servlet-mapping>
+
+    <!-- profilo -->
+    <servlet>
+        <servlet-name> Profilo </servlet-name>
+        <servlet-class> Servlets.Profilo </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> Profilo </servlet-name>
+        <url-pattern> /profilo </url-pattern>
+    </servlet-mapping>
+
+    <!-- task -->
+    <servlet>
+        <servlet-name> Task </servlet-name>
+        <servlet-class> Servlets.Task </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> Task </servlet-name>
+        <url-pattern> /task </url-pattern>
+    </servlet-mapping>
+
+    <!-- Message -->
+    <servlet>
+        <servlet-name> PanRichieste </servlet-name>
+        <servlet-class> Servlets.PanRichieste </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> PanRichieste </servlet-name>
+        <url-pattern> /panRichieste </url-pattern>
+    </servlet-mapping>
+    <!-- LOGIN, IMPORTANTE!! -->
+ 
+
+    <!--progettiOUT -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+ 
+   
+</web-app>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+

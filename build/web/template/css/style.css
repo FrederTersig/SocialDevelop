@@ -1,0 +1,22 @@
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+body {
+  padding-top: 3.5rem;
+}
+
+
+/*panRichieste.html*/
+.req_container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+#req_tab {
+  height:20rem;
+  overflow-y: scroll; 
+}
+
+
+footer {
+	margin-bottom: 0;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<#if id == 0>
+    <#include "header.html">
+<#else>
+    <#include "logHeader.html">
+</#if>
+        <div class="creanewp">
+            <h1 class="">CREA UN NUOVO PROGETTO</h1>
+            <p class="testoreg">Crea un nuovo progetto per in modo da offrire lavoro a tutti gli svilupaptori interessati</p>
+            <hr>
+            <form class="">
+                <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NOME PROGETTO"><br>
+                <textarea class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" id="inlineFormInputName2" placeholder="DESCRIZIONE"></textarea>
+                <br>
+                <div class="form-row">
+                    <div class="col-2">
+                        <select class="form-control">
+                          <option>N. MEMBRI</option>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                          <option>6</option>
+                          <option>7</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <select class="form-control">
+                          <option>TASK</option>
+                          <option>front-end</option>
+                          <option>back-end</option>
+                          <option>grafica</option>
+                          <option>mbo</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <select class="form-control">
+                          <option>SKILL</option>
+                          <option>java</option>
+                          <option>html</option>
+                          <option>php</option>
+                          <option>c++</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">INVIA</button>
+            </form>
+        </div> <!-- chiusura creap -->
+<#include "footer.html">
