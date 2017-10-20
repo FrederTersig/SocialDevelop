@@ -19,7 +19,7 @@
             </div>
             <!-- bisogna decorarla! -->
             <div class="list-group">
-                <form>
+                <form method="post" role="form">
                     <#if progetti ??>
                         <#list progetti as Progetto>
                         <div class="list-group-item container">
@@ -27,8 +27,12 @@
 
                                 <p class="text-center col-2 my-auto">${Progetto.titolo}</p>
                                 <p class="col-7 my-auto" style="overflow: hidden; text-overflow: ellipsis;">${Progetto.descrizione}</p>
-                                <p class="col-2 my-auto" style="color: green;">Collaboratori/Limite Massimo</p>
-                                <button type="button" class="btn btn-outline-primary col-1" > Entra -> </button>
+                                <p class="col-2 my-auto" style="color: green;">${Progetto.id}</p>
+                                
+                                
+                                <button type="submit" class="btn btn-outline-primary col-1" name="dettagli" value="c}"> Entra -> </button>
+                                
+                                <input type="hidden" name="value"  value="d_progetto">
                             </div>
 
                         </div>
@@ -39,6 +43,7 @@
                         </#list>
                     </#if>
                 </form>
+
             </div>
             <div>
                 <p class="text-center">Progetti Finiti</p>
