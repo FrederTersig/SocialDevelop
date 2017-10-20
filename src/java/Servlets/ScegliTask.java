@@ -29,8 +29,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author user1
  */
-@WebServlet(name = "Backend", urlPatterns = {"/Backend"})
-public class Backend extends HttpServlet {
+@WebServlet(name = "ScegliTask", urlPatterns = {"/ScegliTask"})
+public class ScegliTask extends HttpServlet {
 Map<String, Object> data = new HashMap<String, Object>();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,8 +55,9 @@ Map<String, Object> data = new HashMap<String, Object>();
             compiti = new ArrayList<Task>();
             while (task.next()) {
                         String nome = task.getString("nome");
+                        int idt= task.getInt("id");
                         
-                        Task lista = new Task(nome);
+                        Task lista = new Task(idt,nome);
                         compiti.add(lista);            
                 }
             Databasee.close();
@@ -65,7 +66,7 @@ Map<String, Object> data = new HashMap<String, Object>();
             Logger.getLogger(Backend.class.getName()).log(Level.SEVERE, null, ex);
         }
         data.put("task", compiti);
-        FreeMarker.process("backend.html", data, response, getServletContext());
+        FreeMarker.process("sceglitask.html", data, response, getServletContext());
         }
     
 

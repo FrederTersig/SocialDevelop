@@ -1,25 +1,40 @@
 <#include "headerbe.html">
 
-        
+
         <div class="container contenitore">
             <div class="row">
                 <div class="col">
-                    <h2>TASK GIA' PRESENTI</h2>
+                    <h2>TASK</h2>
                     
                     
-                    <ul>
+                    <!--<ul>
                         <#if task ??>
                     <#list task as Task>
                        <li>${Task.nome}</li>
                        </#list>
                        </#if>
-                    </ul>
+                    </ul>-->
                     
                 </div>
+                
+                       <div class="col">
+                    <h2>SKILL ASSOCIATI AL TASK SCELTO</h2>
+                    
+                    
+                   <!-- <ul>
+                        <#if task ??>
+                    <#list task as Task>
+                       <li>${Task.nome}</li>
+                       </#list>
+                       </#if>
+                    </ul>-->
+                    
+                </div>
+                
                 <div class="col">
-                    <h2>AGGIUNGI UN TASK</h2>
+                    <h2>AGGIUNGI UNA SKILL</h2>
                     <form method="POST">
-                        <input type="text" class="form-control" name="nome" placeholder="NOME TASK">
+                        <input type="text" class="form-control" name="nome" placeholder="NOME SKILL">
                         <button type="submit" class="btn btn-primary">AGGIUNGI</button>
                     </form>
                 </div>

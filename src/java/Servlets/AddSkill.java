@@ -29,8 +29,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author user1
  */
-@WebServlet(name = "Backend", urlPatterns = {"/Backend"})
-public class Backend extends HttpServlet {
+@WebServlet(name = "AddSkill", urlPatterns = {"/AddSkill"})
+public class AddSkill extends HttpServlet {
 Map<String, Object> data = new HashMap<String, Object>();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

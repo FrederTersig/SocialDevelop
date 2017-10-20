@@ -2,6 +2,7 @@ package Servlets;
 
 /*import System.Libro;
 import System.Utente;*/
+import System.Admin;
 import System.Progetto;
 import System.Sviluppatore;
 import Util.DataUtile;
@@ -137,7 +138,7 @@ public class Homee extends HttpServlet {
                        // FreeMarker.process("backend.html", data, response, getServletContext());
                     }catch(Exception e2){
                         System.out.println("Errore nel creare la sessione");
-                        Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
+                        Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, e2);
                     }
                     
                 }
@@ -175,7 +176,7 @@ public class Homee extends HttpServlet {
                     SecurityLayer.disposeSession(request); //chiude la sessione
                     id=0; //azzera l'id per il template
                     data.put("id",id);
-                    processRequest(request, response);
+                    //processRequest(request, response);
                     FreeMarker.process("index.html", data, response, getServletContext());
                 }catch(Exception e3){
                     e3.printStackTrace();

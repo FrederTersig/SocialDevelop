@@ -80,7 +80,7 @@ public class Databasee {
      }
      
         public static ResultSet selectTask() throws SQLException { //restituisce tutti i task presenti nel db
-        String query = "SELECT nome FROM task";
+        String query = "SELECT nome,id FROM task";
         return Databasee.executeQuery(query);
        
      }

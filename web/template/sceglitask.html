@@ -1,0 +1,45 @@
+<#include "headerbe.html">
+
+
+        <div class="container contenitore">
+            <div class="row">
+                <div class="col">
+                    <h2>TASK</h2>
+                    
+                    
+                    <!--<ul>
+                        <#if task ??>
+                    <#list task as Task>
+                       <li>${Task.nome}</li>
+                       </#list>
+                       </#if>
+                    </ul>-->
+                    
+                
+                
+                       
+                
+                
+                    <form method="POST">
+                   
+                        <select>
+                                 <#if task ??>
+                    <#list task as Task>
+                            <option name="nome" value="${Task.id}">${Task.nome}</option>
+                            </#list>
+                       </#if>
+                        </select>
+                     
+                        <button type="submit" class="btn btn-primary">SCEGLI</button>
+                    </form>
+                </div>
+            </div>
+        
+        
+        
+        
+        
+        
+        
+        
+       <#include "footer.html">

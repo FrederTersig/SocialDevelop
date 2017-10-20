@@ -25,6 +25,13 @@ public class Task {
         this.nome=nome;
         
     }
+       
+             public Task(int id, String nome){
+        
+        this.nome=nome;
+        this.id=id;
+        
+    }
     
         
 
