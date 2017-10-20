@@ -77,7 +77,8 @@ public class ListaProgetti extends HttpServlet {
                 while (co.next()) {
                         String titolo = co.getString("titolo");
                         String descrizione = co.getString("descrizione");
-                        Progetto lista = new Progetto(titolo, descrizione);
+                        int idProg = co.getInt("id");
+                        Progetto lista = new Progetto(titolo, descrizione,idProg);
                         prog.add(lista);            
                 }
                 Databasee.close();
@@ -183,9 +184,8 @@ public class ListaProgetti extends HttpServlet {
             }else if("d_progetto".equals(action)){
                 System.out.println("HO CLICCATO IL BOTTONE DI UN PROGETTO");
                 int num = Integer.parseInt(request.getParameter("dettagli"));
-                
                 System.out.println("titolo?? --> " + num);
-                
+                /*Bisogna connettersi al DB, prendere tutte le informazioni di Progetto con quel determinato ID, e fare un hashMap*/
             }
     }
 

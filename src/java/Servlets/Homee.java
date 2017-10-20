@@ -62,7 +62,9 @@ public class Homee extends HttpServlet {
                 while (co.next()) {
                         String titolo = co.getString("titolo");
                         String descrizione = co.getString("descrizione");
-                        Progetto lista = new Progetto(titolo, descrizione);
+                        //int codice= co.getInt("id");
+                        int num = co.getInt("id");
+                        Progetto lista = new Progetto(titolo, descrizione, num);
                         prog.add(lista);            
                 }
                 Databasee.close();

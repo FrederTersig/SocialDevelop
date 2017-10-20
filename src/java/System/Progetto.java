@@ -32,11 +32,12 @@ public class Progetto {
         this.idImmagine=idImmagine;
     }
     
-      public Progetto(String titolo, String descrizione){
+      public Progetto(String titolo, String descrizione, int id){
         
         
         this.titolo=titolo;
         this.descrizione=descrizione;
+        this.id = id;
         
     }
   
