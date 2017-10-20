@@ -7,13 +7,16 @@
                     <h2>TASK</h2>
                     
                     
-                    <!--<ul>
-                        <#if task ??>
-                    <#list task as Task>
-                       <li>${Task.nome}</li>
+                    <ul>
+                        <#if nometask ??>
+                        
+                    <#list nometask as Nometask>
+                    
+                       <li>${Nometask.nome}</li>
+                       <#break>
                        </#list>
                        </#if>
-                    </ul>-->
+                    </ul>
                     
                 </div>
                 
@@ -21,13 +24,13 @@
                     <h2>SKILL ASSOCIATI AL TASK SCELTO</h2>
                     
                     
-                   <!-- <ul>
-                        <#if task ??>
-                    <#list task as Task>
-                       <li>${Task.nome}</li>
+                   <ul>
+                        <#if nomeskill ??>
+                    <#list nomeskill as Nomeskill>
+                       <li>${Nomeskill.nome}</li>
                        </#list>
                        </#if>
-                    </ul>-->
+                    </ul>
                     
                 </div>
                 
@@ -35,6 +38,7 @@
                     <h2>AGGIUNGI UNA SKILL</h2>
                     <form method="POST">
                         <input type="text" class="form-control" name="nome" placeholder="NOME SKILL">
+                        <input type="hidden" name="valore" value="addskill">
                         <button type="submit" class="btn btn-primary">AGGIUNGI</button>
                     </form>
                 </div>

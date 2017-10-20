@@ -20,6 +20,12 @@ public class Skill {
         this.idAdmin=idAdmin;
     }
     
+        public Skill(String nome){
+       
+        this.nome=nome;
+     
+    }
+    
   
     
     public int getId(){

@@ -5,7 +5,9 @@
  */
 package Servlets;
 
+
 import System.Task;
+import System.Skill;
 import Util.Databasee;
 import Util.FreeMarker;
 import Util.SecurityLayer;
@@ -65,7 +67,7 @@ Map<String, Object> data = new HashMap<String, Object>();
             Logger.getLogger(Backend.class.getName()).log(Level.SEVERE, null, ex);
         }
         data.put("task", compiti);
-        FreeMarker.process("backend.html", data, response, getServletContext());
+        FreeMarker.process("addskill.html", data, response, getServletContext());
         }
     
 
@@ -120,6 +122,28 @@ Map<String, Object> data = new HashMap<String, Object>();
                     e3.printStackTrace();
                 }
          }
+         
+         String azione = request.getParameter("valore");
+          if("taskscelto".equals(action)){
+         String idtask=request.getParameter("idtask");
+         ResultSet ts= Databasee.selectTaskSkill("idtask");
+         ArrayList<Task> Task = new ArrayList<Task>();
+         ArrayList<Skill> Skill = new ArrayList<Skill>();
+         while(ts.next()){
+             String nometask = ts.getString("nometask");
+             String nomeskill = ts.getString("nome");
+             Task lista = new Task(nometask);
+             Skill lista2 = new Skill(nomeskill);
+             Task.add(lista);
+             Skill.add(lista2);
+         }
+         data.put("nometask", Task);
+         data.put("nomeskill", Skill);
+         FreeMarker.process("addskill.html", data, response, getServletContext());
+          }
+         
+         
+       if("addskill".equals(action)){
         String nome = request.getParameter("nome");
                 Map<String, Object> map = new HashMap<String, Object>();
                  map.put("nome", nome);
@@ -127,6 +151,7 @@ Map<String, Object> data = new HashMap<String, Object>();
                  Databasee.insertRecord("task", map);
                  Databasee.close();
         processRequest(request, response);
+       }
     } catch (Exception ex) {
         Logger.getLogger(Backend.class.getName()).log(Level.SEVERE, null, ex);
     }

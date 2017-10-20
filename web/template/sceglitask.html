@@ -22,14 +22,15 @@
                 
                     <form method="POST">
                    
-                        <select>
+                        <select name="idtask">
                                  <#if task ??>
                     <#list task as Task>
-                            <option name="nome" value="${Task.id}">${Task.nome}</option>
+                            <option  value="${Task.id}">${Task.id}-${Task.nome}</option>
                             </#list>
                        </#if>
+                      
                         </select>
-                     
+                        <input type="hidden" name="valore" value="taskscelto">
                         <button type="submit" class="btn btn-primary">SCEGLI</button>
                     </form>
                 </div>

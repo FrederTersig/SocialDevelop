@@ -59,6 +59,17 @@
         <url-pattern> /sceglitask </url-pattern>
     </servlet-mapping>
     
+         <!-- AGGIUNGI SKILL NEL BACKEND -->
+    <servlet>
+        <servlet-name> AddSkill </servlet-name>
+        <servlet-class> Servlets.AddSkill </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> AddSkill </servlet-name>
+        <url-pattern> /addskill </url-pattern>
+    </servlet-mapping>
+    
     <!-- CREAPROGETTO -->
     <servlet>
         <servlet-name> CreaProgetto </servlet-name>

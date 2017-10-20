@@ -84,6 +84,12 @@ public class Databasee {
         return Databasee.executeQuery(query);
        
      }
+        
+            public static ResultSet selectTaskSkill(String id) throws SQLException { //restituisce tutti i task presenti nel db
+        String query = "SELECT DISTINCT task.nome AS nometask, task.id, skill.nome FROM task, skill, skillperognitask WHERE task.id=" + id + " AND task.id=skillperognitask.idtask AND skill.id=skillperognitask.idskill";
+        return Databasee.executeQuery(query);
+       
+     }
      
       public static ResultSet selectRecord(String table, String condition) throws SQLException {
         // Generazione query

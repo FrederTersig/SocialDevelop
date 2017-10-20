@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import System.Skill;
 import System.Task;
 import Util.Databasee;
 import Util.FreeMarker;
@@ -56,7 +57,7 @@ Map<String, Object> data = new HashMap<String, Object>();
             while (task.next()) {
                         String nome = task.getString("nome");
                         int idt= task.getInt("id");
-                        
+                        System.out.println(idt + "id del task");
                         Task lista = new Task(idt,nome);
                         compiti.add(lista);            
                 }
@@ -121,13 +122,40 @@ Map<String, Object> data = new HashMap<String, Object>();
                     e3.printStackTrace();
                 }
          }
-        String nome = request.getParameter("nome");
+         
+         
+          String azione = request.getParameter("valore");
+          if("taskscelto".equals(azione)){
+              System.out.println(request.getParameter("idtask"));
+         int idtask=Integer.parseInt(request.getParameter("idtask"));
+         ResultSet ts= Databasee.selectTaskSkill(idtask);
+         ArrayList<Task> Task = new ArrayList<Task>();
+         ArrayList<Skill> Skill = new ArrayList<Skill>();
+       
+         while(ts.next()){
+               String nometask = ts.getString("nometask");
+         Task lista = new Task(nometask);
+          Task.add(lista);
+             String nomeskill = ts.getString("nome");
+             
+             Skill lista2 = new Skill(nomeskill);
+            
+             Skill.add(lista2);
+         }
+         data.put("nometask", Task);
+         data.put("nomeskill", Skill);
+         FreeMarker.process("addskill.html", data, response, getServletContext());
+          }
+          
+          
+          
+        /*String nome = request.getParameter("nome");
                 Map<String, Object> map = new HashMap<String, Object>();
                  map.put("nome", nome);
                  map.put("idadmin", id);
-                 Databasee.insertRecord("task", map);
+                 Databasee.insertRecord("task", map);*/
                  Databasee.close();
-        processRequest(request, response);
+        //processRequest(request, response);
     } catch (Exception ex) {
         Logger.getLogger(Backend.class.getName()).log(Level.SEVERE, null, ex);
     }
