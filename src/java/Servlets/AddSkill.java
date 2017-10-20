@@ -123,7 +123,7 @@ Map<String, Object> data = new HashMap<String, Object>();
                 }
          }
          
-         String azione = request.getParameter("valore");
+         /*String azione = request.getParameter("valore");
           if("taskscelto".equals(action)){
          String idtask=request.getParameter("idtask");
          ResultSet ts= Databasee.selectTaskSkill("idtask");
@@ -140,7 +140,7 @@ Map<String, Object> data = new HashMap<String, Object>();
          data.put("nometask", Task);
          data.put("nomeskill", Skill);
          FreeMarker.process("addskill.html", data, response, getServletContext());
-          }
+          }*/
          
          
        if("addskill".equals(action)){

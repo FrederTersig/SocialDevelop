@@ -123,7 +123,7 @@ Map<String, Object> data = new HashMap<String, Object>();
                 }
          }
          
-         
+         //QUANDO VIE SCELTO IL TASK A CUI AGGIUNGERE NUOVE SKILL VERRA' EFFETTUATA UNA QUERY CHE CI RESTITUISCE IL NOME DEL TASK SCELTO E LE SKILL GIA' ASSOCIATE AD ESSO
           String azione = request.getParameter("valore");
           if("taskscelto".equals(azione)){
               System.out.println(request.getParameter("idtask"));
