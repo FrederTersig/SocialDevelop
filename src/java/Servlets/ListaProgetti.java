@@ -169,7 +169,7 @@ public class ListaProgetti extends HttpServlet {
                         Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
                     }
                 }   
-            }else{// if("logout".equals(action)){ // Inizio del logout
+            }else if("logout".equals(action)){ // Inizio del logout
                 System.out.println("CLICCATO LOGOUT!");
                 try{
                     SecurityLayer.disposeSession(request); //chiude la sessione
@@ -180,6 +180,12 @@ public class ListaProgetti extends HttpServlet {
                 }catch(Exception e3){
                     e3.printStackTrace();
                 }
+            }else if("d_progetto".equals(action)){
+                System.out.println("HO CLICCATO IL BOTTONE DI UN PROGETTO");
+                int num = Integer.parseInt(request.getParameter("dettagli"));
+                
+                System.out.println("titolo?? --> " + num);
+                
             }
     }
 
