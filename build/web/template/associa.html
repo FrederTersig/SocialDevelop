@@ -1,0 +1,58 @@
+<#include "headerbe.html">
+
+
+        <div class="container contenitore">
+            <div class="row">
+                <div class="col">
+                    <form method="POST">
+                    <h2>TASK</h2>
+                    
+                    
+                    <select name="nomtask">
+                        <#if task ??>
+                        
+                    <#list task as Tasks>
+                        <option value="${Tasks.id}">${Tasks.nome}</option>
+                        </#list>
+                       </#if>
+                    </select>
+                    
+                  
+                    
+                </div>
+                
+                       <div class="col">
+                    <h2>SKILL ANCORA NON ASSOCIATE AD UN TASK</h2>
+                    
+                     <select name="nomskill">
+                        <#if skill ??>
+                        
+                    <#list skill as Skills>
+                        <option value="${Skills.id}">${Skills.nome}</option>
+                        </#list>
+                       </#if>
+                    </select>
+                    
+               
+                    
+                </div>
+                
+                <div class="col">
+                    
+                    
+                        
+                        <input type="hidden" name="value" value="associa">
+                        <button type="submit" class="btn btn-primary">ASSOCIA TASK A SKILL</button>
+                </div>
+                            </form>
+
+            </div>
+        
+        
+        
+        
+        
+        
+        
+        
+       <#include "footer.html">

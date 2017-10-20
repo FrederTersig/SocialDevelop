@@ -90,6 +90,13 @@ public class Databasee {
         return Databasee.executeQuery(query);
        
      }
+            
+            
+        public static ResultSet skillNonAssociate() throws SQLException { //restituisce tutte le skill ancora non associate ad un task
+        String query = "SELECT skill.nome, skill.id FROM skill LEFT JOIN skillperognitask ON skill.id =skillperognitask.idskill WHERE skillperognitask.idskill IS NULL";
+        return Databasee.executeQuery(query);
+       
+     }
      
       public static ResultSet selectRecord(String table, String condition) throws SQLException {
         // Generazione query

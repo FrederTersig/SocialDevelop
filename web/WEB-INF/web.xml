@@ -81,6 +81,17 @@
         <url-pattern> /creaProgetto </url-pattern>
     </servlet-mapping>
     
+       <!-- ASSOCIA LE SKILL NON ASSOCIATE A NIENTE CON UN TASK -->
+    <servlet>
+        <servlet-name> Associa </servlet-name>
+        <servlet-class> Servlets.Associa </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> Associa </servlet-name>
+        <url-pattern> /associa </url-pattern>
+    </servlet-mapping>
+    
     
     <!--backend-->
        <servlet>

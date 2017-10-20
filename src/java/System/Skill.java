@@ -25,6 +25,12 @@ public class Skill {
         this.nome=nome;
      
     }
+        
+         public Skill(int id, String nome){
+        this.id=id;
+        this.nome=nome;
+        
+    }
     
   
     

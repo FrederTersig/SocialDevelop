@@ -5,9 +5,8 @@
  */
 package Servlets;
 
-
-import System.Task;
 import System.Skill;
+import System.Task;
 import Util.Databasee;
 import Util.FreeMarker;
 import Util.SecurityLayer;
@@ -31,8 +30,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author user1
  */
-@WebServlet(name = "AddSkill", urlPatterns = {"/AddSkill"})
-public class AddSkill extends HttpServlet {
+@WebServlet(name = "Associa", urlPatterns = {"/Associa"})
+public class Associa extends HttpServlet {
 Map<String, Object> data = new HashMap<String, Object>();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,42 +44,40 @@ Map<String, Object> data = new HashMap<String, Object>();
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        
-        response.setContentType("text/html;charset=UTF-8");
+       response.setContentType("text/html;charset=UTF-8");
          HttpSession s = SecurityLayer.checkSession(request);
          int id=(int) s.getAttribute("id");
          System.out.println(id);
-        try{
-          Databasee.connect();
-              
-         int idtask=(int) s.getAttribute("idtask");
-         System.out.println(idtask);
-         //s.setAttribute("idtask",idtask);
-         ResultSet ts= Databasee.selectTaskSkill(idtask);
-         ArrayList<Task> Task = new ArrayList<Task>();
-         ArrayList<Skill> Skill = new ArrayList<Skill>();
-       
-         while(ts.next()){
-               String nometask = ts.getString("nometask");
-         Task lista = new Task(nometask);
-          Task.add(lista);
-             String nomeskill = ts.getString("nome");
-             
-             Skill lista2 = new Skill(nomeskill);
+         ArrayList<Task> compiti = null;
+         ArrayList<Skill> skillnas = null;
+        try {
+            Databasee.connect();
+            ResultSet task= Databasee.selectTask();
+            compiti = new ArrayList<Task>();
+            while (task.next()) {
+                        String nome = task.getString("nome");
+                        int idtask=task.getInt("id");
+                        Task lista = new Task(idtask,nome);
+                        compiti.add(lista);            
+                }
             
-             Skill.add(lista2);
-         }
-         data.put("nometask", Task);
-         data.put("nomeskill", Skill);
-         Databasee.close();
-         FreeMarker.process("addskill.html", data, response, getServletContext());
-          }
-     catch (SQLException ex) {
+            ResultSet skillna= Databasee.skillNonAssociate();
+              skillnas = new ArrayList<Skill>();
+              while (skillna.next()) {
+                        String nome = skillna.getString("nome");
+                        int idskill=skillna.getInt("id");
+                        Skill lista = new Skill(idskill,nome);
+                        skillnas.add(lista);            
+                }
+            Databasee.close();
+            
+        } catch (SQLException ex) {
             Logger.getLogger(Backend.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-        }
-    
+        data.put("task", compiti);
+        data.put("skill", skillnas);
+        FreeMarker.process("associa.html", data, response, getServletContext());
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -92,6 +89,7 @@ Map<String, Object> data = new HashMap<String, Object>();
      * @throws IOException if an I/O error occurs
      */
     @Override
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     try {
@@ -100,7 +98,6 @@ Map<String, Object> data = new HashMap<String, Object>();
         Logger.getLogger(Backend.class.getName()).log(Level.SEVERE, null, ex);
     }
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -112,7 +109,7 @@ Map<String, Object> data = new HashMap<String, Object>();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession s = SecurityLayer.checkSession(request);
+       HttpSession s = SecurityLayer.checkSession(request);
         String action = request.getParameter("value");
          int id=(int) s.getAttribute("id");
          System.out.println(id);
@@ -133,37 +130,16 @@ Map<String, Object> data = new HashMap<String, Object>();
                     e3.printStackTrace();
                 }
          }
-         
-         /*String azione = request.getParameter("valore");
-          if("taskscelto".equals(action)){
-         String idtask=request.getParameter("idtask");
-         ResultSet ts= Databasee.selectTaskSkill("idtask");
-         ArrayList<Task> Task = new ArrayList<Task>();
-         ArrayList<Skill> Skill = new ArrayList<Skill>();
-         while(ts.next()){
-             String nometask = ts.getString("nometask");
-             String nomeskill = ts.getString("nome");
-             Task lista = new Task(nometask);
-             Skill lista2 = new Skill(nomeskill);
-             Task.add(lista);
-             Skill.add(lista2);
-         }
-         data.put("nometask", Task);
-         data.put("nomeskill", Skill);
-         FreeMarker.process("addskill.html", data, response, getServletContext());
-          }*/
-         
-        String azione = request.getParameter("valore"); 
-       if("addskill".equals(azione)){
-        String nome = request.getParameter("nome");
-                Map<String, Object> map = new HashMap<String, Object>();
-                 map.put("nome", nome);
+        int nomtask = Integer.parseInt(request.getParameter("nomtask"));
+        int nomskill = Integer.parseInt(request.getParameter("nomskill"));
+            Map<String, Object> map = new HashMap<String, Object>();
+             map.put("idtask", nomtask);
+              map.put("idskill", nomskill);
                  map.put("idadmin", id);
-                 Databasee.insertRecord("skill", map);
+                 Databasee.insertRecord("skillperognitask", map);
                  Databasee.close();
         processRequest(request, response);
-       }}
-     catch (Exception ex) {
+    } catch (Exception ex) {
         Logger.getLogger(Backend.class.getName()).log(Level.SEVERE, null, ex);
     }
     }
