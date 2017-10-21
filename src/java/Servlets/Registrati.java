@@ -6,16 +6,23 @@
 package Servlets;
 
 import System.Admin;
+import System.Skill;
 import Util.DataUtile;
 import System.Sviluppatore;
 import static Util.DataUtile.crypt;
+import Util.Database;
 import Util.Databasee;
 import Util.FreeMarker;
 import Util.SecurityLayer;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import static java.util.Objects.isNull;
 import java.util.logging.Level;
@@ -27,6 +34,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -35,6 +45,17 @@ import javax.servlet.http.HttpSession;
 
 public class Registrati extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
+        /*private static final long serialVersionUID = 1L;
+    private static final String UPLOAD_DIRECTORY = "upload";
+    private static final int THRESHOLD_SIZE = 1024 * 1024 * 3;  // 3MB
+    private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
+    private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
+
+    int titurl = 0;
+
+    public static String toString(int a, int b, int c) {
+        return a + "-" + b + "-" + c;
+    }*/
     public int id=0;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,6 +83,26 @@ public class Registrati extends HttpServlet {
             }  
             //Fine controllo ID da sessione
             try{
+                          Databasee.connect();
+              
+         //int idtask=(int) s.getAttribute("idtask");
+         //System.out.println(idtask);
+         //s.setAttribute("idtask",idtask);
+         ResultSet ts= Databasee.selectRecord2("skill");
+         
+         ArrayList<Skill> Skill = new ArrayList<Skill>();
+       
+         while(ts.next()){
+        
+             String nomeskill = ts.getString("nome");
+             int idskill = ts.getInt("id");
+             Skill lista2 = new Skill(idskill,nomeskill);
+            
+             Skill.add(lista2);
+         }
+         
+         data.put("nomeskill", Skill);
+         Databasee.close();
                 FreeMarker.process("registrati.html", data, response, getServletContext());
             }catch(Exception e){}
     }
@@ -170,7 +211,9 @@ public class Registrati extends HttpServlet {
                 //String username = request.getParameter("Username");
                 String tel = request.getParameter("Telefono");
                 String indirizzo = request.getParameter("Indirizzo");
-                
+                String[] skill = request.getParameterValues("skill");
+                for(int i=0; i<skill.length; i++){
+                System.out.println(skill[i]);}
                 
                 // REGISTRAZIONE 
                 try {
@@ -194,16 +237,107 @@ public class Registrati extends HttpServlet {
                     if (check == 0) {//INSERISCO I DATI DI MAP NEL DATABASE
                         System.out.println("DENTRO CONDIZIONE CHECK=0");
                         Databasee.insertRecord("sviluppatore", map);
+                        //INSERISCO NEL DB LE SKILL CHE LO SVILUPPATORE HA DETTO DI AVERE
+                        String emailn="'" + email + "'";
+                       ResultSet sv = Databasee.selectRecord("sviluppatore", "email= " + emailn);
+                       map.clear();
+                       while(sv.next()){
+                              int idsvi = sv.getInt("id");
+                              map.put("idsviluppatore", idsvi);
+                                for(int i=0; i<skill.length; i++){
+               map.put("idskill", skill[i]);
+                             Databasee.insertRecord("livello", map);
+                                }
+                       }
                         System.out.println("SORPASSO DATABASEE.INSERTRECORD");
-                        response.sendRedirect("index");
+                        //response.sendRedirect("index");
                     }else{
                         response.sendRedirect("index");
                     }
-                    try {
-                        Databasee.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                 
+                    
+                   //****************UPLOAD IMMAGINE*********************
+                  /* System.out.println("+++++++inizio upload!!+++++");
+                  
+        if (!ServletFileUpload.isMultipartContent(request)) {
+
+            PrintWriter writer = response.getWriter();
+            writer.println("Request does not contain upload data");
+            writer.flush();
+            return;
+        }
+
+        // Configurazione impostazioni di upload
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        factory.setSizeThreshold(THRESHOLD_SIZE);
+        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        System.out.println("UPLOAD: " + upload);
+
+        upload.setFileSizeMax(MAX_FILE_SIZE);
+        upload.setSizeMax(MAX_REQUEST_SIZE);
+
+        //Costruisce il path della cartella dove fare l'upload del file
+        String uploadPath = "C:\\Users\\user1\\Desktop\\SocialDevelopGitHub\\web\\template" + UPLOAD_DIRECTORY;
+        System.out.println("UPLOAD PATH: " + uploadPath);
+
+        // creates the directory if it does not exist
+        File uploadDir = new File(uploadPath);
+        System.out.println("UPLOAD DIR: " + uploadDir);
+
+        if (!uploadDir.exists()) {
+            System.out.println("DENTRO IF-EXIST");
+
+            uploadDir.mkdir();
+        }
+
+        try {
+            // parses the request's content to extract file data
+            List formItems = upload.parseRequest(request);
+            Iterator iter = formItems.iterator();
+            System.out.println("FORM ITEMS: " + formItems);
+            System.out.println("ITER: " + iter);
+
+            // iterates over form's fields
+            while (iter.hasNext()) {
+                FileItem item = (FileItem) iter.next();
+                System.out.println("ITEM: " + item);
+
+                // processes only fields that are not form fields
+                if (!item.isFormField()) {
+                    String fileName2 = new File(item.getName()).getName();
+                    System.out.println("FILENAME2: " + fileName2);
+
+                    String fileName = item.getName();
+                    System.out.println("FILENAME: " + fileName);
+
+                    String filePath = uploadPath + File.separator + fileName;
+                    System.out.println("FILEPATH: " + filePath);
+
+                    File storeFile = new File(filePath);
+                    System.out.println("STOREFILE" + storeFile);
+
+                    map.put("immagine", "template/upload/" + fileName);
+                    // saves the file on disk
+                    item.write(storeFile);
+
+                    System.out.println("TITOLO POST: " + titurl);
+
+                    Database.connect();
+                    Database.insertRecord("immagini", map);
+                    Database.close();
+
+                    map.clear();
+                }
+            }
+            request.setAttribute("message", "Upload has been done successfully!");
+        } catch (Exception ex) {
+            request.setAttribute("message", "There was an error: " + ex.getMessage());
+        }*/
+        response.sendRedirect("index");
+        
+    
 
                 } catch (NamingException ex) {
                     Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, ex);

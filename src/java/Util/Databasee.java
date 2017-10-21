@@ -105,6 +105,13 @@ public class Databasee {
         return Databasee.executeQuery(query);
     }
       
+        public static ResultSet selectRecord2(String table) throws SQLException {
+        // Generazione query
+        String query = "SELECT * FROM " + table;
+        // Esecuzione query
+        return Databasee.executeQuery(query);
+    }
+      
       
           public static boolean insertRecord(String table, Map<String, Object> data) throws SQLException {
         // Generazione query

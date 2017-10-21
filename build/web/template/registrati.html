@@ -16,6 +16,7 @@
         <input type="password" name="Pass" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="PASSWORD"><br>
         <input type="number" name="Telefono" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="TELEFONO"><br>
         <input type="date" name="DataNascita" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="DATA DI NASCITA"><br>
+         <input type="file" name="file1" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="IMMAGINE PROFILO"><br>
         <input type="hidden" name="value" value="registra">
         <div class="form-row">
             <div class="col-7">
@@ -28,13 +29,18 @@
               <input type="number" name=" " class="form-control" placeholder="CODICE POSTALE">
             </div>
         </div><br>
-        <select class="form-control">
-                <option>SKILL</option>
-                <option>java</option>
-                <option>html</option>
-                <option>php</option>
-                <option>c++</option>
-        </select><br>
+      <fieldset>
+ <legend>Linguaggi conosciuti</legend><br>
+ <#if nomeskill ??>
+                    <#list nomeskill as Nomeskill>
+                    <input type="checkbox" name="skill" value="${Nomeskill.id}"/> ${Nomeskill.nome}<!-- <input type="number" name="punteggio">-->
+ <br />
+ </#list>
+                       </#if> 
+ <input type="checkbox" name="css" value="css"/> css 
+ <br />
+ <input type="checkbox" name="javascript" value="javascript"/> JavaScript 
+</fieldset><br>
         <button type="submit" class="btn btn-primary">INVIA</button>
     </form>
 </div>

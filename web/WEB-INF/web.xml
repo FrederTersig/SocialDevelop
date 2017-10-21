@@ -48,16 +48,6 @@
         <url-pattern> /contattaci </url-pattern>
     </servlet-mapping>
     
-       <!-- SCEGLI TASK NEL BACKEND -->
-    <servlet>
-        <servlet-name> ScegliTask </servlet-name>
-        <servlet-class> Servlets.ScegliTask </servlet-class>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name> ScegliTask </servlet-name>
-        <url-pattern> /sceglitask </url-pattern>
-    </servlet-mapping>
     
          <!-- AGGIUNGI SKILL NEL BACKEND -->
     <servlet>
