@@ -27,17 +27,20 @@
                 <ul class="navbar-nav mr-auto">
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="listaCerca"><img src="template/img/SEARCH.png"></a>
+                            <a class="nav-link" href="listaCerca" data-toggle="tooltip" data-placement="bottom" title="Ricerca"><img src="template/img/SEARCH.png"></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="listaProgetti">Progetti</a>
+                            <a class="nav-link" href="listaProgetti" data-toggle="tooltip" data-placement="bottom" title="Progetti"><img src="template/img/PROJECTS.png"></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="registrati">Registrati</a>
+                            <a class="nav-link" href="registrati" data-toggle="tooltip" data-placement="bottom" title="Registrati"><img src="template/img/SIGNUP.png"></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contattaci">Contatti</a>
+                            <a class="nav-link" href="contattaci" data-toggle="tooltip" data-placement="bottom" title="Contattaci"><img src="template/img/CONTACT_US.png"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="creaProgetto" data-toggle="tooltip" data-placement="bottom" title="Crea Progetto"><img src="template/img/NEW_PROJECT.png"></a>
                         </li>
                   
                 </ul>
@@ -47,18 +50,18 @@
             <!-- action="login" si riferisce alla servlet chiamata login (che bisogna scrivere nel web.xml) che chiamerà un metodo "validate" presente su   -->
             <!-- di un'altra servlet e poi semplicemente SE si è connessi o meno farà ritornare l'utente sulla pagina in cui ci si è autenticati -->
             <form method="post" class="form-inline" role="form">
-                    <div class="input-group">
+                    <div class="input-group mr-3">
                             <span class="input-group-addon"><img src="template/img/USER_SD.png"></span>
                             <input id="email" type="email" class="form-control" name="email" value="" placeholder="Email Address"> 
                             <input type="hidden" name="value" value="login">
                     </div>
 
-                    <div class="input-group">
+                    <div class="input-group mr-3">
                         <span class="input-group-addon"><img src="template/img/LOCK_SD.png"></span>
                             <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
                     </div>
 
-                        <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
             </form>
             
             
