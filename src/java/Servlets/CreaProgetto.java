@@ -27,6 +27,9 @@ import javax.naming.NamingException;
 /*Libreria Servlet*/
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -135,6 +138,13 @@ public class CreaProgetto extends HttpServlet {
                     e3.printStackTrace();
                 }
             }
+            
+             String nome = request.getParameter("nome");
+                String descrizione = request.getParameter("descrizione");
+SimpleDateFormat sdf = new SimpleDateFormat("gg/MM/yyyy"); //oppure il formato che vuoi tu
+String oggi = sdf.parse(new Date());
+              System.out.println(oggi);
+            
     }
 
     /**

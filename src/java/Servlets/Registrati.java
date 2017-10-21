@@ -215,6 +215,9 @@ public class Registrati extends HttpServlet {
                 for(int i=0; i<skill.length; i++){
                 System.out.println(skill[i]);}
                 
+                String[] punteggio =request.getParameterValues("punteggio");
+                for(int i=0; i<punteggio.length; i++){
+                System.out.println(punteggio[i]);}
                 // REGISTRAZIONE 
                 try {
                     System.out.println("POST::: Mi connetto al database");

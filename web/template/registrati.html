@@ -33,13 +33,11 @@
  <legend>Linguaggi conosciuti</legend><br>
  <#if nomeskill ??>
                     <#list nomeskill as Nomeskill>
-                    <input type="checkbox" name="skill" value="${Nomeskill.id}"/> ${Nomeskill.nome}<!-- <input type="number" name="punteggio">-->
+                    <input type="checkbox" name="skill" value="${Nomeskill.id}"/> ${Nomeskill.nome}<input type="number" name="punteggio">
  <br />
  </#list>
                        </#if> 
- <input type="checkbox" name="css" value="css"/> css 
- <br />
- <input type="checkbox" name="javascript" value="javascript"/> JavaScript 
+ 
 </fieldset><br>
         <button type="submit" class="btn btn-primary">INVIA</button>
     </form>
