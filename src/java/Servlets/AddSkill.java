@@ -53,24 +53,22 @@ Map<String, Object> data = new HashMap<String, Object>();
         try{
           Databasee.connect();
               
-         int idtask=(int) s.getAttribute("idtask");
-         System.out.println(idtask);
+         //int idtask=(int) s.getAttribute("idtask");
+         //System.out.println(idtask);
          //s.setAttribute("idtask",idtask);
-         ResultSet ts= Databasee.selectTaskSkill(idtask);
-         ArrayList<Task> Task = new ArrayList<Task>();
+         ResultSet ts= Databasee.selectRecord2("skill");
+         
          ArrayList<Skill> Skill = new ArrayList<Skill>();
        
          while(ts.next()){
-               String nometask = ts.getString("nometask");
-         Task lista = new Task(nometask);
-          Task.add(lista);
+        
              String nomeskill = ts.getString("nome");
              
              Skill lista2 = new Skill(nomeskill);
             
              Skill.add(lista2);
          }
-         data.put("nometask", Task);
+         
          data.put("nomeskill", Skill);
          Databasee.close();
          FreeMarker.process("addskill.html", data, response, getServletContext());

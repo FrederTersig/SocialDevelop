@@ -97,10 +97,49 @@ public class Databasee {
         return Databasee.executeQuery(query);
        
      }
+        
+        
+            public static boolean updateRecord(String table, Map<String, Object> data, String condition) throws SQLException {
+        // Generazione query
+        String query = "UPDATE " + table + " SET ";
+
+        Object value;
+        String attr;
+
+        for (Map.Entry<String, Object> e : data.entrySet()) {
+            attr = e.getKey();
+            value = e.getValue();
+            if (value instanceof String) {
+                value = value.toString().replace("\'", "\\'");
+                query = query + attr + " = '" + value + "', ";
+            } else {
+                query = query + attr + " = " + value + ", ";
+            }
+
+        }
+        query = query.substring(0, query.length() - 2) + " WHERE " + condition;
+        System.out.println(query);
+        // Esecuzione query
+        return Databasee.updateQuery(query);
+    }
      
       public static ResultSet selectRecord(String table, String condition) throws SQLException {
         // Generazione query
         String query = "SELECT * FROM " + table + " WHERE " + condition;
+        // Esecuzione query
+        return Databasee.executeQuery(query);
+    }
+      
+          public static ResultSet selectRecord2(String table, String condition) throws SQLException {
+        // Generazione query
+        String query = "SELECT coordinatore.id FROM " + table + " WHERE " + condition;
+        // Esecuzione query
+        return Databasee.executeQuery(query);
+    }
+      
+        public static ResultSet selectRecord2(String table) throws SQLException {
+        // Generazione query
+        String query = "SELECT * FROM " + table;
         // Esecuzione query
         return Databasee.executeQuery(query);
     }

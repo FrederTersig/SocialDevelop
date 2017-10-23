@@ -48,15 +48,16 @@
         <url-pattern> /contattaci </url-pattern>
     </servlet-mapping>
     
-       <!-- SCEGLI TASK NEL BACKEND -->
+    
+       <!-- UPLOAD IMMAGINE PROFILO -->
     <servlet>
-        <servlet-name> ScegliTask </servlet-name>
-        <servlet-class> Servlets.ScegliTask </servlet-class>
+        <servlet-name> Upload </servlet-name>
+        <servlet-class> Servlets.Upload </servlet-class>
     </servlet>
     
     <servlet-mapping>
-        <servlet-name> ScegliTask </servlet-name>
-        <url-pattern> /sceglitask </url-pattern>
+        <servlet-name> Upload </servlet-name>
+        <url-pattern> /upload </url-pattern>
     </servlet-mapping>
     
          <!-- AGGIUNGI SKILL NEL BACKEND -->

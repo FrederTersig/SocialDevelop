@@ -52,7 +52,7 @@ Map<String, Object> data = new HashMap<String, Object>();
          ArrayList<Skill> skillnas = null;
         try {
             Databasee.connect();
-            ResultSet task= Databasee.selectTask();
+            ResultSet task= Databasee.selectRecord2("task");
             compiti = new ArrayList<Task>();
             while (task.next()) {
                         String nome = task.getString("nome");
@@ -61,7 +61,8 @@ Map<String, Object> data = new HashMap<String, Object>();
                         compiti.add(lista);            
                 }
             
-            ResultSet skillna= Databasee.skillNonAssociate();
+            
+            ResultSet skillna= Databasee.selectRecord2("skill");
               skillnas = new ArrayList<Skill>();
               while (skillna.next()) {
                         String nome = skillna.getString("nome");
