@@ -217,7 +217,9 @@ public class Registrati extends HttpServlet {
                 
                 String[] punteggio =request.getParameterValues("punteggio");
                 for(int i=0; i<punteggio.length; i++){
+                    if(punteggio[i]!=""){
                 System.out.println(punteggio[i]);}
+                }
                 // REGISTRAZIONE 
                 try {
                     System.out.println("POST::: Mi connetto al database");
@@ -244,17 +246,43 @@ public class Registrati extends HttpServlet {
                         String emailn="'" + email + "'";
                        ResultSet sv = Databasee.selectRecord("sviluppatore", "email= " + emailn);
                        map.clear();
+                     //QUA E' UN MACELLO MA FUNZIONA. INSERISCE NELL'ENTITA' LIVELLO LE SKILL SCELTE DALL'UTENTE E IL SUO LIVELLO DI PREPARAZIONE
+                         int cont2=0;
+                       for(int i=0; i<punteggio.length; i++){
+                           if(punteggio[i]!=""){
+                           cont2++;}
+                       }
+                       String[] prep= new String[cont2];
+                       
+                       int cont3=0;
+                               for(int j=0; j<punteggio.length; j++){           
+                    if(punteggio[j]!=""){
+                        prep[cont3]=punteggio[j];
+                        cont3++;}
+                            }
                        while(sv.next()){
                               int idsvi = sv.getInt("id");
                               map.put("idsviluppatore", idsvi);
                                 for(int i=0; i<skill.length; i++){
                map.put("idskill", skill[i]);
+                            
+                            
+                map.put("preparazione", prep[i]);
+                    
+                    
+                            
+                
                              Databasee.insertRecord("livello", map);
-                                }
+                          
+                    }
+                                           
                        }
-                        System.out.println("SORPASSO DATABASEE.INSERTRECORD");
+                                }
+                       
+                    
+     
                         //response.sendRedirect("index");
-                    }else{
+                            else{
                         response.sendRedirect("index");
                     }
                  
@@ -353,5 +381,6 @@ public class Registrati extends HttpServlet {
             }else{
                 System.out.println("ERRORE!!! CHE TIPO DI POST HO FATTO?");
             }
-    }
 }
+}
+

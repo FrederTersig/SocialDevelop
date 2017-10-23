@@ -321,7 +321,7 @@ public class Database {
      *
      * @param query query da eseguire
      */
-    private static boolean updateQuery(String query) throws SQLException {
+    static boolean updateQuery(String query) throws SQLException {
 
         Statement s1;
         s1 = Database.db.createStatement();

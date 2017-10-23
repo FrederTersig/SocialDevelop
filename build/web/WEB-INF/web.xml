@@ -49,6 +49,17 @@
     </servlet-mapping>
     
     
+       <!-- UPLOAD IMMAGINE PROFILO -->
+    <servlet>
+        <servlet-name> Upload </servlet-name>
+        <servlet-class> Servlets.Upload </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> Upload </servlet-name>
+        <url-pattern> /upload </url-pattern>
+    </servlet-mapping>
+    
          <!-- AGGIUNGI SKILL NEL BACKEND -->
     <servlet>
         <servlet-name> AddSkill </servlet-name>
