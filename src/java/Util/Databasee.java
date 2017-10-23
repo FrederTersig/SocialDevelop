@@ -130,6 +130,13 @@ public class Databasee {
         return Databasee.executeQuery(query);
     }
       
+          public static ResultSet selectRecord2(String table, String condition) throws SQLException {
+        // Generazione query
+        String query = "SELECT coordinatore.id FROM " + table + " WHERE " + condition;
+        // Esecuzione query
+        return Databasee.executeQuery(query);
+    }
+      
         public static ResultSet selectRecord2(String table) throws SQLException {
         // Generazione query
         String query = "SELECT * FROM " + table;

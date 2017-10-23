@@ -28,6 +28,7 @@ import javax.naming.NamingException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
@@ -97,6 +98,8 @@ public class CreaProgetto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Map<String, Object> map = new HashMap<String, Object>();
+         HttpSession a = SecurityLayer.checkSession(request);
             String action = request.getParameter("value");
             if("login".equals(action)){ // SE il metodo post è il login....
                 System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
@@ -126,7 +129,7 @@ public class CreaProgetto extends HttpServlet {
                         Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
                     }
                 }   
-            }else{// if("logout".equals(action)){ // Inizio del logout
+            } if("logout".equals(action)){// if("logout".equals(action)){ // Inizio del logout
                 System.out.println("CLICCATO LOGOUT!");
                 try{
                     SecurityLayer.disposeSession(request); //chiude la sessione
@@ -141,10 +144,44 @@ public class CreaProgetto extends HttpServlet {
             
              String nome = request.getParameter("nome");
                 String descrizione = request.getParameter("descrizione");
-SimpleDateFormat sdf = new SimpleDateFormat("gg/MM/yyyy"); //oppure il formato che vuoi tu
-String oggi = sdf.parse(new Date());
-              System.out.println(oggi);
-            
+Calendar c = Calendar.getInstance();
+
+System.out.println(c.getTime());	/* Rappresentazione come stringa in base al tuo Locale */
+System.out.println(c.get(Calendar.YEAR)); /* Ottieni l'anno */
+System.out.println(c.get(Calendar.MONTH)); /* Ottieni il mese */
+System.out.println(c.get(Calendar.DAY_OF_MONTH)); /* Ottieni il giorno */
+int year=c.get(Calendar.YEAR);
+int month= c.get(Calendar.MONTH)+1;
+int day=c.get(Calendar.DAY_OF_MONTH);
+String today=year + "/" + month + "/" + day;
+System.out.println(today);
+System.out.println(a.getAttribute("id"));
+map.put("idsviluppatore", a.getAttribute("id"));
+int idco=0;
+        try {
+            Databasee.connect();
+            ResultSet coor=Databasee.selectRecord("sviluppatore,coordinatore", a.getAttribute("id") + "=coordinatore.idsviluppatore");
+            if(!coor.next()){
+            Databasee.insertRecord("coordinatore", map);}
+          
+            map.clear();
+            ResultSet coo=Databasee.selectRecord2("sviluppatore,coordinatore", a.getAttribute("id") + "=coordinatore.idsviluppatore");
+            while(coo.next()){
+                idco = coo.getInt("id");
+            }
+            map.put("idcoordinatore", idco);
+            map.put("titolo", nome);
+            map.put("descrizione", descrizione);
+            map.put("datacreazione", today);
+            Databasee.insertRecord("progetto", map);
+            Databasee.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CreaProgetto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CreaProgetto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        response.sendRedirect("listaProgetti");
     }
 
     /**
