@@ -1,0 +1,39 @@
+ <#include "logHeader.html">
+
+        <div class="creanewp">
+            <#if nomtask ??>
+            <#list nomtask as Nomtask>
+            <h1 class="">TASK SELEZIONATO: ${Nomtask.nome} </h1>
+            </#list>
+            </#if>
+            <p class="testoreg">Scegli le skill richieste per poter partecipare al task</p>
+            <hr>
+            <form method="POST" action="skillprogetto">
+                <div class="row">
+                <div class="col">
+                    <fieldset>
+ <legend>Skill richieste</legend><br>
+ <#if nomes ??>
+                    <#list nomes as Nomes>
+                    <input type="checkbox" name="skill" value="${Nomes.id}"/> ${Nomes.nome}<input type="number" name="livmin">
+ <br />
+ </#list>
+                       </#if> 
+ 
+</fieldset><br>
+               
+
+                   
+
+              
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                <button type="submit" class="btn btn-primary">SELEZIONA SKILL</button>
+                 
+                    </div>
+                </div>
+            </form>
+        </div> <!-- chiusura creap -->
+<#include "footer.html">

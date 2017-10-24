@@ -5,45 +5,34 @@
  */
 package Servlets;
 
-import System.Progetto;
 import System.Task;
+import System.Skill;
 import System.Sviluppatore;
-import Util.DataUtile;
 import Util.Databasee;
 import Util.FreeMarker;
 import Util.SecurityLayer;
-/**/
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import static java.util.Objects.isNull;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.NamingException;
-/*Libreria Servlet*/
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 /**
  *
- * @author Federico Tersigni
+ * @author user1
  */
-//@WebServlet(name = "CreaProgetto", urlPatterns = {"/CreaProgetto"})
-public class CreaProgetto extends HttpServlet {
+@WebServlet(name = "TaskSkillProgetto", urlPatterns = {"/TaskSkillProgetto"})
+public class TaskSkillProgetto extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
     /**
@@ -57,20 +46,12 @@ public class CreaProgetto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            response.setContentType("text/html;charset=UTF-8");
-            HttpSession s = SecurityLayer.checkSession(request);
-            if(s != null){//condizione per vedere se la sessione esiste. 
-                System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
-                if(s.getAttribute("id") != null) id = (int) s.getAttribute("id");
-                else id=0;
-                System.out.println("ID ?? > " + id );
-                data.put("id", id);    
-            }else{
-                id = 0;
-                data.put("id", id);
-            }     
-            
-            FreeMarker.process("creaprogetto.html", data, response, getServletContext());
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+         
+              FreeMarker.process("taskskillprogetto.html", data, response, getServletContext());
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -101,8 +82,9 @@ public class CreaProgetto extends HttpServlet {
             throws ServletException, IOException {
         Map<String, Object> map = new HashMap<String, Object>();
          HttpSession a = SecurityLayer.checkSession(request);
-            String action = request.getParameter("value");
-            if("login".equals(action)){ // SE il metodo post è il login....
+         String action = request.getParameter("value");
+         
+          if("login".equals(action)){ // SE il metodo post è il login....
                 System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
                 String EmailL = request.getParameter("email");
                 String PassL = request.getParameter("password");
@@ -136,77 +118,62 @@ public class CreaProgetto extends HttpServlet {
                     SecurityLayer.disposeSession(request); //chiude la sessione
                     id=0; //azzera l'id per il template
                     data.put("id",id);
-                    processRequest(request, response);
-                    FreeMarker.process("creaprogetto.html", data, response, getServletContext());
+                    //processRequest(request, response);
+                    FreeMarker.process("index.html", data, response, getServletContext());
                 }catch(Exception e3){
                     e3.printStackTrace();
                 }
             }
             
-             String nomePro = request.getParameter("nome");
+             String idtask = request.getParameter("idt");
+             a.setAttribute("idtask", idtask);
                 String descrizione = request.getParameter("descrizione");
-Calendar c = Calendar.getInstance();
-
-System.out.println(c.getTime());	/* Rappresentazione come stringa in base al tuo Locale */
-System.out.println(c.get(Calendar.YEAR)); /* Ottieni l'anno */
-System.out.println(c.get(Calendar.MONTH)); /* Ottieni il mese */
-System.out.println(c.get(Calendar.DAY_OF_MONTH)); /* Ottieni il giorno */
-int year=c.get(Calendar.YEAR);
-int month= c.get(Calendar.MONTH)+1;
-int day=c.get(Calendar.DAY_OF_MONTH);
-String today=year + "/" + month + "/" + day;
-System.out.println(today);
-System.out.println(a.getAttribute("id"));
-map.put("idsviluppatore", a.getAttribute("id"));
-int idco=0;
+                int membri =Integer.parseInt(request.getParameter("membri"));
+                int idcor=(int) a.getAttribute("idcoor");
         try {
             Databasee.connect();
-            ResultSet coor=Databasee.selectRecord("sviluppatore,coordinatore", a.getAttribute("id") + "=coordinatore.idsviluppatore");
-            if(!coor.next()){
-            Databasee.insertRecord("coordinatore", map);}
-          
-            map.clear();
-            ResultSet coo=Databasee.selectRecord2("sviluppatore,coordinatore", a.getAttribute("id") + "=coordinatore.idsviluppatore");
-            while(coo.next()){
-                idco = coo.getInt("id");
-                a.setAttribute("idcoor", idco);
+            ResultSet idprog=Databasee.selectMaxRecord("progetto", idcor + "=progetto.idcoordinatore");
+            while(idprog.next()){
+                int idprogetto= idprog.getInt("id");
+                a.setAttribute("idprogetto", idprogetto);
+                map.put("idprogetto", idprogetto);
             }
-            map.put("idcoordinatore", idco);
-            map.put("titolo", nomePro);
+            
             map.put("descrizione", descrizione);
-            map.put("datacreazione", today);
-            Databasee.insertRecord("progetto", map);
-           
+            map.put("idtask", idtask);
+            map.put("numcollaboratori", membri);
+            map.put("stato", 0);
+            Databasee.insertRecord("taskprogetto", map);
+            ResultSet tasksel=Databasee.selectRecord("task", "task.id=" + idtask);
+            ArrayList<Task> Task = new ArrayList<Task>();
+            while(tasksel.next()){
+                String nomtask=tasksel.getString("nome");
+                Task lista3 = new Task(nomtask);
+                Task.add(lista3);
+                data.put("nomtask", Task);
+            }
+            ResultSet skilltask=Databasee.selectRecord("skillperognitask, skill", "idtask=" + idtask + " AND skill.id=skillperognitask.idskill");
+            ArrayList<Skill> Skill = new ArrayList<Skill>();
+            while(skilltask.next()){
+                String nomskill=skilltask.getString("nome");
+                int idskills=skilltask.getInt("id");
+                 Skill lista2 = new Skill(idskills,nomskill);
+            
+             Skill.add(lista2);
+            }
+            data.put("nomes", Skill);
             Databasee.close();
         } catch (SQLException ex) {
-            Logger.getLogger(CreaProgetto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TaskSkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(CreaProgetto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TaskSkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
         }
-         ArrayList<Task> compiti = null;
-    
-        try {
-            Databasee.connect();
-             ResultSet task= Databasee.selectTask();
-            compiti = new ArrayList<Task>();
-            while (task.next()) {
-                        String tas = task.getString("nome");
-                        int idt= task.getInt("id");
-                        Task lista = new Task(idt,tas);
-                        compiti.add(lista);            
-                }
-            
-            Databasee.close();
-             data.put("task", compiti);
-        FreeMarker.process("taskskillprogetto.html", data, response, getServletContext());
-        } catch (Exception ex) {
-            Logger.getLogger(CreaProgetto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-           
         
-        //response.sendRedirect("listaProgetti");
-    
+        
+        FreeMarker.process("skillprogetto.html", data, response, getServletContext());
+        //processRequest(request, response);
     }
+
     /**
      * Returns a short description of the servlet.
      *
