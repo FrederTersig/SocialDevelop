@@ -8,6 +8,7 @@ package Servlets;
 import System.Admin;
 import System.Progetto;
 import System.Sviluppatore;
+import System.TaskProgetto;
 
 import Util.DataUtile;
 import Util.Databasee;
@@ -184,11 +185,51 @@ public class ListaProgetti extends HttpServlet {
             }else if("d_progetto".equals(action)){
                 System.out.println("HO CLICCATO IL BOTTONE DI UN PROGETTO");
                 int num = Integer.parseInt(request.getParameter("dettagli"));
-                System.out.println("titolo?? --> " + num);
+                System.out.println("ID PROGETTI, DEVE COINCIDERE CON ID PROGETTO TASK --> " + num);
                 /*Bisogna connettersi al DB, prendere tutte le informazioni di Progetto con quel determinato ID, e fare un hashMap*/
+                ArrayList<TaskProgetto> taskProg = null;
+                // DA MODIFICARE
+                try{//Prova la connessione al Database
+                    
+                    Databasee.connect();
+                    ResultSet co = Databasee.selectRecord("taskprogetto","idprogetto=" + num);
+                    taskProg = new ArrayList<TaskProgetto>();
+                    while (co.next()) {
+                            //String titolo = co.getString("titolo");
+                            //String descrizione = co.getString("descrizione");
+                            //int idProg = co.getInt("id");
+                            //Progetto lista = new Progetto(titolo, descrizione,idProg);
+                            //prog.add(lista);   
+
+                            int numeroColl = co.getInt("numcollaboratori");
+                            boolean stato = co.getBoolean("stato");
+                            int id = co.getInt("id");
+                            String descrizione_task = co.getString("descrizione");
+                            int id_progetto_task = co.getInt("idProgetto");
+                            int id_task = co.getInt("idTask");
+                            //System.out.println("Task presenti per quel progetto!!!");
+                           // System.out.println("id progetto task:> " + id_progetto_task + " | id task:> " + id_task + " |id dell'insieme:> " + id_insieme);
+                            //System.out.println("Descrizione del task! -> " + descrizione_task);
+                            //public TaskProgetto(int id, String descrizione, int numCollaboratori, boolean stato, int idProgetto, int idTask){
+                            TaskProgetto lista = new TaskProgetto(id,descrizione_task,numeroColl,stato,id_progetto_task,id_task);
+                            taskProg.add(lista);
+                    }
+                    Databasee.close();
+                }catch(NamingException e) {
+                }catch (SQLException e) {
+                }catch (Exception ex) {
+                        Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                data.put("taskprogetto", taskProg);
+                System.out.println("appena prima del freemarker che ti porta a dettagliProgetto!");
+                FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
+                
+                //FINE MODIFICA
+                
+                
             }
     }
-
+ //selectRecord(String table, String condition)
     /**
      * Returns a short description of the servlet.
      *

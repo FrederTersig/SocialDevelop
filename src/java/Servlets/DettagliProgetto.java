@@ -55,6 +55,7 @@ public class DettagliProgetto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
+            System.out.println("Richiedo di entrare in dettagliProgetto!");
             HttpSession s = SecurityLayer.checkSession(request);
             if(s != null){//condizione per vedere se la sessione esiste. 
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
@@ -82,6 +83,7 @@ public class DettagliProgetto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("get di dettagliProgetto");
         processRequest(request, response);
     }
 
