@@ -68,7 +68,7 @@ public class DettagliProgetto extends HttpServlet {
                 data.put("id", id);
             }     
             
-            FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
+            FreeMarker.process("dettagliprogetto.html", data, response, getServletContext());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

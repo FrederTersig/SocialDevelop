@@ -212,9 +212,27 @@ public class ListaProgetti extends HttpServlet {
                 }
                 data.put("taskprogetto", taskProg);
                 System.out.println("appena prima del freemarker che ti porta a dettagliProgetto!");
-                //processRequest(request, response);
-                FreeMarker.process("dettagliprogetto.html", data, response, getServletContext()); //perché dettagliprogetto in minuscolo?     
+                //PROVA
+                HttpSession s = SecurityLayer.checkSession(request);
+                if(s != null){//condizione per vedere se la sessione esiste. 
+                    System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
+                    if(s.getAttribute("id") != null) id = (int) s.getAttribute("id");
+                    else id=0;
+                    System.out.println("ID ?? > " + id );
+                    data.put("id", id);    
+                }else{
+                    id = 0;
+                    data.put("id", id);
+                }   
                 
+                
+                //
+                  
+                //RequestDispatcher d=request.getRequestDispatcher("DettagliProgetto");
+                //System.out.println("FACCIO IL DISPATCH!");
+                //d.forward(request, response);
+                //FreeMarker.process("dettagliprogetto.html", data, response, getServletContext()); //perché dettagliprogetto in minuscolo?  
+                response.sendRedirect("dettagliProgetto");
             }
     }
  //selectRecord(String table, String condition)
