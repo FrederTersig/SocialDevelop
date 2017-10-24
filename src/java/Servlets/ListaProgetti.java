@@ -222,10 +222,9 @@ public class ListaProgetti extends HttpServlet {
                 }
                 data.put("taskprogetto", taskProg);
                 System.out.println("appena prima del freemarker che ti porta a dettagliProgetto!");
-                FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
-                
-                //FINE MODIFICA
-                
+                processRequest(request, response);
+                FreeMarker.process("dettagliprogetto.html", data, response, getServletContext()); //perché dettagliprogetto in minuscolo?
+
                 
             }
     }
