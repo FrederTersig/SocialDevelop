@@ -1,0 +1,59 @@
+ <#include "logHeader.html">
+
+        <div class="creanewp">
+            <h1 class="">SELEZIONA UN TASK DA AGGIUNGERE AL TUO PROGETTO</h1>
+            <p class="testoreg">inizia a popolare il tuo progetto con i task che hai intenzione di far svolgere ai tuoi dipendenti</p>
+            <hr>
+            <form method="POST" action="taskskillprogetto">
+                <div class="row">
+                <div class="col">
+                    <label>TASK</label>
+                        <select name="idt" class="form-control">
+                          <#if task ??>
+                    <#list task as Task>
+                          <option value="${Task.id}">${Task.id} - ${Task.nome}</option>
+                          </#list>
+                          </#if>
+                        
+                        </select>
+                    </div>
+                    
+                       <div class="col-2">
+                           <label>NUMERO MEMBRI</label>
+                        <select class="form-control" name="membri">
+                          
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                <div class="col">
+                <label>DESCRIZIONE</label>
+            
+                <textarea class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" name="descrizione" id="inlineFormInputName2" placeholder="DESCRIZIONE"></textarea>
+                </div>
+                <br>
+                
+               
+
+                   
+
+              
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                <button type="submit" class="btn btn-primary">SELEZIONA SKILL</button>
+                 
+                    </div>
+                </div>
+            </form>
+        </div> <!-- chiusura creap -->
+<#include "footer.html">

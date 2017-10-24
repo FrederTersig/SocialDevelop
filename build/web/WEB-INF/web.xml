@@ -48,6 +48,17 @@
         <url-pattern> /contattaci </url-pattern>
     </servlet-mapping>
     
+        <!-- TASK DA AGGIUNGERE DURANTE LA CREAZIONE DEL PROGETTO -->
+    <servlet>
+        <servlet-name> TaskSkillProgetto </servlet-name>
+        <servlet-class> Servlets.TaskSkillProgetto </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> TaskSkillProgetto </servlet-name>
+        <url-pattern> /taskskillprogetto </url-pattern>
+    </servlet-mapping>
+    
     
        <!-- UPLOAD IMMAGINE PROFILO -->
     <servlet>
