@@ -79,6 +79,12 @@ public class Databasee {
        
      }
      
+      public static ResultSet selectProgettoUltimi5() throws SQLException {
+        String query = "SELECT titolo, descrizione, id FROM progetto ORDER BY id DESC LIMIT 4";
+        return Databasee.executeQuery(query);
+       
+     }
+     
         public static ResultSet selectTask() throws SQLException { //restituisce tutti i task presenti nel db
         String query = "SELECT nome,id FROM task";
         return Databasee.executeQuery(query);
@@ -126,6 +132,13 @@ public class Databasee {
       public static ResultSet selectRecord(String table, String condition) throws SQLException {
         // Generazione query
         String query = "SELECT * FROM " + table + " WHERE " + condition;
+        // Esecuzione query
+        return Databasee.executeQuery(query);
+    }
+      
+          public static ResultSet selectRecordst(String table, String condition) throws SQLException {
+        // Generazione query
+        String query = "SELECT skill.id, skill.nome FROM " + table + " WHERE " + condition;
         // Esecuzione query
         return Databasee.executeQuery(query);
     }

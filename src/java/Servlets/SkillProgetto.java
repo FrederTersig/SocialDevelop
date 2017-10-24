@@ -5,16 +5,27 @@
  */
 package Servlets;
 
+import System.Task;
+import System.Skill;
+import System.Sviluppatore;
+import Util.Databasee;
 import Util.FreeMarker;
+import Util.SecurityLayer;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -69,7 +80,124 @@ public class SkillProgetto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+              Map<String, Object> map = new HashMap<String, Object>();
+         HttpSession a = SecurityLayer.checkSession(request);
+         String action = request.getParameter("value");
+         
+          if("login".equals(action)){ // SE il metodo post è il login....
+                System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
+                String EmailL = request.getParameter("email");
+                String PassL = request.getParameter("password");
+                id = LoginValidate.validate(EmailL, PassL);
+                if (id == 0) { //data.put("id",id); è inutile perché nel caso in cui non ci si connetta non ci serve registrare l'id e la mail
+                // ID == 0 significa che non si è connessi! appare scritta  "non connesso!"
+                    data.put("nome","");
+                    data.put("id",0);
+                    //out.println("<script type=\"text/javascript\">");
+                    //out.println("alert('User or password incorrect');");
+                    //out.println("</script>");
+                    FreeMarker.process("creaprogetto.html", data, response, getServletContext());
+                } else {
+                    try{ 
+                        HttpSession s = SecurityLayer.createSession(request, EmailL, id);
+                        System.out.println("Sessione Creata, Connesso!");
+                        data.put("nome",EmailL);
+                        data.put("id",id);
+                        //RequestDispatcher rd = request.getRequestDispatcher("index"); //<- dispatch di una richiesta ad un'altra servlet.
+                        s.setAttribute("id", id);
+                        processRequest(request, response);
+                        FreeMarker.process("creaprogetto.html", data, response, getServletContext());
+                    }catch(Exception e2){
+                        System.out.println("Errore nel creare la sessione");
+                        Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
+                    }
+                }   
+            } if("logout".equals(action)){// if("logout".equals(action)){ // Inizio del logout
+                System.out.println("CLICCATO LOGOUT!");
+                try{
+                    SecurityLayer.disposeSession(request); //chiude la sessione
+                    id=0; //azzera l'id per il template
+                    data.put("id",id);
+                    //processRequest(request, response);
+                    FreeMarker.process("index.html", data, response, getServletContext());
+                }catch(Exception e3){
+                    e3.printStackTrace();
+                }
+            }
+            
+          try {
+              Databasee.connect();
+          } catch (Exception ex) {
+              Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
+          }
+             String[] skill = request.getParameterValues("skill");
+              String[] punteggio =request.getParameterValues("livmin");
+             int cont2=0;
+                       for(int i=0; i<punteggio.length; i++){
+                           if(punteggio[i]!=""){
+                           cont2++;}
+                       }
+                       String[] prep= new String[cont2];
+                       
+                       int cont3=0;
+                               for(int j=0; j<punteggio.length; j++){           
+                    if(punteggio[j]!=""){
+                        prep[cont3]=punteggio[j];
+                        cont3++;}
+                            }
+          try {
+              ResultSet idtaskprogetto=Databasee.selectMaxRecord("taskprogetto", "taskprogetto.idprogetto=" + a.getAttribute("idprogetto") );
+              while (idtaskprogetto.next()){
+                  int idtp=idtaskprogetto.getInt("id");
+                  map.put("idtaskprogetto", idtp);
+          } 
+              
+               for(int i=0; i<skill.length; i++){
+              ResultSet idskillperognitask=Databasee.selectRecord("skillperognitask", "skillperognitask.idskill=" + skill[i] + " AND skillperognitask.idtask=" + a.getAttribute("idtask"));
+               while(idskillperognitask.next()){
+                   System.out.println("ENTRIIIIIIIIIIIIIIII");
+                   int idspot=idskillperognitask.getInt("id");
+                   map.put("idskillperognitask", idspot);
+                   map.put("livellomin", prep[i]);
+                   Databasee.insertRecord("skillscelte", map);
+                   
+               }
+               } 
+               Databasee.close();
+               String azione = request.getParameter("fine");
+               System.out.println(azione);
+               if(azione.equals("indietro")){
+ArrayList<Task> compiti = null;
+    
+       
+                  try {
+                      Databasee.connect();
+                  } catch (Exception ex) {
+                      Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+             ResultSet task= Databasee.selectTask();
+            compiti = new ArrayList<Task>();
+            while (task.next()) {
+                        String tas = task.getString("nome");
+                        int idt= task.getInt("id");
+                        Task lista = new Task(idt,tas);
+                        compiti.add(lista);            
+                }
+            
+            Databasee.close();
+             data.put("task", compiti);
+        FreeMarker.process("taskskillprogetto.html", data, response, getServletContext());
+               
+               } 
+               if(azione.equals("fine")){
+                   response.sendRedirect("index");
+               }
+            } catch (SQLException ex) {
+              Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
+          }
+                                           
+                       
+    
     }
 
     /**

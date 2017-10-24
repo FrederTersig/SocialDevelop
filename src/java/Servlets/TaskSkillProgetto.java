@@ -152,7 +152,7 @@ public class TaskSkillProgetto extends HttpServlet {
                 Task.add(lista3);
                 data.put("nomtask", Task);
             }
-            ResultSet skilltask=Databasee.selectRecord("skillperognitask, skill", "idtask=" + idtask + " AND skill.id=skillperognitask.idskill");
+            ResultSet skilltask=Databasee.selectRecordst("skillperognitask, skill", "idtask=" + idtask + " AND skill.id=skillperognitask.idskill");
             ArrayList<Skill> Skill = new ArrayList<Skill>();
             while(skilltask.next()){
                 String nomskill=skilltask.getString("nome");

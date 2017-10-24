@@ -136,8 +136,9 @@ public class CreaProgetto extends HttpServlet {
                     SecurityLayer.disposeSession(request); //chiude la sessione
                     id=0; //azzera l'id per il template
                     data.put("id",id);
-                    processRequest(request, response);
-                    FreeMarker.process("creaprogetto.html", data, response, getServletContext());
+                    //processRequest(request, response);
+                    //FreeMarker.process("creaprogetto.html", data, response, getServletContext());
+                    response.sendRedirect("index");
                 }catch(Exception e3){
                     e3.printStackTrace();
                 }

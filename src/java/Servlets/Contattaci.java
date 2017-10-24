@@ -155,8 +155,9 @@ public class Contattaci extends HttpServlet {
                     SecurityLayer.disposeSession(request); //chiude la sessione
                     id=0; //azzera l'id per il template
                     data.put("id",id);
-                    processRequest(request, response);
-                    FreeMarker.process("contattaci.html", data, response, getServletContext());
+                    //processRequest(request, response);
+                    //FreeMarker.process("contattaci.html", data, response, getServletContext());
+                    response.sendRedirect("index");
                 }catch(Exception e3){
                     e3.printStackTrace();
                 }

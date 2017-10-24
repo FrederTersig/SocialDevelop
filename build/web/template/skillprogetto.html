@@ -1,5 +1,5 @@
  <#include "logHeader.html">
-
+<div class="container">
         <div class="creanewp">
             <#if nomtask ??>
             <#list nomtask as Nomtask>
@@ -21,7 +21,7 @@
                        </#if> 
  
 </fieldset><br>
-               
+                </div></div>
 
                    
 
@@ -30,10 +30,13 @@
                 <br>
                 <div class="row">
                     <div class="col">
-                <button type="submit" class="btn btn-primary">SELEZIONA SKILL</button>
+                <button type="submit" name="fine" value="indietro" class="btn btn-primary">SELEZIONA SKILL E AGGIUNGI UN ALTRO TASK</button>
                  
                     </div>
+                    <div class="col">
+                       <button type="submit" name="fine" value="fine" class="btn btn-primary">SELEZIONA SKILL E FINE</button> 
                 </div>
             </form>
         </div> <!-- chiusura creap -->
+
 <#include "footer.html">

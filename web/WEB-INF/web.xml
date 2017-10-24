@@ -48,7 +48,18 @@
         <url-pattern> /contattaci </url-pattern>
     </servlet-mapping>
     
-        <!-- TASK DA AGGIUNGERE DURANTE LA CREAZIONE DEL PROGETTO -->
+        <!-- SCELTA SKILL RICHIESTE PER PARTECIPARE AL TASK -->
+    <servlet>
+        <servlet-name> SkillProgetto </servlet-name>
+        <servlet-class> Servlets.SkillProgetto </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> SkillProgetto </servlet-name>
+        <url-pattern> /skillprogetto </url-pattern>
+    </servlet-mapping>
+    
+           <!-- TASK DA AGGIUNGERE DURANTE LA CREAZIONE DEL PROGETTO -->
     <servlet>
         <servlet-name> TaskSkillProgetto </servlet-name>
         <servlet-class> Servlets.TaskSkillProgetto </servlet-class>

@@ -56,8 +56,12 @@ public class Profilo extends HttpServlet {
             HttpSession s = SecurityLayer.checkSession(request);
             if(s != null){//condizione per vedere se la sessione esiste. 
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
-                if(s.getAttribute("id") != null) id = (int) s.getAttribute("id");
-                else id=0;
+                if(s.getAttribute("id") != null){
+                    id = (int) s.getAttribute("id");
+                }
+                else{
+                    id=0;
+                }
                 System.out.println("ID ?? > " + id );
                 data.put("id", id);    
             }else{
@@ -129,8 +133,9 @@ public class Profilo extends HttpServlet {
                     SecurityLayer.disposeSession(request); //chiude la sessione
                     id=0; //azzera l'id per il template
                     data.put("id",id);
-                    processRequest(request, response);
-                    FreeMarker.process("profilo.html", data, response, getServletContext());
+                    //processRequest(request, response);
+                    //FreeMarker.process("profilo.html", data, response, getServletContext());
+                    response.sendRedirect("index");
                 }catch(Exception e3){
                     e3.printStackTrace();
                 }
