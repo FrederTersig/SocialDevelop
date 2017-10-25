@@ -8,6 +8,7 @@ package Servlets;
 import System.Admin;
 import System.Progetto;
 import System.Sviluppatore;
+import System.TaskProgetto;
 
 import Util.DataUtile;
 import Util.Databasee;
@@ -52,26 +53,64 @@ public class DettagliProgetto extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    /*
+    
+                // DA MODIFICARE
+                
+
+                //PROVA
+    */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
             System.out.println("Richiedo di entrare in dettagliProgetto!");
+            int num = (int) request.getSession(true).getAttribute("idprogetto");
+            data.put("idprogetto",num);
             HttpSession s = SecurityLayer.checkSession(request);
+            System.out.println("data> " + data); 
+            ArrayList<TaskProgetto> taskProg = null;
             if(s != null){//condizione per vedere se la sessione esiste. 
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
-                if(s.getAttribute("id") != null)
-                {id = (int) s.getAttribute("id");}
-                else{ id=0;
-                
+                if(s.getAttribute("id") != null){
+                    id = (int) s.getAttribute("id");
+                }else{ 
+                    id=0;
                 }
                 System.out.println("ID ?? > " + id );
                 data.put("id", id);    
             }else{
+                System.out.println("Non esiste la sessione mentre si è in dettagliProgetto");
                 id = 0;
                 data.put("id", id);
             }     
-            
-            FreeMarker.process("dettagliprogetto.html", data, response, getServletContext());
+            /*INIZIO CHIAMATA AL DB PER DETTAGLIPROGETTO ********************************************/
+                try{//Query per avere gli id dei task presenti al progetto              
+                    Databasee.connect();
+                    ResultSet co = Databasee.selectRecord("taskprogetto","idprogetto=" + num);
+                    taskProg = new ArrayList<TaskProgetto>();
+                    while (co.next()) {
+                            int numeroColl = co.getInt("numcollaboratori");
+                            boolean stato = co.getBoolean("stato");
+                            int id = co.getInt("id");
+                            String descrizione_task = co.getString("descrizione");
+                            int id_progetto_task = co.getInt("idProgetto");
+                            int id_task = co.getInt("idTask");
+                            TaskProgetto lista = new TaskProgetto(id,descrizione_task,numeroColl,stato,id_progetto_task,id_task);
+                            taskProg.add(lista);
+                    }
+                    Databasee.close();
+                }catch(NamingException e) {
+                }catch (SQLException e) {
+                }catch (Exception ex) {
+                        Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                data.put("taskprogetto", taskProg);
+            /*FINE *********************************************************************************/
+            System.out.println("CHE COSA HO IN DATA ORA::");
+            System.out.println(data.get("taskprogetto"));
+            System.out.println("FINE!!!!");
+            FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -102,6 +141,7 @@ public class DettagliProgetto extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             String action = request.getParameter("value");
+            System.out.println("post di dettaglioProgetto");
             if("login".equals(action)){ // SE il metodo post è il login....
                 System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
                 String EmailL = request.getParameter("email");
@@ -154,7 +194,7 @@ public class DettagliProgetto extends HttpServlet {
                         Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, e2);
                     }
                 }   
-            }else{// if("logout".equals(action)){ // Inizio del logout
+            }else if("logout".equals(action)){ // Inizio del logout
                 System.out.println("CLICCATO LOGOUT!");
                 try{
                     SecurityLayer.disposeSession(request); //chiude la sessione

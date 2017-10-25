@@ -191,33 +191,10 @@ public class ListaProgetti extends HttpServlet {
             }else if("d_progetto".equals(action)){
                 System.out.println("HO CLICCATO IL BOTTONE DI UN PROGETTO");
                 int num = Integer.parseInt(request.getParameter("dettagli"));
+                data.put("idprogetto", num);
                 System.out.println("ID PROGETTI, DEVE COINCIDERE CON ID PROGETTO TASK --> " + num);
                 /*Bisogna connettersi al DB, prendere tutte le informazioni di Progetto con quel determinato ID, e fare un hashMap*/
-                ArrayList<TaskProgetto> taskProg = null;
-                // DA MODIFICARE
-                try{//Prova la connessione al Database                 
-                    Databasee.connect();
-                    ResultSet co = Databasee.selectRecord("taskprogetto","idprogetto=" + num);
-                    taskProg = new ArrayList<TaskProgetto>();
-                    while (co.next()) {
-                            int numeroColl = co.getInt("numcollaboratori");
-                            boolean stato = co.getBoolean("stato");
-                            int id = co.getInt("id");
-                            String descrizione_task = co.getString("descrizione");
-                            int id_progetto_task = co.getInt("idProgetto");
-                            int id_task = co.getInt("idTask");
-                            TaskProgetto lista = new TaskProgetto(id,descrizione_task,numeroColl,stato,id_progetto_task,id_task);
-                            taskProg.add(lista);
-                    }
-                    Databasee.close();
-                }catch(NamingException e) {
-                }catch (SQLException e) {
-                }catch (Exception ex) {
-                        Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                data.put("taskprogetto", taskProg);
-                System.out.println("appena prima del freemarker che ti porta a dettagliProgetto!");
-                //PROVA
+                
                 HttpSession s = SecurityLayer.checkSession(request);
                 if(s != null){//condizione per vedere se la sessione esiste. 
                     System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
@@ -226,17 +203,15 @@ public class ListaProgetti extends HttpServlet {
                     System.out.println("ID ?? > " + id );
                     data.put("id", id);    
                 }else{
+                    System.out.println("Ho cliccato, Non esiste sessione, come passo i dati del progetto?");
                     id = 0;
-                    data.put("id", id);
+                    data.put("id", id);  
+                    
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("idprogetto", num);         
+                    System.out.println("SESSIONE?!?!?!>" + z.getAttribute("idprogetto"));
                 }   
-                
-                
-                //
-                  
-                //RequestDispatcher d=request.getRequestDispatcher("DettagliProgetto");
-                //System.out.println("FACCIO IL DISPATCH!");
-                //d.forward(request, response);
-                //FreeMarker.process("dettagliprogetto.html", data, response, getServletContext()); //perché dettagliprogetto in minuscolo?  
+
                 response.sendRedirect("dettagliProgetto");
             }
     }
