@@ -192,26 +192,22 @@ public class ListaProgetti extends HttpServlet {
                 System.out.println("HO CLICCATO IL BOTTONE DI UN PROGETTO");
                 int num = Integer.parseInt(request.getParameter("dettagli"));
                 data.put("idprogetto", num);
-                System.out.println("ID PROGETTI, DEVE COINCIDERE CON ID PROGETTO TASK --> " + num);
-                /*Bisogna connettersi al DB, prendere tutte le informazioni di Progetto con quel determinato ID, e fare un hashMap*/
-                
                 HttpSession s = SecurityLayer.checkSession(request);
                 if(s != null){//condizione per vedere se la sessione esiste. 
                     System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
-                    if(s.getAttribute("id") != null) id = (int) s.getAttribute("id");
-                    else id=0;
-                    System.out.println("ID ?? > " + id );
-                    data.put("id", id);    
+                    if(s.getAttribute("id") != null){ 
+                        id = (int) s.getAttribute("id");
+                    }else{ 
+                        id=0;
+                    }              
+                    s.setAttribute("idprogetto",num);   
                 }else{
                     System.out.println("Ho cliccato, Non esiste sessione, come passo i dati del progetto?");
                     id = 0;
-                    data.put("id", id);  
-                    
                     HttpSession z = request.getSession(true);
                     z.setAttribute("idprogetto", num);         
-                    System.out.println("SESSIONE?!?!?!>" + z.getAttribute("idprogetto"));
                 }   
-
+                data.put("id", id); 
                 response.sendRedirect("dettagliProgetto");
             }
     }

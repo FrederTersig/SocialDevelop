@@ -16,21 +16,23 @@
         <div class="col-4">
             <img src="RDC.png" class="rounded-circle imgprofilo mt-4 ml-4">
         </div>     
-                <div class="col mt-5">
-                <p>
-                   
-                <b>NOME E COGNOME COORDINATORE:</b> Claudio Morè<br><br>
-                <b>DESCRIZIONE PROGETTO:</b> Il progetto "PROGETTO1" nasce per portare a termine un'applicazione per smartphone che permette di ordinare il proprio pranzo o la propria cena comodamente da casa e a portata di un click<br><br>
-                <b>NUMERO MEMBRI:</b> 0/5<br><br>
-                <b>TASK:</b>                
-                </p>
+            
+                        <div class="col mt-5">
+                        <p>
 
-                <ul>
-                    <li>grafica(cliccabile)</li>
-                    <li>front-end(cliccabile)</li>
-                    <li>back-end(cliccabile)</li>
-                    <li>database(cliccabile)</li>
-                </ul>
+                        <b>NOME E COGNOME COORDINATORE:</b> Claudio Morè<br><br>
+                        <b>DESCRIZIONE PROGETTO:</b> Il progetto "PROGETTO1" nasce per portare a termine un'applicazione per smartphone che permette di ordinare il proprio pranzo o la propria cena comodamente da casa e a portata di un click<br><br>
+                        <b>NUMERO MEMBRI:</b> 0/5<br><br>
+                        <b>TASK:</b>                
+                        </p>
+
+                            <#if taskprogetto ??>
+                                <#list taskprogetto as TaskProgetto>
+                                    <div>${TaskProgetto.getDescrizione()}</div>
+                                    
+                                </#list>
+                            </#if>
+                
                 
         </div>
     </div>

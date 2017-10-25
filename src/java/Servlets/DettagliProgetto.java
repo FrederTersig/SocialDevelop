@@ -9,6 +9,7 @@ import System.Admin;
 import System.Progetto;
 import System.Sviluppatore;
 import System.TaskProgetto;
+import System.Task;
 
 import Util.DataUtile;
 import Util.Databasee;
@@ -68,8 +69,7 @@ public class DettagliProgetto extends HttpServlet {
             int num = (int) request.getSession(true).getAttribute("idprogetto");
             data.put("idprogetto",num);
             HttpSession s = SecurityLayer.checkSession(request);
-            System.out.println("data> " + data); 
-            ArrayList<TaskProgetto> taskProg = null;
+
             if(s != null){//condizione per vedere se la sessione esiste. 
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
                 if(s.getAttribute("id") != null){
@@ -84,7 +84,10 @@ public class DettagliProgetto extends HttpServlet {
                 id = 0;
                 data.put("id", id);
             }     
-            /*INIZIO CHIAMATA AL DB PER DETTAGLIPROGETTO ********************************************/
+            /* CHIAMATE AL DATABASE ********************************************/
+            ArrayList<TaskProgetto> taskProg = null;
+            List<Integer> task = new ArrayList<Integer>();
+
                 try{//Query per avere gli id dei task presenti al progetto              
                     Databasee.connect();
                     ResultSet co = Databasee.selectRecord("taskprogetto","idprogetto=" + num);
@@ -98,18 +101,38 @@ public class DettagliProgetto extends HttpServlet {
                             int id_task = co.getInt("idTask");
                             TaskProgetto lista = new TaskProgetto(id,descrizione_task,numeroColl,stato,id_progetto_task,id_task);
                             taskProg.add(lista);
+                            task.add(id_task);
                     }
+                    System.out.println("PROVA>>>" + taskProg.get(0).getId());
                     Databasee.close();
                 }catch(NamingException e) {
                 }catch (SQLException e) {
                 }catch (Exception ex) {
-                        Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(TaskProgetto.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                data.put("taskprogetto", taskProg);
-            /*FINE *********************************************************************************/
-            System.out.println("CHE COSA HO IN DATA ORA::");
-            System.out.println(data.get("taskprogetto"));
-            System.out.println("FINE!!!!");
+                data.put("taskprogetto", taskProg); 
+                
+                try{
+                    Databasee.connect();
+                    //ResultSet co = Databasee.selectRecord("task", "id=");
+                    System.out.println("Dettagli dei task");
+                    int taskSize = task.size();
+                    System.out.println(taskSize);
+                    for(Integer i:task){
+                        System.out.println("Dentro il for: elemento" + i);
+                        
+                        ResultSet co = Databasee.selectRecord("task","id="+i);
+                        //Prima parte giusta
+                        System.out.println("chiude for");
+                    }
+                    Databasee.close();
+                }catch (NamingException e){
+                }catch (SQLException e){
+                }catch (Exception ex){
+                        Logger.getLogger(Task.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            /*FINE CHIAMATE *********************************************************************************/
+
             FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
     }
 
