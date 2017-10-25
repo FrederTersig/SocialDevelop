@@ -86,7 +86,8 @@ public class DettagliProgetto extends HttpServlet {
             }     
             /* CHIAMATE AL DATABASE ********************************************/
             ArrayList<TaskProgetto> taskProg = null;
-            List<Integer> task = new ArrayList<Integer>();
+            ArrayList<Task> task = null;
+            List<Integer> listaIdTask = new ArrayList<Integer>();
 
                 try{//Query per avere gli id dei task presenti al progetto              
                     Databasee.connect();
@@ -101,7 +102,7 @@ public class DettagliProgetto extends HttpServlet {
                             int id_task = co.getInt("idTask");
                             TaskProgetto lista = new TaskProgetto(id,descrizione_task,numeroColl,stato,id_progetto_task,id_task);
                             taskProg.add(lista);
-                            task.add(id_task);
+                            listaIdTask.add(id_task);
                     }
                     System.out.println("PROVA>>>" + taskProg.get(0).getId());
                     Databasee.close();
@@ -116,14 +117,14 @@ public class DettagliProgetto extends HttpServlet {
                     Databasee.connect();
                     //ResultSet co = Databasee.selectRecord("task", "id=");
                     System.out.println("Dettagli dei task");
-                    int taskSize = task.size();
-                    System.out.println(taskSize);
-                    for(Integer i:task){
-                        System.out.println("Dentro il for: elemento" + i);
-                        
+                    
+                    for(Integer i:listaIdTask){
                         ResultSet co = Databasee.selectRecord("task","id="+i);
-                        //Prima parte giusta
-                        System.out.println("chiude for");
+                        //Prendo i risultati che ho ricevuto nella chiamata:
+                        String nome = co.getString("nome");
+                        Task lista = new Task(i, nome); // i è l'id del task
+                        task.add(lista);
+                        
                     }
                     Databasee.close();
                 }catch (NamingException e){
@@ -131,6 +132,7 @@ public class DettagliProgetto extends HttpServlet {
                 }catch (Exception ex){
                         Logger.getLogger(Task.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                data.put("task",task);
             /*FINE CHIAMATE *********************************************************************************/
 
             FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());

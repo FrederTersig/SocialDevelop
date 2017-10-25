@@ -20,13 +20,13 @@ public class Task {
         this.idAdmin=idAdmin;
     }
     
-       public Task(String nome){
+    public Task(String nome){
         
         this.nome=nome;
         
     }
        
-             public Task(int id, String nome){
+    public Task(int id, String nome){
         
         this.nome=nome;
         this.id=id;
