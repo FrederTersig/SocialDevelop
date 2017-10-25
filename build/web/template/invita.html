@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<#include "logHeader.html">
+
+<div class="container">
+        <!-- Container delle cards -->
+        <div class="card-deck">
+            <#if progetti ??>
+            <#list progetti as Progetto>
+            <!-- Inizio "Mazzo" di carte -->
+                <div class="card"> <!-- card-img-top 277x180 -->
+                    <img class="card-img-top" src="template/img/anteprima.png" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">${Progetto.titolo}</h4>
+                      <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
+                    </div>
+                    <div class="card-footer">
+                      <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </#list>
+            </#if>
+        <!-- fine carta --> 
+        </div>
+    </div>
+
+
+<#include "footer.html">

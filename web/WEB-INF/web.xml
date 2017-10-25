@@ -26,6 +26,17 @@
         <url-pattern> /index </url-pattern>
     </servlet-mapping>
     
+        <!-- INVITA -->
+    <servlet>
+        <servlet-name> Invita </servlet-name>
+        <servlet-class> Servlets.Invita </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>  Invita </servlet-name>
+        <url-pattern> /invita </url-pattern>
+    </servlet-mapping>
+    
     <!-- REGISTRATI -->
     <servlet>
         <servlet-name> Registrati </servlet-name>

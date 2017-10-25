@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
 public class SkillProgetto extends HttpServlet {
       Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
-
+public int idtp=0;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -148,7 +148,7 @@ public class SkillProgetto extends HttpServlet {
           try {
               ResultSet idtaskprogetto=Databasee.selectMaxRecord("taskprogetto", "taskprogetto.idprogetto=" + a.getAttribute("idprogetto") );
               while (idtaskprogetto.next()){
-                  int idtp=idtaskprogetto.getInt("id");
+                  idtp=idtaskprogetto.getInt("id");
                   map.put("idtaskprogetto", idtp);
           } 
               
@@ -191,6 +191,14 @@ ArrayList<Task> compiti = null;
                } 
                if(azione.equals("fine")){
                    response.sendRedirect("index");
+               }
+               
+               if(azione.equals("invita")){
+                   int idprog=(int) a.getAttribute("idprogetto");
+        System.out.println(idprog);
+         System.out.println(idtp);
+         ResultSet svilup=Databasee.selectSvilup(" progetto.id=" + idprog + " AND progetto.id=taskprogetto.idprogetto AND taskprogetto.id=" + idtp + " AND taskprogetto.id=skillscelte.idtaskprogetto AND skillscelte.id=" + skill[i] + " AND skillscelte.idskillperognitask=skillperognitask.id AND skillperognitask.idskill=skill.id AND skill.id=livello.idskill AND livello.preparazione>=skillscelte.livellomin AND sviluppatore.id=livello.idsviluppatore");
+                     FreeMarker.process("invita.html", data, response, getServletContext());
                }
             } catch (SQLException ex) {
               Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);

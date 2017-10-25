@@ -91,6 +91,12 @@ public class Databasee {
        
      }
         
+             public static ResultSet selectSvilup() throws SQLException { //restituisce tutti i task presenti nel db
+        String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";
+        return Databasee.executeQuery(query);
+       
+     }
+        
             public static ResultSet selectTaskSkill(int id) throws SQLException { //restituisce tutti i task presenti nel db
         String query = "SELECT DISTINCT task.nome AS nometask, task.id, skill.nome FROM task, skill, skillperognitask WHERE task.id=" + id + " AND task.id=skillperognitask.idtask AND skill.id=skillperognitask.idskill";
         return Databasee.executeQuery(query);
