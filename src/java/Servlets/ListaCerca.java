@@ -54,21 +54,44 @@ Map<String, Object> data = new HashMap<String, Object>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
+            String ricercaStr = (String) request.getSession(true).getAttribute("ricerca");
             HttpSession s = SecurityLayer.checkSession(request);
-            if(s != null){//condizione per vedere se la sessione esiste. 
+            if(s != null){
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
                 if(s.getAttribute("id") != null){
                     id = (int) s.getAttribute("id");
                 }
                 else{
                     id=0;
-                }
-                System.out.println("ID ?? > " + id );
-                data.put("id", id);    
+                }  
             }else{
-                id = 0;
-                data.put("id", id);
+                id = 0; 
             }     
+            data.put("id", id);
+            
+            ArrayList<Progetto> prog = null;
+            try{//Prova la connessione al Database
+                Databasee.connect();
+                ResultSet co = Databasee.searchProgetti(ricercaStr);
+                prog = new ArrayList<Progetto>();
+                while (co.next()) {
+                        String titolo = co.getString("titolo");
+                        String descrizione = co.getString("descrizione");
+                        //int codice= co.getInt("id");
+                        int num = co.getInt("id");
+                        Progetto lista = new Progetto(titolo, descrizione, num);
+                        prog.add(lista);            
+                }
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            data.put("progetti", prog);
+            
+            ArrayList<Sviluppatore> svilup = null;
+            //manca  la parte dello sviluppatore!
             
             FreeMarker.process("listaCerca.html", data, response, getServletContext());
     }

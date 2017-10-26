@@ -41,15 +41,12 @@ public class Homee extends HttpServlet {
         public int id=0;
 
         protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-            System.out.println("processRequest di Homee!");
-            
+            System.out.println("processRequest di Homee!");     
             HttpSession s = SecurityLayer.checkSession(request);
             if(s != null){//condizione per vedere se la sessione esiste. 
-                System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
                 if(s.getAttribute("id") != null){
                     id = (int) s.getAttribute("id");
-                }
-                else{
+                }else{
                     id=0;
                 }
                 System.out.println("ID ?? > " + id );

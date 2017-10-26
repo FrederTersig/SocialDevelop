@@ -66,6 +66,7 @@ public class DettagliProgetto extends HttpServlet {
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
             System.out.println("Richiedo di entrare in dettagliProgetto!");
+            // request.getSession andrà bene per utenti loggati e non?
             int num = (int) request.getSession(true).getAttribute("idprogetto");
             data.put("idprogetto",num);
             HttpSession s = SecurityLayer.checkSession(request);
