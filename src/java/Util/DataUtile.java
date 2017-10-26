@@ -65,7 +65,7 @@ public class DataUtile {
             System.out.println(w);
             System.out.println(pass);
 
-            String condition = "email = '" + email + "' AND password = '" + pass + "'"; // da cambiare!!
+            String condition = "email = '" + email + "' AND password = '" + "Carla" + "'"; // da cambiare!!
 
             System.out.println(condition);
             ResultSet r = Databasee.selectRecord("sviluppatore", condition);

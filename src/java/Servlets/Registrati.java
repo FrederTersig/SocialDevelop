@@ -205,6 +205,19 @@ public class Registrati extends HttpServlet {
                 }catch(Exception e3){
                     e3.printStackTrace();
                 }
+            }else if("search".equals(action)){
+                System.out.println("COMINCIA LA RICERCA!");
+                String SearchStringa = request.getParameter("ricerca");
+                System.out.println("RICERCA IN CORSO::::: >>>" + SearchStringa);           
+                HttpSession s = SecurityLayer.checkSession(request);
+                if(s != null){//condizione per vedere se la sessione esiste.                    
+                    s.setAttribute("ricerca",SearchStringa);   
+                }else{
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("ricerca",SearchStringa);         
+                }   
+                data.put("ricerca", SearchStringa);                
+                response.sendRedirect("listaCerca");
             }else if("registra".equals(action)){
                 System.out.println("POST::: Sto Registrando un nuovo account!");
                 
@@ -249,45 +262,32 @@ public class Registrati extends HttpServlet {
                         Databasee.insertRecord("sviluppatore", map);
                         //INSERISCO NEL DB LE SKILL CHE LO SVILUPPATORE HA DETTO DI AVERE
                         String emailn="'" + email + "'";
-                       ResultSet sv = Databasee.selectRecord("sviluppatore", "email= " + emailn);
-                       map.clear();
-                     //QUA E' UN MACELLO MA FUNZIONA. INSERISCE NELL'ENTITA' LIVELLO LE SKILL SCELTE DALL'UTENTE E IL SUO LIVELLO DI PREPARAZIONE
-                         int cont2=0;
-                       for(int i=0; i<punteggio.length; i++){
+                        ResultSet sv = Databasee.selectRecord("sviluppatore", "email= " + emailn);
+                        map.clear();
+                        //QUA E' UN MACELLO MA FUNZIONA. INSERISCE NELL'ENTITA' LIVELLO LE SKILL SCELTE DALL'UTENTE E IL SUO LIVELLO DI PREPARAZIONE
+                        int cont2=0;
+                        for(int i=0; i<punteggio.length; i++){
                            if(punteggio[i]!=""){
                            cont2++;}
-                       }
-                       String[] prep= new String[cont2];
-                       
-                       int cont3=0;
-                               for(int j=0; j<punteggio.length; j++){           
-                    if(punteggio[j]!=""){
-                        prep[cont3]=punteggio[j];
-                        cont3++;}
+                        }
+                        String[] prep= new String[cont2];
+                        int cont3=0;
+                        for(int j=0; j<punteggio.length; j++){           
+                            if(punteggio[j]!=""){
+                                prep[cont3]=punteggio[j];
+                                cont3++;}
                             }
-                       while(sv.next()){
-                              int idsvi = sv.getInt("id");
-                              map.put("idsviluppatore", idsvi);
-                                for(int i=0; i<skill.length; i++){
-               map.put("idskill", skill[i]);
-                            
-                            
-                map.put("preparazione", prep[i]);
-                    
-                    
-                            
-                
-                             Databasee.insertRecord("livello", map);
-                          
-                    }
+                        while(sv.next()){
+                            int idsvi = sv.getInt("id");
+                            map.put("idsviluppatore", idsvi);
+                            for(int i=0; i<skill.length; i++){
+                                map.put("idskill", skill[i]);
+                                map.put("preparazione", prep[i]);
+                                Databasee.insertRecord("livello", map);
+                            }
                                            
-                       }
-                                }
-                       
-                    
-     
-                        //response.sendRedirect("index");
-                            else{
+                        }
+                    }else{
                         response.sendRedirect("index");
                     }
                  
@@ -371,9 +371,7 @@ public class Registrati extends HttpServlet {
         } catch (Exception ex) {
             request.setAttribute("message", "There was an error: " + ex.getMessage());
         }*/
-        response.sendRedirect("index");
-        
-    
+                response.sendRedirect("index");
 
                 } catch (NamingException ex) {
                     Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, ex);

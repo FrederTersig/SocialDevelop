@@ -153,7 +153,7 @@ Map<String, Object> data = new HashMap<String, Object>();
                         Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
                     }
                 }   
-            }else{// if("logout".equals(action)){ // Inizio del logout
+            }else if("logout".equals(action)){ // Inizio del logout
                 System.out.println("CLICCATO LOGOUT!");
                 try{
                     SecurityLayer.disposeSession(request); //chiude la sessione
@@ -165,6 +165,19 @@ Map<String, Object> data = new HashMap<String, Object>();
                 }catch(Exception e3){
                     e3.printStackTrace();
                 }
+            }else if("search".equals(action)){
+                System.out.println("COMINCIA LA RICERCA!");
+                String SearchStringa = request.getParameter("ricerca");
+                System.out.println("RICERCA IN CORSO::::: >>>" + SearchStringa);           
+                HttpSession s = SecurityLayer.checkSession(request);
+                if(s != null){//condizione per vedere se la sessione esiste.                    
+                    s.setAttribute("ricerca",SearchStringa);   
+                }else{
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("ricerca",SearchStringa);         
+                }   
+                data.put("ricerca", SearchStringa);                
+                response.sendRedirect("listaCerca");
             }
     }
 

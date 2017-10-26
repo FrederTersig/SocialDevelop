@@ -23,12 +23,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="listaCerca" data-toggle="tooltip" data-placement="bottom" title="Ricerca"><img src="template/img/SEARCH.png"></a>
-                        </li>
+            <div class="collapse navbar-collapse row" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto col-2">
+
                         <li class="nav-item">
                             <a class="nav-link" href="listaProgetti" data-toggle="tooltip" data-placement="bottom" title="Progetti"><img src="template/img/PROJECTS.png"></a>
                         </li>
@@ -39,29 +36,34 @@
                         <li class="nav-item">
                             <a class="nav-link" href="contattaci" data-toggle="tooltip" data-placement="bottom" title="Contattaci"><img src="template/img/CONTACT_US.png"></a>
                         </li>
-                        
-                  
                 </ul>
-            <!-- Form Login veloce sulla barra -->
-            <!-- Il tasto quando cliccato esegue la servlet LOGIN che userà il metodo presente in validate.java per poi dispatchare l'evento su di un'altra -->
-            <!-- Servlet per eseguire la servlet corrispondente alla pagina su cui ci si trova -->
-            <!-- action="login" si riferisce alla servlet chiamata login (che bisogna scrivere nel web.xml) che chiamerà un metodo "validate" presente su   -->
-            <!-- di un'altra servlet e poi semplicemente SE si è connessi o meno farà ritornare l'utente sulla pagina in cui ci si è autenticati -->
-            <form method="post" class="form-inline" role="form">
-                    <div class="input-group mr-3">
-                            <span class="input-group-addon"><img src="template/img/USER_SD.png"></span>
-                            <input id="email" type="email" class="form-control" name="email" value="" placeholder="Email Address"> 
-                            <input type="hidden" name="value" value="login">
+                <form method="post" class="col-4" role="form">
+                    <div class="input-group">  
+                        <span class="input-group-btn">
+                            <button class="btn btn-dark" type="submit" data-toggle="tooltip" data-placement="bottom" title="Ricerca"><img src="template/img/SEARCH.png"></button>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Cerca.." aria-label="Cerca.." name="ricerca">
+                        <input type="hidden" name="value" value="search">
                     </div>
+                </form>
+                <!-- Form Login veloce sulla barra -->
+                <!-- Il tasto quando cliccato esegue la servlet LOGIN che userà il metodo presente in validate.java per poi dispatchare l'evento su di un'altra -->
+                <!-- Servlet per eseguire la servlet corrispondente alla pagina su cui ci si trova -->
+                <!-- action="login" si riferisce alla servlet chiamata login (che bisogna scrivere nel web.xml) che chiamerà un metodo "validate" presente su   -->
+                <!-- di un'altra servlet e poi semplicemente SE si è connessi o meno farà ritornare l'utente sulla pagina in cui ci si è autenticati -->
+                <form method="post" class="form-inline mr-3" role="form">
+                        <div class="input-group mr-3">
+                                <span class="input-group-addon"><img src="template/img/USER_SD.png"></span>
+                                <input id="email" type="email" class="form-control" name="email" value="" placeholder="Indirizzo Email"> 
+                                <input type="hidden" name="value" value="login">
+                        </div>
 
-                    <div class="input-group mr-3">
-                        <span class="input-group-addon"><img src="template/img/LOCK_SD.png"></span>
-                            <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
-                    </div>
+                        <div class="input-group mr-3">
+                            <span class="input-group-addon"><img src="template/img/LOCK_SD.png"></span>
+                                <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
+                        </div>
 
-                    <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-            
-            
-      </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
     </nav>

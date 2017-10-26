@@ -126,12 +126,11 @@ public class Homee extends HttpServlet {
             if("login".equals(action)){ // SE il metodo post è il login....
                 System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
                 String EmailL = request.getParameter("email");
-                String PassL = request.getParameter("password");
-                
+                String PassL = request.getParameter("password");    
                 //piccolo controllo per entrare nella pagina backend (ovviamente il controllo sarà molto più ampio)
-                       if(EmailL.equals("admin@admin.it") && PassL.equals("admin")){
-                           id = LoginValidate.validateOfficer(EmailL, PassL);
-                           try{ 
+                if(EmailL.equals("admin@admin.it") && PassL.equals("admin")){
+                    id = LoginValidate.validateOfficer(EmailL, PassL);
+                    try{ 
                         HttpSession s = SecurityLayer.createSession(request, EmailL, id);
                         System.out.println("Sessione Creata, Connesso!");
                         data.put("nome",EmailL);
@@ -139,7 +138,6 @@ public class Homee extends HttpServlet {
                         //RequestDispatcher rd = request.getRequestDispatcher("index"); //<- dispatch di una richiesta ad un'altra servlet.
                         s.setAttribute("id", id);
                         //processRequest(request, response);
-                        
                         response.sendRedirect("backend");
                        // FreeMarker.process("backend.html", data, response, getServletContext());
                     }catch(Exception e2){
@@ -176,7 +174,7 @@ public class Homee extends HttpServlet {
                         Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
                     }
                 }   
-            }else{// if("logout".equals(action)){ // Inizio del logout
+            }else if("logout".equals(action)){ // Inizio del logout
                 System.out.println("CLICCATO LOGOUT!");
                 try{
                     SecurityLayer.disposeSession(request); //chiude la sessione
@@ -187,6 +185,19 @@ public class Homee extends HttpServlet {
                 }catch(Exception e3){
                     e3.printStackTrace();
                 }
+            }else if("search".equals(action)){
+                System.out.println("COMINCIA LA RICERCA!");
+                String SearchStringa = request.getParameter("ricerca");
+                System.out.println("RICERCA IN CORSO::::: >>>" + SearchStringa);           
+                HttpSession s = SecurityLayer.checkSession(request);
+                if(s != null){//condizione per vedere se la sessione esiste.                    
+                    s.setAttribute("ricerca",SearchStringa);   
+                }else{
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("ricerca",SearchStringa);         
+                }   
+                data.put("ricerca", SearchStringa);                
+                response.sendRedirect("listaCerca");
             }
  
     }
