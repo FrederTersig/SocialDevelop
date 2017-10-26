@@ -88,23 +88,30 @@ public class DettagliProgetto extends HttpServlet {
             System.out.println("COMINCIO LA CONNESSIONE");
             System.out.println(data);
             System.out.println("---------");
+            
+            ArrayList<Progetto> progettoDet =null;
+            
                 try{
+                    progettoDet = new ArrayList<Progetto>();
                     Databasee.connect();
-                    ResultSet co = Databasee.selectProgettoDetail(num);
-                    //prog = new ArrayList<Progetto>();
-                    String nome = co.getString("nome");
-                    String cognome = co.getString("cognome");
-                    String titolo = co.getString("titolo");
-                    String descrizione = co.getString("descrizione");
-                    Progetto prog_det = new Progetto(nome,cognome,titolo,descrizione);
-                    data.put("progettoDettaglio", prog_det);
-                    System.out.println(data);
+                    ResultSet mo = Databasee.selectProgettoDetail(num);
+                    while(mo.next()){
+                        String nome = mo.getString("nome");
+                        String cognome = mo.getString("cognome");
+                        String descrizione = mo.getString("descrizione");
+                        String titolo = mo.getString("titolo");
+                        Progetto nuova = new Progetto(nome,cognome,titolo,descrizione);
+                        progettoDet.add(nuova);
+                    }
                     Databasee.close();
                 }catch(NamingException e) {
                 }catch (SQLException e) {
                 }catch (Exception ex) {
                         Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            data.put("progettodettaglio", progettoDet);
+            System.out.println("Check DB");
+            System.out.println(data);
             
             ArrayList<TaskProgetto> taskProg=null;
                 try{

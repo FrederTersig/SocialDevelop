@@ -84,7 +84,7 @@ public class Progetto {
         this.descrizione=descrizione;
     }
     
-    public String getdescrizione(){
+    public String getDescrizione(){
         return descrizione;
     }
     
