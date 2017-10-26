@@ -90,13 +90,36 @@ public class Databasee {
         return Databasee.executeQuery(query);
        
      }  
+        //Dato un idprogetto, mi restituisce i nomi dei task appartenenti al progetto, il loro stato e il numero di collaboratori.
         public static ResultSet selectTaskProg(int idprogetto) throws SQLException {
             String query = "SELECT taskprogetto.numcollaboratori, taskprogetto.stato, task.nome FROM taskprogetto, task WHERE (idprogetto="+idprogetto+") AND (taskprogetto.idtask = task.id)";
             return Databasee.executeQuery(query);
-         
+        }
+        //dato un idprogetto, mi restituisce nome e cognome del coordinatore
+        public static ResultSet selectProgettoDetail(int idprogetto) throws SQLException{
+            String query = "SELECT sviluppatore.nome, sviluppatore.cognome, progetto.titolo, progetto.descrizione, progetto.datacreazione FROM progetto,sviluppatore, coordinatore WHERE (progetto.id ="+idprogetto+") AND (progetto.idcoordinatore = coordinatore.id) AND (coordinatore.idsviluppatore = sviluppatore.id)";
+            return Databasee.executeQuery(query);
+        }
+        //Dato un idtask, mi restituisce i dettagli del task, con le skill prerequisito e i collaboratori che ci stanno lavorando e i loro nomi!.
+        public static ResultSet selectTaskDetail(int idtask) throws SQLException{
+            String query ="SELECT taskprogetto.numcollaboratori, taskprogetto.stato, taskprogetto.descrizione, task.nome, sviluppatore.nome, sviluppatore.cognome FROM taskprogetto, task, collaboratore, sviluppatore WHERE (idtask = "+idtask+") AND (taskprogetto.idtask = task.id) AND (taskprogetto.idtask = collaboratore.idtaskprogetto) AND (collaboratore.idsviluppatore = sviluppatore.id)";
+            return Databasee.executeQuery(query);
         }
         
-             public static ResultSet selectSvilup() throws SQLException { //restituisce tutti i task presenti nel db
+        //data una stringa, mi restituisce una lista di sviluppatori che hanno quel nome / cognome. (tutto o in parte) ** MANCA L'AVATAR/IMMAGINE fatta in THUUMBNAIL!!
+        public static ResultSet searchSviluppatori(String nome) throws SQLException{
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome FROM `sviluppatore` WHERE sviluppatore.nome LIKE '"+nome+"%' OR sviluppatore.cognome LIKE '"+nome+"%'";
+            return Databasee.executeQuery(query);
+        }
+        //data una stringa, mi restituisce una lista di progetti che ha quel nome
+        public static ResultSet searchProgetti(String nome) throws SQLException{
+            String query="SELECT progetto.titolo, progetto.descrizione FROM `progetto` WHERE progetto.titolo LIKE '"+nome+"%'";
+            return Databasee.executeQuery(query);
+        }
+        
+        
+        
+             public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
         String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";
         return Databasee.executeQuery(query);
        

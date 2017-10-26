@@ -21,6 +21,8 @@ public class Progetto {
     private String titolo;
     private String descrizione;
     private String dataCreazione;
+    private String nomeCoordinatore;
+    private String cognomeCoordinatore;
     private int idImmagine;
     
     public Progetto(int id, int idCoordinatore, String titolo, String descrizione, String dataCreazione, int idImmagine){
@@ -32,15 +34,31 @@ public class Progetto {
         this.idImmagine=idImmagine;
     }
     
-      public Progetto(String titolo, String descrizione, int id){
-        
-        
+    public Progetto(String titolo, String descrizione, int id){
         this.titolo=titolo;
         this.descrizione=descrizione;
         this.id = id;
-        
     }
-  
+    //progetto per il dettaglioProgetto - nome,cognome,titolo,descrizione
+    public Progetto(String nome, String cognome, String titolo, String descrizione){
+        this.nomeCoordinatore=nome;
+        this.cognomeCoordinatore=cognome;
+        this.titolo=titolo;
+        this.descrizione=descrizione;
+    }
+    
+    public String getNomeCoord(){
+        return nomeCoordinatore;
+    }
+    public String getCognomeCoord(){
+        return cognomeCoordinatore;
+    }
+    public void setNomeCoord(String nome){
+        this.nomeCoordinatore=nome;
+    }
+    public void setCognomeCoord(String cognome){
+        this.cognomeCoordinatore=cognome;
+    }
     
     public int getId(){
         return id;
