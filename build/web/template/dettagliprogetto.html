@@ -28,9 +28,21 @@
 
                             <#if taskprogetto ??>
                                 <#list taskprogetto as TaskProgetto>
-                                    
-                                            <div>${TaskProgetto.getDescrizione()}</div>
-                                    
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-7">${TaskProgetto.getNome()}</div>
+                                            <div class="col-2">${TaskProgetto.getnumCollaboratori()}</div>
+                                            <div class="col-2">
+                                                <#if TaskProgetto.getStato() == true>
+                                                    Progetto in Sviluppo!
+                                                <#else>
+                                                    Progetto Completato!
+                                                </#if>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    </div>
                                 </#list>
                             </#if>
                             <!-- Da aggiungere nomi task -->

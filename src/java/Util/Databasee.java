@@ -89,7 +89,12 @@ public class Databasee {
         String query = "SELECT nome,id FROM task";
         return Databasee.executeQuery(query);
        
-     }
+     }  
+        public static ResultSet selectTaskProg(int idprogetto) throws SQLException {
+            String query = "SELECT taskprogetto.numcollaboratori, taskprogetto.stato, task.nome FROM taskprogetto, task WHERE (idprogetto="+idprogetto+") AND (taskprogetto.idtask = task.id)";
+            return Databasee.executeQuery(query);
+         
+        }
         
              public static ResultSet selectSvilup() throws SQLException { //restituisce tutti i task presenti nel db
         String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";

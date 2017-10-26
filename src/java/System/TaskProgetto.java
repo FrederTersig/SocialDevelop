@@ -16,6 +16,7 @@ public class TaskProgetto {
     private boolean stato;
     private int idProgetto;
     private int idTask;
+    private String nome; // Mi serve per la lista dei task presenti in un progetto!
     
     public TaskProgetto(int id, String descrizione, int numCollaboratori, boolean stato, int idProgetto, int idTask){
         this.id=id;
@@ -25,10 +26,20 @@ public class TaskProgetto {
         this.idProgetto=idProgetto;
         this.idTask=idTask;
     }
-    
+    /*NUOVA AGGIUNTA PER DETTAGLI PROGETTO!*/
+    public TaskProgetto(int numCollaboratori, boolean stato, String nome){
+        this.numCollaboratori = numCollaboratori;
+        this.stato = stato;
+        this.nome = nome;
+    }
         
-  
-    
+    public String getNome(){
+        return nome;
+    }
+    public void setNome(){
+        this.nome=nome;
+    }
+    /* FINE NUOVA AGGIUNTA*/
     public int getId(){
         return id;
     }

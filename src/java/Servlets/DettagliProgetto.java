@@ -83,8 +83,27 @@ public class DettagliProgetto extends HttpServlet {
                 System.out.println("Non esiste la sessione mentre si è in dettagliProgetto");
                 id = 0;
                 data.put("id", id);
-            }     
-            /* CHIAMATE AL DATABASE ********************************************/
+            }  
+            ArrayList<TaskProgetto> taskProg=null;
+                try{
+                    Databasee.connect();
+                    ResultSet co = Databasee.selectTaskProg(num);
+                    taskProg = new ArrayList<TaskProgetto>();
+                    while (co.next()){
+                        int numeroColl = co.getInt("numcollaboratori");
+                        boolean stato = co.getBoolean("stato");
+                        String nome = co.getString("nome");
+                        TaskProgetto lista = new TaskProgetto(numeroColl, stato, nome);
+                        taskProg.add(lista);
+                    }
+
+                }catch(NamingException e) {
+                }catch (SQLException e) {
+                }catch (Exception ex) {
+                        Logger.getLogger(TaskProgetto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                data.put("taskprogetto", taskProg);
+            /* 
             ArrayList<TaskProgetto> taskProg = null;
             ArrayList<Task> task = null;
             List<Integer> listaIdTask = new ArrayList<Integer>();
@@ -115,16 +134,18 @@ public class DettagliProgetto extends HttpServlet {
                 
                 try{
                     Databasee.connect();
-                    //ResultSet co = Databasee.selectRecord("task", "id=");
+                    task = new ArrayList<Task>();
                     System.out.println("Dettagli dei task");
-                    
+                    //da cambiare
                     for(Integer i:listaIdTask){
+                        System.out.println("ECCOLO!!");
                         ResultSet co = Databasee.selectRecord("task","id="+i);
                         //Prendo i risultati che ho ricevuto nella chiamata:
                         String nome = co.getString("nome");
                         Task lista = new Task(i, nome); // i è l'id del task
                         task.add(lista);
-                        
+                        System.out.println("!!!! >  " + lista);
+                        System.out.println("!!!! >  " + task);
                     }
                     Databasee.close();
                 }catch (NamingException e){
@@ -133,7 +154,9 @@ public class DettagliProgetto extends HttpServlet {
                         Logger.getLogger(Task.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 data.put("task",task);
-            /*FINE CHIAMATE *********************************************************************************/
+                System.out.println("visualizzazione DATA");
+                System.out.println(data);
+            */
 
             FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
     }
