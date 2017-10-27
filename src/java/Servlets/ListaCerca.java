@@ -68,31 +68,58 @@ Map<String, Object> data = new HashMap<String, Object>();
                 id = 0; 
             }     
             data.put("id", id);
-            
-            ArrayList<Progetto> prog = null;
-            try{//Prova la connessione al Database
-                Databasee.connect();
-                ResultSet co = Databasee.searchProgetti(ricercaStr);
-                prog = new ArrayList<Progetto>();
-                while (co.next()) {
-                        String titolo = co.getString("titolo");
-                        String descrizione = co.getString("descrizione");
-                        //int codice= co.getInt("id");
-                        int num = co.getInt("id");
-                        Progetto lista = new Progetto(titolo, descrizione, num);
-                        prog.add(lista);            
+            if(ricercaStr != ""){
+                ArrayList<Progetto> prog = null;
+                int numProgetti=0;
+                int numSviluppatori=0;
+                data.put("stringa",ricercaStr);
+                try{//Prova la connessione al Database
+                    Databasee.connect();
+                    ResultSet co = Databasee.searchProgetti(ricercaStr);
+                    prog = new ArrayList<Progetto>();
+                    while (co.next()) {
+                            String titolo = co.getString("titolo");
+                            String descrizione = co.getString("descrizione");
+                            Progetto lista = new Progetto(titolo, descrizione);
+                            prog.add(lista);            
+                            numProgetti +=1;
+                    }
+                    Databasee.close();
+                }catch(NamingException e) {
+                }catch (SQLException e) {
+                }catch (Exception ex) {
+                        Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Databasee.close();
-            }catch(NamingException e) {
-            }catch (SQLException e) {
-            }catch (Exception ex) {
-                    Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
+                data.put("progetti", prog);
+                data.put("numProgetti",numProgetti);
+                System.out.println("ECCO PROVA PROG, COSA C'E' ??");
+                System.out.println(prog);
+                ArrayList<Sviluppatore> svilup = null;
+                //manca  la parte dello sviluppatore!
+                try{
+                    Databasee.connect();
+                    ResultSet co = Databasee.searchSviluppatori(ricercaStr);
+                    svilup = new ArrayList<Sviluppatore>();
+                    while(co.next()){
+                        String nome = co.getString("nome");
+                        String cognome = co.getString("cognome");
+                        Sviluppatore lista = new Sviluppatore(nome,cognome);
+                        svilup.add(lista);
+                        numSviluppatori +=1;
+                    }
+                    Databasee.close();
+                }catch(NamingException e) {
+                }catch (SQLException e) {
+                }catch (Exception ex) {
+                        Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                data.put("sviluppatori",svilup);
+                data.put("numSviluppatori", numSviluppatori);
+                System.out.println("CHECK DI DATA!");
+                System.out.println(data);
+            }else{
+                
             }
-            data.put("progetti", prog);
-            
-            ArrayList<Sviluppatore> svilup = null;
-            //manca  la parte dello sviluppatore!
-            
             FreeMarker.process("listaCerca.html", data, response, getServletContext());
     }
 

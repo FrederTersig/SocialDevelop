@@ -34,7 +34,12 @@ public class Sviluppatore {
         this.idImmagine=idImmagine;
     }
     
-       public Sviluppatore() {
+    public Sviluppatore(String nome, String cognome){
+        this.nome = nome;
+        this.cognome = cognome;
+    }
+    
+    public Sviluppatore() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

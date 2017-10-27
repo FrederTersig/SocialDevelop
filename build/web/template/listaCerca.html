@@ -7,72 +7,90 @@
 
     <!-- Ricerca Progetti -->
     <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-7">13 Progetti trovati per "Stringa"</h1>       
-      </div>
+        <div class="container">
+            <#if numProgetti ==0> 
+                <h1 class="display-5">Nessun Progetto trovato per "${stringa}"</h1>
+            <#elseif numProgetti ==1>
+                <h1 class="display-5">1 Progetto trovato per "${stringa}"</h1>
+            <#else>
+                <h1 class="display-5">${numProgetti} Progetti trovati per "${stringa}"</h1>
+            </#if>
+        </div>
     </div>
     <!-- Risultati Progetti -->
     <div class="container">
-        <!-- Container delle cards -->
-        <div class="card-deck">
-            <!-- Inizio "Mazzo" di carte -->
-            <div class="card"> <!-- card-img-top 277x180 -->
-                <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">Nome Progetto 1</h4>
-                    <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">Nome Progetto 2</h4>
-                    <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-            </div>       
-        </div><!-- fine carta --> 
-        <br>  
+            <div class="list-group my-5">
+                <form method="post" role="form">
+                    <#if progetti ??>
+                        <#list progetti as Progetto>
+                        <div class="list-group-item container">
+                            <div class="row">
+
+                                <p class="text-center col-2 my-auto">${Progetto.titolo}</p>
+                                <p class="col-7 my-auto" style="overflow: hidden; text-overflow: ellipsis;">${Progetto.descrizione}</p>
+                                <p class="col-2 my-auto" style="color: green;">Data Creazione</p>
+                                
+                                
+                                <button type="submit" class="btn btn-outline-primary col-1" name="dettagli" value=""> Entra -> </button>
+                                <!-- VA MESSO ANCHE l'ID COSI DA POTER ENTRARE NEL DETTAGLIO PROGETTO!!! ${Progetto.id} -->
+                                <input type="hidden" name="value"  value="d_progetto">
+                            </div>
+
+                        </div>
+                        <!--Collaboratori/Limite Massimo: Numero di collaboratori presenti / Numero massimo di collaboratori disponibili. Potrebbe essere 
+                        sostituito dalla scritta "full" in rosso quando il numero dei collaboratori è uguale al limite massimo. La scritta poi è in verde se
+                        il numero dei collaboratori è minore del limite massimo-->
+
+                        </#list>
+                    <#else>
+                    <h4> Nessun progetto trovato! </h4>
+                    </#if>
+                </form>
+            </div> 
     </div><!-- fine container -->
     
     <!-- Ricerca Sviluppatori -->
     <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-7">13 Sviluppatori trovati per "Stringa"</h1>       
-      </div>
+        <div class="container">
+            <#if numSviluppatori ==0> 
+                <h1 class="display-5">Nessuno Sviluppatore trovato per "${stringa}"</h1>
+            <#elseif numSviluppatori ==1>
+                <h1 class="display-5">1 Sviluppatore trovato per "${stringa}"</h1>
+            <#else>
+                <h1 class="display-5">${numSviluppatori} Sviluppatore trovati per "${stringa}"</h1>
+            </#if>
+        </div>
     </div>
     
     <!-- Risultati Sviluppatori -->
     <div class="container">
-        <!-- Container delle cards -->
-        <div class="card-deck">
-            <!-- Inizio "Mazzo" di carte -->
-            <div class="card"> <!-- card-img-top 277x180 -->
-                <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">Nome Progetto 1</h4>
-                    <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="./img/anteprima.png" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">Nome Progetto 2</h4>
-                    <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
-            </div>       
-        </div><!-- fine carta --> 
+            <div class="list-group my-5">
+                <form method="post" role="form">
+                    <#if sviluppatori ??>
+                        <#list sviluppatori as Sviluppatore>
+                        <div class="list-group-item row">
+                            <div class="col-4 d-inline-block">
+                                <p class="text-left">${Sviluppatore.nome}, ${Sviluppatore.cognome}</p>
+                            </div>
+                            <div class="col-6 d-inline-block">
+
+                                <button type="submit" class="btn btn-outline-primary" name="dettagli" value=""> Visualizza Profilo -> </button>
+                                <input type="hidden" name="value"  value="d_sviluppatore">
+                            </div>
+                            
+
+                        </div>
+                        <!--Collaboratori/Limite Massimo: Numero di collaboratori presenti / Numero massimo di collaboratori disponibili. Potrebbe essere 
+                        sostituito dalla scritta "full" in rosso quando il numero dei collaboratori è uguale al limite massimo. La scritta poi è in verde se
+                        il numero dei collaboratori è minore del limite massimo-->
+
+                        </#list>
+                    <#else>
+                    <h4> Nessun progetto trovato! </h4>
+                    </#if>
+                </form>
+            </div> 
+
         <br>  
     </div><!-- fine container -->
 
