@@ -193,12 +193,22 @@ ArrayList<Task> compiti = null;
                    response.sendRedirect("index");
                }
                
+               
                if(azione.equals("invita")){
                    int idprog=(int) a.getAttribute("idprogetto");
         System.out.println(idprog);
-         System.out.println(idtp);
+         System.out.println(idtp); 
          ResultSet svilup=Databasee.selectSvilup(" progetto.id=" + idprog + " AND progetto.id=taskprogetto.idprogetto AND taskprogetto.id=" + idtp + " AND taskprogetto.id=skillscelte.idtaskprogetto AND skillscelte.id=" + skill[i] + " AND skillscelte.idskillperognitask=skillperognitask.id AND skillperognitask.idskill=skill.id AND skill.id=livello.idskill AND livello.preparazione>=skillscelte.livellomin AND sviluppatore.id=livello.idsviluppatore");
-                     FreeMarker.process("invita.html", data, response, getServletContext());
+         ArrayList<Sviluppatore> svi= new ArrayList<Sviluppatore>(); 
+         while(svilup.next()){
+             String nomesvi=svilup.getString("nome");
+             String cognomesvi=svilup.getString("cognome");
+             Sviluppatore c=new Sviluppatore("nomesvi","cognomesvi");
+             svi.add(c);
+           
+         }
+         data.put("nomianti",svi);
+         FreeMarker.process("invita.html", data, response, getServletContext());
                }
             } catch (SQLException ex) {
               Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);

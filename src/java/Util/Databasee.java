@@ -120,7 +120,7 @@ public class Databasee {
         
         
              public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
-        String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";
+        String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome, sviluppatore.cognome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";
         return Databasee.executeQuery(query);
        
      }

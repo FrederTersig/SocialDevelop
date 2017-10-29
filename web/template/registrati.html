@@ -29,7 +29,7 @@
  <legend>Linguaggi conosciuti</legend><br>
  <#if nomeskill ??>
                     <#list nomeskill as Nomeskill>
-                    <input type="checkbox" name="skill" value="${Nomeskill.id}"/> ${Nomeskill.nome}<input type="number" name="punteggio">
+                    <input type="checkbox" name="skill" value="${Nomeskill.id}" onclick="unlock(this, '${Nomeskill.id}')"/> ${Nomeskill.nome}<input type="number" name="punteggio" id="${Nomeskill.id}" disabled="disabled">
  <br />
  </#list>
                        </#if> 
@@ -38,4 +38,6 @@
         <button type="submit" class="btn btn-primary">INVIA</button>
     </form>
 </div>
+
+
   <#include "footer.html">
