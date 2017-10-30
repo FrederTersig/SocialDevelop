@@ -117,9 +117,25 @@ public class Databasee {
             return Databasee.executeQuery(query);
         }
         
+        //dato un idprogetto, ci restituisce TUTTI i commenti.
+        public static ResultSet getCommentiProgetto(int idprogetto) throws SQLException{
+            String query="SELECT commenti.testo, commenti.visibilità, sviluppatore.nome, sviluppatore.cognome  FROM commenti, progetto, collaboratore, sviluppatore WHERE commenti.idprogetto = progetto.id AND progetto.id = 1 AND commenti.idcollaboratore = collaboratore.id AND collaboratore.idsviluppatore=sviluppatore.id";
+            return Databasee.executeQuery(query);
+        }
+        
+        /*Serve query per idVisibilità -> Quando un guest user si connette, se il determinato commento ha visibilità 0 allora non devo mostrarlo. Se invece l'utente è autenticato/loggato, allora
+        bisogna vedere se l'id di quell'utente risulta tra gli id degli utenti COLLABORATORI di quel progetto!*/
+        
+        //dato un idprogetto e un idsviluppatore, ci ritorna due risultati di cui uno è true SE lo sviluppatore fa parte di quel progetto.
+        //questo mi serve per vedere se quel determinato sviluppatore è un collaboratore di un progetto E quindi s e può vedere tutti i commenti (anche quelli con visibilità=0).
+        //Basta un condizionale per vedere se ritorna un solo false significa che NON fa parte del progetto.
+        public static ResultSet checkCollaboratore(int idprogetto, int idsviluppatore) throws SQLException{
+            String query="SELECT DISTINCT IF (" + idprogetto +" = taskprogetto.idprogetto AND collaboratore.idtaskprogetto = taskprogetto.id AND collaboratore.idsviluppatore =  "+ idsviluppatore +" , 'true', 'false') FROM progetto, taskprogetto, collaboratore";
+            return Databasee.executeQuery(query);
+        }
         
         
-             public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
+        public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
         String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome, sviluppatore.cognome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";
         return Databasee.executeQuery(query);
        
