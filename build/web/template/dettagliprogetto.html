@@ -46,29 +46,38 @@
         </div>
         <!-- SEZIONE DEI COMMENTI DEL PROGETTO! -->
         
+            
+            
+        
         <div class="container">
             <!-- Container dei messaggi presenti nel task -->
             <div class="d-flex flex-column">
+                
                 <div class="p-2">
-                    <div class="row" style="background-color:grey;">
-                        <div class="card border-dark" style="max-width:10rem;">
-                            <img class="card-img-top" src="./img/utenteA.png" alt="fotoUtente"/>
-                            <div class="card-body">
-                                <div class="card-title">
-                                  NicknameSvilup
-                                </div>
-
-                            </div>
-                            <div class="card-footer">
-                              <small class="text-muted">10/08/2017 10:53</small>
-                            </div>
-                        </div>
-                    <!-- Fine Carta -->
-                        <div class="col-10 text-left mt-3 ">
-                            <p>Questa è una prova del messaggio presente nel task da parte di uno dei collaboratori, questo messaggio può essere privato (visibile SOLO a chi collabora per questo task) o semplicemente pubblico, accessibile da ogni utente esterno</p>
-                        </div> 
-                    </div>
-                    <hr><!-- Barra di separazione tra risposte -->
+                    <!-- INIZIO COMMENTO -->
+                    <#if commenti ??>
+                        <#list commenti as Commenti>
+                            <#if collabora != false || Commenti.getVisibilita() != false>
+                                    <div class="row" style="background-color:grey;">
+                                        <div class="card border-dark" style="max-width:10rem;">
+                                            <img class="card-img-top" src="./img/utenteA.png" alt="fotoUtente"/>
+                                            <div class="card-body">
+                                                <div class="card-title">
+                                                    ${Commenti.getCreatoreNome()}<br>
+                                                    ${Commenti.getCreatoreCognome()}<br>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    <!-- Fine Carta -->
+                                        <div class="col-10 text-left mt-3 ">
+                                            <p>${Commenti.getTesto()}</p>
+                                        </div> 
+                                    </div>
+                                    <!-- FINE DEL COMMENTO!! -->
+                                    <hr><!-- Barra di separazione tra risposte -->
+                            </#if>
+                        </#list>
+                    </#if>
                 </div><!-- FINE del primo FLEX (div con classe p-2) -->
                 
                 <!-- Inizia la parte della creazione della risposta/commento -->

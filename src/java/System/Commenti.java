@@ -35,12 +35,25 @@ public class Commenti {
         this.visibilita=visib;
     }
     
+    public String getCreatoreNome(){
+        return nomeSvil;
+    }
+    public String getCreatoreCognome(){
+        return cognomeSvil;
+    }
+    public void setCreatoreNome(String nome){
+        this.nomeSvil = nome;
+    }
+    public void setCreatoreCognome(String cognome){
+        this.cognomeSvil = cognome;
+    }
+    
     
     public int getId(){
         return id;
     }
     
-      public void setTesto(String testo){
+    public void setTesto(String testo){
         this.testo=testo;
     }
     

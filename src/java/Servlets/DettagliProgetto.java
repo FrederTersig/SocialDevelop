@@ -6,6 +6,7 @@
 package Servlets;
 
 import System.Admin;
+import System.Commenti;
 import System.Progetto;
 import System.Sviluppatore;
 import System.TaskProgetto;
@@ -124,9 +125,8 @@ public class DettagliProgetto extends HttpServlet {
 
             System.out.println(data);
             System.out.println("---------");
-            
+            // Parte dove si recuperano le informazioni del progetto dal database
             ArrayList<Progetto> progettoDet =null;
-            
                 try{
                     progettoDet = new ArrayList<Progetto>();
                     Databasee.connect();
@@ -146,9 +146,8 @@ public class DettagliProgetto extends HttpServlet {
                         Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             data.put("progettodettaglio", progettoDet);
-            System.out.println("Check DB");
-            System.out.println(data);
             
+            //Chiamata per prendere informazioni dei task presenti nel progetto
             ArrayList<TaskProgetto> taskProg=null;
                 try{
                     Databasee.connect();
@@ -169,6 +168,30 @@ public class DettagliProgetto extends HttpServlet {
                         Logger.getLogger(TaskProgetto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             data.put("taskprogetto", taskProg);
+            
+            ArrayList<Commenti> listaCommenti=null;
+                try{
+                    Databasee.connect();
+                    ResultSet co = Databasee.getCommentiProgetto(num);
+                    listaCommenti = new ArrayList<Commenti>();
+                    while(co.next()) {
+                        String testo = co.getString("testo");
+                        Boolean visibil = co.getBoolean("visibilità");
+                        String nome = co.getString("nome");
+                        String cognome = co.getString("cognome");
+                        Commenti lista = new Commenti(testo,nome,cognome,visibil);
+                        listaCommenti.add(lista);
+                    }
+                    Databasee.close();
+                    
+                }catch(NamingException e) {
+                }catch (SQLException e) {
+                }catch (Exception ex) {
+                        Logger.getLogger(Commenti.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            data.put("commenti", listaCommenti);
+            System.out.println("Check SESSIONE: COSA ABBIAMO??");
+            System.out.println(data);
             FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
     }
 
