@@ -25,9 +25,7 @@ body {
 }
 
 /*footer*/
-.decorazione{
-    background-color: green;
-}
+
 
 footer {
 	margin-bottom: 0;
@@ -37,4 +35,23 @@ footer {
 
 .contenitore{
     margin-top: 20px;
+}
+
+/*registrati*/
+
+.registrati{
+    margin-top: 64px;
+    margin-left: 183px;
+    margin-roght: 183px;
+}
+
+fieldset{
+ 
+    overflow: auto;
+    height:300px;
+   margin:0px 482px;
+}
+
+.dimen{
+    width:50px;
 }
