@@ -70,9 +70,11 @@ public class DettagliProgetto extends HttpServlet {
             int num = (int) request.getSession(true).getAttribute("idprogetto");
             data.put("idprogetto",num);
             HttpSession s = SecurityLayer.checkSession(request);
-
+            Boolean collabora = false;
+            //COMMENTI = testo, nome, cognome, visibilità(boolean)
+            
             if(s != null){//condizione per vedere se la sessione esiste. 
-                System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
+                System.out.println("S DIVERSA DA NULL DENTRO DETTAGLIPROGETTO!");
                 if(s.getAttribute("id") != null){
                     id = (int) s.getAttribute("id");
                 }else{ 
@@ -80,13 +82,46 @@ public class DettagliProgetto extends HttpServlet {
                 }
                 System.out.println("ID ?? > " + id );
                 data.put("id", id);    
+                
+                //SE esiste lo userid nella sessione, vedi se fa parte del progetto. 
+                //Registra in data la variabile booleana "Collabora" che sarà false se non è connesso o se non è tra i collaboratori del progetto
+                //True altrimenti
+                System.out.println("Check collaboratore per progetto con id -> " + num);
+                
+                if(s.getAttribute("userid") != null){
+                    int svil = (int) s.getAttribute("userid");
+                    try{
+                        Databasee.connect();
+                        System.out.println("APPENA PRIMA DI RESULTSET PER CHECKCOLLABORATORE!");
+                        ResultSet ko = Databasee.checkCollaboratore(num, svil);
+                        System.out.println("Risultato :::: ");
+                        //System.out.println(ko.absolute(0));
+                        //System.out.println(ko.absolute(1));
+                        System.out.println(ko.absolute(2));
+                        collabora = ko.absolute(2);
+                        System.out.println("UGUALI? >> "+ ko.absolute(2) + " " + collabora );
+                        System.out.println("/////////////////////////");
+                        //int prova = ko.getInt("visibilità");
+                        
+                        Databasee.close();
+                    }catch(NamingException e) {
+                    }catch (SQLException e) {
+                    }catch (Exception ex) {
+                            Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    System.out.println("Non esiste userid");
+                    
+                }
             }else{
                 System.out.println("Non esiste la sessione mentre si è in dettagliProgetto");
                 id = 0;
                 data.put("id", id);
             }  
+            data.put("collabora", collabora);
             //ArrayList<Progetto> prog=null;
             System.out.println("COMINCIO LA CONNESSIONE");
+
             System.out.println(data);
             System.out.println("---------");
             

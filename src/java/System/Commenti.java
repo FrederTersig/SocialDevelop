@@ -16,6 +16,8 @@ public class Commenti {
     private String tipo;
     private int idCollaboratore;
     private int idProgetto;
+    private String nomeSvil;
+    private String cognomeSvil;
     
     public Commenti(int id, String testo, boolean visibilita, String tipo, int idCollaboratore, int idProgetto){
         this.id=id;
@@ -26,6 +28,12 @@ public class Commenti {
         this.idProgetto=idProgetto;
        
      }
+    public Commenti(String testo, String nome, String cognome, boolean visib){ // MANCA IMMAGINE!!!!!!
+        this.testo=testo;
+        this.nomeSvil=nome;
+        this.cognomeSvil=cognome;
+        this.visibilita=visib;
+    }
     
     
     public int getId(){

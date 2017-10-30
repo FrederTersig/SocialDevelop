@@ -130,7 +130,8 @@ public class Databasee {
         //questo mi serve per vedere se quel determinato sviluppatore è un collaboratore di un progetto E quindi s e può vedere tutti i commenti (anche quelli con visibilità=0).
         //Basta un condizionale per vedere se ritorna un solo false significa che NON fa parte del progetto.
         public static ResultSet checkCollaboratore(int idprogetto, int idsviluppatore) throws SQLException{
-            String query="SELECT DISTINCT IF (" + idprogetto +" = taskprogetto.idprogetto AND collaboratore.idtaskprogetto = taskprogetto.id AND collaboratore.idsviluppatore =  "+ idsviluppatore +" , 'true', 'false') FROM progetto, taskprogetto, collaboratore";
+            //SELECT DISTINCT IF (1 = taskprogetto.idprogetto AND collaboratore.idtaskprogetto = taskprogetto.id AND collaboratore.idsviluppatore =  11 , 'true', 'false') FROM progetto, taskprogetto, collaboratore
+            String query="SELECT DISTINCT IF (" + idprogetto +" = taskprogetto.idprogetto AND collaboratore.idtaskprogetto = taskprogetto.id AND collaboratore.idsviluppatore = "+ idsviluppatore +" , 'true', 'false') FROM progetto, taskprogetto, collaboratore";
             return Databasee.executeQuery(query);
         }
         
