@@ -141,12 +141,17 @@ public class Databasee {
             String query="SELECT sviluppatore.nome, sviluppatore.cognome FROM progetto, taskprogetto, skillscelte, sviluppatore, skillperognitask, skill, livello WHERE progetto.id = "+ idprogetto +" AND taskprogetto.idprogetto = progetto.id AND skillscelte.idtaskprogetto = taskprogetto.id  AND (skillperognitask.id = skillscelte.idskillperognitask AND skill.id = skillperognitask.idskill) AND (livello.idskill = skill.id AND sviluppatore.id = livello.idsviluppatore) AND sviluppatore.id NOT IN( SELECT sviluppatore.id FROM progetto, taskprogetto, collaboratore, sviluppatore WHERE progetto.id="+ idprogetto +" AND taskprogetto.idprogetto = progetto.id AND collaboratore.idtaskprogetto = taskprogetto.id AND sviluppatore.id = collaboratore.idsviluppatore) AND sviluppatore.id NOT IN( SELECT sviluppatore.id FROM progetto, coordinatore, sviluppatore WHERE progetto.id = " + idprogetto + " AND progetto.idcoordinatore = coordinatore.id AND coordinatore.id = sviluppatore.id)";
             return Databasee.executeQuery(query);
         }
-        
-        public static ResultSet getInfoProfilo(int idprofilo) throws SQLException{
-            String query="SELECT sviluppatore.nome, sviluppatore.cognome, sviluppatore.data, sviluppatore.email, sviluppatore.telefono, sviluppatore.indirizzo, skill.nome, livello.preparazione FROM sviluppatore, livello, skill WHERE sviluppatore.id = " + idprofilo +" AND livello.idsviluppatore = sviluppatore.id AND skill.id = livello.idskill";
+        //Query che dato un ID sviluppatore ci dà le informazioni principali TRANNE IMMAGINE PROFILO E CURRICULUM DA METTERE (solo aggiunta di due nomi nella query)!
+        public static ResultSet getInfoProfilo(int idsviluppatore) throws SQLException{
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome, sviluppatore.data, sviluppatore.email, sviluppatore.telefono, sviluppatore.indirizzo, skill.nome, livello.preparazione FROM sviluppatore, livello, skill WHERE sviluppatore.id = " + idsviluppatore +" AND livello.idsviluppatore = sviluppatore.id AND skill.id = livello.idskill";
             return Databasee.executeQuery(query);
         }
-        
+        //Query che dato un ID sviluppatore ci dà le informazioni inerenti alle Valutazioni che ha ricevuto, nome del coordinatore che gliel'ha date, titolo del progetto e descrizione della task del progetto.
+        public static ResultSet getValutazioniProf(int idsviluppatore) throws SQLException{
+            String query="SELECT valutazione.punteggio, sviluppatore.nome, sviluppatore.cognome, progetto.titolo, taskprogetto.descrizione FROM collaboratore,taskprogetto, valutazione, coordinatore, sviluppatore, progetto WHERE collaboratore.idsviluppatore = " + idsviluppatore +" AND valutazione.idcollaboratore = collaboratore.id AND collaboratore.idtaskprogetto = taskprogetto.id AND coordinatore.id = valutazione.idcoordinatore AND (sviluppatore.id = coordinatore.idsviluppatore AND progetto.idcoordinatore = coordinatore.id)";
+            return Databasee.executeQuery(query);
+            
+        }
         
         public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
         String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome, sviluppatore.cognome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";
