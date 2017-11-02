@@ -142,6 +142,10 @@ public class Databasee {
             return Databasee.executeQuery(query);
         }
         
+        public static ResultSet getInfoProfilo(int idprofilo) throws SQLException{
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome, sviluppatore.data, sviluppatore.email, sviluppatore.telefono, sviluppatore.indirizzo, skill.nome, livello.preparazione FROM sviluppatore, livello, skill WHERE sviluppatore.id = " + idprofilo +" AND livello.idsviluppatore = sviluppatore.id AND skill.id = livello.idskill";
+            return Databasee.executeQuery(query);
+        }
         
         
         public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
