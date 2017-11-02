@@ -70,36 +70,45 @@ public class Task2 extends HttpServlet {
                 data.put("id", id);
             } 
             
-                int idt=Integer.parseInt(request.getParameter("idt"));
-        System.out.println(idt + "SEEEEEEEE");
-        ResultSet dett=Databasee.selectRecord("taskprogetto,task,progetto", "taskprogetto.id=" + idt + " AND taskprogetto.idtask=task.id AND taskprogetto.idprogetto=progetto.id");
-        ArrayList<TaskProgetto> t=new ArrayList<TaskProgetto>();  
-        ArrayList<Progetto> p=new ArrayList<Progetto>(); 
-        ArrayList<Task> ta=new ArrayList<Task>(); 
-        
-        while(dett.next()){
-               String descrizione=dett.getString("descrizione");
-               int numcol=dett.getInt("numcollaboratori");
-               String nomprog=dett.getString("progetto.titolo");
-               String nomtask=dett.getString("task.nome");
-               TaskProgetto tas=new TaskProgetto(numcol,descrizione);
-               Progetto np=new Progetto(nomprog);
-               Task nt=new Task(nomtask);
-               t.add(tas);
-               p.add(np);
-               ta.add(nt);
-           } 
-        Integer n=null;
-        ResultSet part=Databasee.contCollaboratori(idt);
-        while(part.next()){
-            int collat=part.getInt("num");
-            n=new Integer(collat);
-        }
-        data.put("taskprogetto", t);
-        data.put("nomeprogetto", p);
-        data.put("nometask", ta);
-        data.put("numcol", n);
-            FreeMarker.process("task.html", data, response, getServletContext());
+            int idt=Integer.parseInt(request.getParameter("idt"));
+            System.out.println(idt + "SEEEEEEEE");
+            try{
+                Databasee.connect();
+                ResultSet dett=Databasee.selectRecord("taskprogetto,task,progetto", "taskprogetto.id=" + idt + " AND taskprogetto.idtask=task.id AND taskprogetto.idprogetto=progetto.id");
+                ArrayList<TaskProgetto> t=new ArrayList<TaskProgetto>();  
+                ArrayList<Progetto> p=new ArrayList<Progetto>(); 
+                ArrayList<Task> ta=new ArrayList<Task>(); 
+
+                while(dett.next()){
+                       String descrizione=dett.getString("descrizione");
+                       int numcol=dett.getInt("numcollaboratori");
+                       String nomprog=dett.getString("progetto.titolo");
+                       String nomtask=dett.getString("task.nome");
+                       TaskProgetto tas=new TaskProgetto(numcol,descrizione);
+                       Progetto np=new Progetto(nomprog);
+                       Task nt=new Task(nomtask);
+                       t.add(tas);
+                       p.add(np);
+                       ta.add(nt);
+                   } 
+                Integer n=null;
+                ResultSet part=Databasee.contCollaboratori(idt);
+                while(part.next()){
+                    int collat=part.getInt("num");
+                    n=new Integer(collat);
+                }
+                Databasee.close();
+                data.put("taskprogetto", t);
+                data.put("nomeprogetto", p);
+                data.put("nometask", ta);
+                data.put("numcol", n);
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                        Logger.getLogger(Task2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+                FreeMarker.process("task.html", data, response, getServletContext());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
