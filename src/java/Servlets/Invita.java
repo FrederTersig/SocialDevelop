@@ -5,11 +5,20 @@
  */
 package Servlets;
 
+import Util.Databasee;
+import System.Task;
+import Util.FreeMarker;
 import Util.SecurityLayer;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -78,8 +87,120 @@ public class Invita extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession a = SecurityLayer.checkSession(request);
-        
-        
+        String azione = request.getParameter("ancora");
+               System.out.println(azione);
+               if(azione.equals("inv")){
+                  try {
+                      Databasee.connect();
+                      String[] idsv =request.getParameterValues("idsv");
+                      int[] ids=new int[idsv.length];
+                      for(int i=0; i<idsv.length; i++){
+                          ids[i]=Integer.parseInt(idsv[i]);
+                          System.out.println(ids[i]);
+                      }
+                      int idco=(int) a.getAttribute("idcoor");
+                      
+                      int idta=(int) a.getAttribute("idtaskprogetto");
+                      Map<String, Object> map = new HashMap<String, Object>();
+                      map.put("idcoordinatore", idco);
+                      map.put("idtaskprogetto", idta);
+                      
+                      Calendar c = Calendar.getInstance();
+                      
+                      int year=c.get(Calendar.YEAR);
+                      int month= c.get(Calendar.MONTH)+1;
+                      int day=c.get(Calendar.DAY_OF_MONTH);
+                      String today=year + "/" + month + "/" + day;
+                      map.put("datacreazione", today);
+                      map.put("tipo",0);
+                      
+                      for(int i=0; i<ids.length; i++){
+                          ids[i]=Integer.parseInt(idsv[i]);
+                          map.put("idsviluppatore", ids[i]);
+                          try {
+                              Databasee.insertRecord("richieste", map);
+                             
+                          } catch (SQLException ex) {
+                              Logger.getLogger(Invita.class.getName()).log(Level.SEVERE, null, ex);
+                          }
+                          System.out.println(ids[i]);
+                      }
+                       Databasee.close();
+                      ArrayList<Task> compiti = null;
+                      
+                      
+                      try {
+                          Databasee.connect();
+                      } catch (Exception ex) {
+                          Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+                      ResultSet task= Databasee.selectTask();
+                      
+                      compiti = new ArrayList<Task>();
+                      try {
+                          while (task.next()) {
+                              String tas = task.getString("nome");
+                              int idt= task.getInt("id");
+                              Task lista = new Task(idt,tas);
+                              compiti.add(lista);
+                          }
+                      } catch (SQLException ex) {
+                          Logger.getLogger(Invita.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+                      
+                      Databasee.close();
+                      data.put("task", compiti);
+                      FreeMarker.process("taskskillprogetto.html", data, response, getServletContext());
+                      
+                  } catch (SQLException ex) {
+                      Logger.getLogger(Invita.class.getName()).log(Level.SEVERE, null, ex);
+                  } catch (Exception ex) {
+                Logger.getLogger(Invita.class.getName()).log(Level.SEVERE, null, ex);
+            }
+               
+               } 
+               if(azione.equals("fine")){
+                   response.sendRedirect("index");
+               }
+               
+               
+                  if(azione.equals("ind")){
+                      try {
+                          ArrayList<Task> compiti = null;
+                          
+                          
+                          try {
+                              Databasee.connect();
+                          } catch (Exception ex) {
+                              Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
+                          }
+                          ResultSet task= Databasee.selectTask();
+                          
+                          compiti = new ArrayList<Task>();
+                          try {
+                              while (task.next()) {
+                                  String tas = task.getString("nome");
+                                  int idt= task.getInt("id");
+                                  Task lista = new Task(idt,tas);
+                                  compiti.add(lista);
+                              }
+                          } catch (SQLException ex) {
+                              Logger.getLogger(Invita.class.getName()).log(Level.SEVERE, null, ex);
+                          }
+                          
+                          Databasee.close();
+                          data.put("task", compiti);
+                          FreeMarker.process("taskskillprogetto.html", data, response, getServletContext());
+                          
+                          
+                      } catch (SQLException ex) {
+                          Logger.getLogger(Invita.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+                      
+                
+               }
+               
+        //Databasee.insertRecord("richieste", map);
         processRequest(request, response);
     }
 

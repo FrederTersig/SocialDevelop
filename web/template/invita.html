@@ -2,27 +2,33 @@
 
 <#include "logHeader.html">
 
-<div class="container">
-        <!-- Container delle cards -->
-        <div class="card-deck">
-            <#if progetti ??>
-            <#list progetti as Progetto>
-            <!-- Inizio "Mazzo" di carte -->
-                <div class="card"> <!-- card-img-top 277x180 -->
-                    <img class="card-img-top" src="template/img/anteprima.png" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">${Progetto.titolo}</h4>
-                      <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </#list>
-            </#if>
-        <!-- fine carta --> 
-        </div>
+ <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-7">Lista svilupaptori</h1>
+        <p class="lead">Ecco gli sviluppatori che fanno al caso tuo.</p>
+      </div>
     </div>
 
+    <div class="container">
+         
+        <form method="POST" action="invita">
+  <fieldset>
+ <legend>Linguaggi conosciuti</legend><br>
+ <#if nominati ??>
+                    <#list nominati as Nominati>
+                    <div class="row">
+                        
+                        <div class="col-md-6"><input type="checkbox" name="idsv" value="${Nominati.id}" /> ${Nominati.nome}&nbsp;${Nominati.cognome}</div><div class="col-md-6 allineamento"></div>
+                    </div>
+                        <br />
+ </#list>
+                       </#if> 
+ 
+</fieldset><br>
+        <button type="submit" name="ancora" value="inv" class="btn btn-primary">INVITA</button>
+        <button type="submit" name="ancora" value="fine" class="btn btn-primary">FINE</button>
+        <button type="submit" name="ancora" value="ind" class="btn btn-primary">TORNA AD AGGIUNGERE TASK</button>
+        </form>
+    </div>
 
 <#include "footer.html">

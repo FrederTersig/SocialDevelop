@@ -144,6 +144,11 @@ public class TaskSkillProgetto extends HttpServlet {
             map.put("numcollaboratori", membri);
             map.put("stato", 0);
             Databasee.insertRecord("taskprogetto", map);
+            ResultSet utask=Databasee.selectMaxRecord("taskprogetto", "taskprogetto.idprogetto="+ a.getAttribute("idprogetto"));
+            while (utask.next()){
+                int idt=utask.getInt("id");
+                a.setAttribute("idtaskprogetto",idt);
+            }
             ResultSet tasksel=Databasee.selectRecord("task", "task.id=" + idtask);
             ArrayList<Task> Task = new ArrayList<Task>();
             while(tasksel.next()){
