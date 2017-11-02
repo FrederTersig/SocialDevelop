@@ -143,7 +143,7 @@ public class Databasee {
         }
         //Query che dato un ID sviluppatore ci dà le informazioni principali TRANNE IMMAGINE PROFILO E CURRICULUM DA METTERE (solo aggiunta di due nomi nella query)!
         public static ResultSet getInfoProfilo(int idsviluppatore) throws SQLException{
-            String query="SELECT sviluppatore.nome, sviluppatore.cognome, sviluppatore.data, sviluppatore.email, sviluppatore.telefono, sviluppatore.indirizzo AS skillnome FROM sviluppatore WHERE sviluppatore.id = " + idsviluppatore +" ";
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome, sviluppatore.data, sviluppatore.email, sviluppatore.telefono, sviluppatore.indirizzo FROM sviluppatore WHERE sviluppatore.id = " + idsviluppatore +" ";
             return Databasee.executeQuery(query);
         }
         //query per avere la lista di skill di un utente
@@ -156,6 +156,12 @@ public class Databasee {
             String query="SELECT valutazione.punteggio, sviluppatore.nome, sviluppatore.cognome, progetto.titolo, taskprogetto.descrizione FROM collaboratore,taskprogetto, valutazione, coordinatore, sviluppatore, progetto WHERE collaboratore.idsviluppatore = " + idsviluppatore +" AND valutazione.idcollaboratore = collaboratore.id AND collaboratore.idtaskprogetto = taskprogetto.id AND coordinatore.id = valutazione.idcoordinatore AND (sviluppatore.id = coordinatore.idsviluppatore AND progetto.idcoordinatore = coordinatore.id)";
             return Databasee.executeQuery(query);
             
+        }
+        
+        // NUOVA QUERY
+        public static ResultSet getInfoProfilo_B(int idsviluppatore) throws SQLException{
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome, sviluppatore.data, sviluppatore.email, sviluppatore.telefono, sviluppatore.indirizzo AS skillnome FROM sviluppatore WHERE sviluppatore.id = " + idsviluppatore +" ";
+            return Databasee.executeQuery(query);
         }
         
         public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.

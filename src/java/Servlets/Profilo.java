@@ -94,7 +94,7 @@ public class Profilo extends HttpServlet {
             }catch (Exception ex) {
                     Logger.getLogger(Profilo.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+            System.out.println("ARRAY PROFILO??" + detSvilupp);
             data.put("profiloSv", detSvilupp);
             
             ArrayList<Skill> listaSkill = null;

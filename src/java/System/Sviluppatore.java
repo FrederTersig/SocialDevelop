@@ -60,8 +60,7 @@ public class Sviluppatore {
         this.telefono = telefono;
         this.indirizzo = indirizzo;
         this.dataDiNascita = data;
-
-        
+ 
     }
     
     
