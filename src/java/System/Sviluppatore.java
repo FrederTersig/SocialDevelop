@@ -20,7 +20,7 @@ public class Sviluppatore {
     private String indirizzo;
     private String password;
     private int idImmagine;
-    
+
     public Sviluppatore(int id, String nome, String cognome, String dataDiNascita, String email, int telefono, String curriculum, String indirizzo, String password, int idImmagine){
         this.id=id;
         this.nome=nome;
@@ -39,7 +39,19 @@ public class Sviluppatore {
         this.cognome = cognome;
     }
     
-   
+   //Sviluppatore che ci viene dato dalla pagina "profilo" NON PERSONALE
+    public Sviluppatore(String nome, String cognome, String data, String email, int telefono, String indirizzo){
+        this.nome = nome;
+        this.cognome = cognome;
+        this.dataDiNascita = data;
+        this.email = email; 
+        this.telefono = telefono;
+        this.indirizzo = indirizzo;
+
+        
+    }
+    
+    
     
     public Sviluppatore() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
