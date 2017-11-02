@@ -30,7 +30,7 @@
             <p><b>TASK:</b></p>                
             <#if taskprogetto ??>
                 <#list taskprogetto as TaskProgetto>
-                    <div class="row">
+                <a href="task?idt=${TaskProgetto.id}"><div class="row">
                         <div class="col-7">${TaskProgetto.getNome()}</div>
                         <div class="col-2">${TaskProgetto.getnumCollaboratori()}</div>
                         <div class="col-2">
@@ -41,6 +41,7 @@
                                 </#if>
                         </div>
                     </div>
+                </a>
                 </#list>
             </#if>
         </div>

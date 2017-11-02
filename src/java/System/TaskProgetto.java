@@ -32,6 +32,20 @@ public class TaskProgetto {
         this.stato = stato;
         this.nome = nome;
     }
+    
+      /*NUOVA AGGIUNTA PER DETTAGLI PROGETTO!*/
+    public TaskProgetto(int id,int numCollaboratori, boolean stato, String nome){
+       this.id=id;
+        this.numCollaboratori = numCollaboratori;
+        this.stato = stato;
+        this.nome = nome;
+    }
+    
+       public TaskProgetto(int numCollaboratori, String descrizione){
+     
+        this.numCollaboratori = numCollaboratori;
+     this.descrizione=descrizione;
+    }
         
     public String getNome(){
         return nome;

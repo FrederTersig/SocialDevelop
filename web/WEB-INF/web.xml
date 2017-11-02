@@ -207,12 +207,12 @@
 
     <!-- task -->
     <servlet>
-        <servlet-name> Task </servlet-name>
-        <servlet-class> Servlets.Task </servlet-class>
+        <servlet-name> Task2 </servlet-name>
+        <servlet-class> Servlets.Task2 </servlet-class>
     </servlet>
     
     <servlet-mapping>
-        <servlet-name> Task </servlet-name>
+        <servlet-name> Task2 </servlet-name>
         <url-pattern> /task </url-pattern>
     </servlet-mapping>
 

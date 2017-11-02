@@ -95,6 +95,13 @@ public class Databasee {
             String query = "SELECT taskprogetto.numcollaboratori, taskprogetto.stato, task.nome FROM taskprogetto, task WHERE (idprogetto="+idprogetto+") AND (taskprogetto.idtask = task.id)";
             return Databasee.executeQuery(query);
         }
+        
+            //Dato un idprogetto, mi restituisce i nomi dei task appartenenti al progetto, il loro stato e il numero di collaboratori.
+        public static ResultSet selectTaskProg2(int idprogetto) throws SQLException {
+            String query = "SELECT taskprogetto.numcollaboratori, taskprogetto.stato, task.nome, taskprogetto.id FROM taskprogetto, task WHERE (idprogetto="+idprogetto+") AND (taskprogetto.idtask = task.id)";
+            return Databasee.executeQuery(query);
+        }
+        
         //dato un idprogetto, mi restituisce nome e cognome del coordinatore
         public static ResultSet selectProgettoDetail(int idprogetto) throws SQLException{
             String query = "SELECT sviluppatore.nome, sviluppatore.cognome, progetto.titolo, progetto.descrizione, progetto.datacreazione FROM progetto, sviluppatore, coordinatore WHERE (progetto.id = "+idprogetto+") AND (progetto.idcoordinatore = coordinatore.id) AND (coordinatore.idsviluppatore = sviluppatore.id)";
@@ -103,6 +110,11 @@ public class Databasee {
         //Dato un idtask, mi restituisce i dettagli del task, con le skill prerequisito e i collaboratori che ci stanno lavorando e i loro nomi!.
         public static ResultSet selectTaskDetail(int idtask) throws SQLException{
             String query ="SELECT taskprogetto.numcollaboratori, taskprogetto.stato, taskprogetto.descrizione, task.nome, sviluppatore.nome, sviluppatore.cognome FROM taskprogetto, task, collaboratore, sviluppatore WHERE (idtask = "+idtask+") AND (taskprogetto.idtask = task.id) AND (taskprogetto.idtask = collaboratore.idtaskprogetto) AND (collaboratore.idsviluppatore = sviluppatore.id)";
+            return Databasee.executeQuery(query);
+        }
+        
+           public static ResultSet contCollaboratori(int idtaskprogetto) throws SQLException{
+            String query ="SELECT COUNT(collaboratore.id) AS num FROM collaboratore, taskprogetto WHERE taskprogetto.id=" + idtaskprogetto + " AND collaboratore.idtaskprogetto=taskprogetto.id";
             return Databasee.executeQuery(query);
         }
         

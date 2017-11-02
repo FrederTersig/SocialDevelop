@@ -29,7 +29,7 @@ public class Upload extends HttpServlet {
     private static final int THRESHOLD_SIZE = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
-
+int id=0;
     
 
     public static String toString(int a, int b, int c) {
@@ -38,6 +38,35 @@ public class Upload extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  HttpSession s = SecurityLayer.checkSession(request);
+ 
+ 
+ 
+  String action = request.getParameter("value");
+        
+        if("logout".equals(action)){ // Inizio del logout
+                System.out.println("CLICCATO LOGOUT!");
+                try{
+                    SecurityLayer.disposeSession(request); //chiude la sessione
+                    id=0; //azzera l'id per il template
+                    data.put("id",id);
+                    response.sendRedirect("index");
+                }catch(Exception e3){
+                    e3.printStackTrace();
+                }
+            }else if("search".equals(action)){
+                System.out.println("COMINCIA LA RICERCA!");
+                String SearchStringa = request.getParameter("ricerca");
+                System.out.println("RICERCA IN CORSO::::: >>>" + SearchStringa);           
+                
+                if(s != null){//condizione per vedere se la sessione esiste.                    
+                    s.setAttribute("ricerca",SearchStringa);   
+                }else{
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("ricerca",SearchStringa);         
+                }   
+                data.put("ricerca", SearchStringa);                
+                response.sendRedirect("listaCerca");
+            }
         // checks if the request actually contains upload file
         Map<String, Object> map = new HashMap<String, Object>();
         if (!ServletFileUpload.isMultipartContent(request)) {

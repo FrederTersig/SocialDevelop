@@ -8,6 +8,8 @@ package Servlets;
 import System.Admin;
 import System.Progetto;
 import System.Sviluppatore;
+import System.TaskProgetto;
+import System.Task;
 import Util.DataUtile;
 import Util.Databasee;
 import Util.FreeMarker;
@@ -40,8 +42,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Federico Tersigni
  */
-//@WebServlet(name = "Task", urlPatterns = {"/Task"})
-public class Task extends HttpServlet {
+//@WebServlet(name = "Task2", urlPatterns = {"/Task"})
+public class Task2 extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
     /**
@@ -54,7 +56,7 @@ public class Task extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
             response.setContentType("text/html;charset=UTF-8");
             HttpSession s = SecurityLayer.checkSession(request);
             if(s != null){//condizione per vedere se la sessione esiste. 
@@ -66,8 +68,37 @@ public class Task extends HttpServlet {
             }else{
                 id = 0;
                 data.put("id", id);
-            }     
+            } 
             
+                int idt=Integer.parseInt(request.getParameter("idt"));
+        System.out.println(idt + "SEEEEEEEE");
+        ResultSet dett=Databasee.selectRecord("taskprogetto,task,progetto", "taskprogetto.id=" + idt + " AND taskprogetto.idtask=task.id AND taskprogetto.idprogetto=progetto.id");
+        ArrayList<TaskProgetto> t=new ArrayList<TaskProgetto>();  
+        ArrayList<Progetto> p=new ArrayList<Progetto>(); 
+        ArrayList<Task> ta=new ArrayList<Task>(); 
+        
+        while(dett.next()){
+               String descrizione=dett.getString("descrizione");
+               int numcol=dett.getInt("numcollaboratori");
+               String nomprog=dett.getString("progetto.titolo");
+               String nomtask=dett.getString("task.nome");
+               TaskProgetto tas=new TaskProgetto(numcol,descrizione);
+               Progetto np=new Progetto(nomprog);
+               Task nt=new Task(nomtask);
+               t.add(tas);
+               p.add(np);
+               ta.add(nt);
+           } 
+        Integer n=null;
+        ResultSet part=Databasee.contCollaboratori(idt);
+        while(part.next()){
+            int collat=part.getInt("num");
+            n=new Integer(collat);
+        }
+        data.put("taskprogetto", t);
+        data.put("nomeprogetto", p);
+        data.put("nometask", ta);
+        data.put("numcol", n);
             FreeMarker.process("task.html", data, response, getServletContext());
     }
 
@@ -83,7 +114,12 @@ public class Task extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Task2.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

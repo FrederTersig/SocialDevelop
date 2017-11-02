@@ -8,15 +8,17 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col-8">
-                <h2 class="font-weight-bold text-left">Progetto Specifico > Nome Task</h2>
-                <p class="text-left">Descrizione del task specifico di quel determinato progetto. Questa descrizione esprime quali tipi di azioni e di lavori bisogna fare per completare questo specifico task appartenente ad uno specifico progetto. Al lato della task ci sono due informazioni aggiuntive che sono il numero dei collaboratori e la scadenza prefissata.</p>
-            </div>
-            <div class="col-4">
               
-                <p class="text-right font-italic">Creato il gg/mm/aaaa, Scadenza il gg/mm/aaaa<br>
-                Numero dei collaboratori: 5
-                </p>
+                <h2 class="font-weight-bold text-left"> <#if nomeprogetto ??><#list nomeprogetto as NomeProgetto>${NomeProgetto.titolo}</#list></#if> > <#if nometask ??><#list nometask as NomeTask>${NomeTask.nome}</#list></#if></h2>
+           
+                <#if taskprogetto ??>
+                <#list taskprogetto as TaskProgetto>
+                <p class="text-left">${TaskProgetto.descrizione}</p><br><br>
+                <p>NUMERO COLLABORATORI: ${numcol}/${TaskProgetto.numCollaboratori}</p>
+                </#list>
+                </#if>
             </div>
+        
         </div>
     </div>
 

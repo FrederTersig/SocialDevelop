@@ -142,13 +142,14 @@ public class DettagliProgetto extends HttpServlet {
             ArrayList<TaskProgetto> taskProg=null;
                 try{
                     Databasee.connect();
-                    ResultSet co = Databasee.selectTaskProg(num);
+                    ResultSet co = Databasee.selectTaskProg2(num);
                     taskProg = new ArrayList<TaskProgetto>();
                     while (co.next()){
                         int numeroColl = co.getInt("numcollaboratori");
                         boolean stato = co.getBoolean("stato");
                         String nome = co.getString("nome");
-                        TaskProgetto lista = new TaskProgetto(numeroColl, stato, nome);
+                        int idtp=co.getInt("taskprogetto.id");
+                        TaskProgetto lista = new TaskProgetto(idtp,numeroColl, stato, nome);
                         taskProg.add(lista);
                     }
                     Databasee.close();

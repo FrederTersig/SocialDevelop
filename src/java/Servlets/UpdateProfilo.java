@@ -155,6 +155,33 @@ public class UpdateProfilo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession s = SecurityLayer.checkSession(request);
+        
+        String action = request.getParameter("value");
+        
+        if("logout".equals(action)){ // Inizio del logout
+                System.out.println("CLICCATO LOGOUT!");
+                try{
+                    SecurityLayer.disposeSession(request); //chiude la sessione
+                    id=0; //azzera l'id per il template
+                    data.put("id",id);
+                response.sendRedirect("index");
+                }catch(Exception e3){
+                    e3.printStackTrace();
+                }
+            }else if("search".equals(action)){
+                System.out.println("COMINCIA LA RICERCA!");
+                String SearchStringa = request.getParameter("ricerca");
+                System.out.println("RICERCA IN CORSO::::: >>>" + SearchStringa);           
+                
+                if(s != null){//condizione per vedere se la sessione esiste.                    
+                    s.setAttribute("ricerca",SearchStringa);   
+                }else{
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("ricerca",SearchStringa);         
+                }   
+                data.put("ricerca", SearchStringa);                
+                response.sendRedirect("listaCerca");
+            }
      try {
          Databasee.connect();
          String indirizzo=request.getParameter("indirizzo");
