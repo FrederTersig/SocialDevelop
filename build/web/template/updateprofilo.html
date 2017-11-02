@@ -6,43 +6,28 @@
     <h1 class="centro">AGGIORNA PROFILO</h1>
     <p class="testoreg">aggiorna i tuoi dati</p>
   <hr>
-  <form method="post">
+  <form method="post" action="updateprofilo">
       <div class="row">
+          <#if svi ??>
+          <#list svi as Svi>
           <div class="col-md-6">
-        <input type="text" name="Nome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NOME">
+        indirizzo attuale: ${Svi.nome}<input type="text" name="indirizzo" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO INDIRIZZO">
           </div>
-          <div class="col-md-6">
-        <input type="text" name="Cognome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="COGNOME">
-          </div></div>
-      <br>
-          <div class="row">
-              <div class="col-md-6">
-        <input type="email" name="Email" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="E-MAIL">
-              </div>
-              <div class="col-md-6">
-        <input type="password" name="Pass" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="PASSWORD">
-              </div></div>
-      <br>
-      <div class="row">
-          <div class="col-md-4">
-        <input type="number" name="Telefono" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="TELEFONO">
-          </div>
-          <div class="col-md-4">
-        <input type="date" name="DataNascita" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="DATA DI NASCITA">
-         </div>
-      <div class="col-md-4">
-              <input type="text" name="Indirizzo" class="form-control" placeholder="RESIDENZA">
-            </div>
+           <div class="col-md-6">
+        telefono attuale: ${Svi.cognome}<input type="text" name="telefono" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO TELEFONO">
+           </div>
+          </#list>
+          </#if>
             <input type="hidden" name="value" value="registra">
             </div>
-        </div><br>
+        <br>
       <fieldset>
- <legend>Linguaggi conosciuti</legend><br>
- <#if nomeskill ??>
-                    <#list nomeskill as Nomeskill>
+ <legend>AGGIUNGI ALTRE SKILL</legend><br>
+ <#if skill ??>
+                    <#list skill as Skill>
                     <div class="row">
                         
-                        <div class="col-md-6"><input type="checkbox" name="skill" value="${Nomeskill.id}" onclick="unlock(this, '${Nomeskill.id}')"/> ${Nomeskill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" name="punteggio" id="${Nomeskill.id}" disabled="disabled"></div>
+                        <div class="col-md-6"><input type="checkbox" name="skill" value="${Skill.id}" onclick="unlock(this, '${Skill.id}')"/> ${Skill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" name="punteggio" id="${Skill.id}" disabled="disabled"></div>
                     </div>
                         <br />
  </#list>
@@ -51,6 +36,14 @@
 </fieldset><br>
         <button type="submit" class="btn btn-primary">INVIA</button>
     </form>
+  <a href="upload">CARICA UNA NUOVA IMMAGINE PROFILO</a><br>
+  <a href="uploadcurriculum">CARICA UN CURRICULUM</a><br>
+  <#if curricu ??>
+  <#list curricu as Curriculum>
+  <img src="${Curriculum.curriculum}">
+    </#list>
+    </#if>
+  
 </div>
 
 

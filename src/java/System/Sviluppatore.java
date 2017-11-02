@@ -49,6 +49,11 @@ public class Sviluppatore {
         this.id=id;
     }
     
+      public Sviluppatore(String curriculum){
+        this.curriculum = curriculum;
+     
+    }
+    
     
    //Sviluppatore che ci viene dato dalla pagina "profilo" NON PERSONALE
 

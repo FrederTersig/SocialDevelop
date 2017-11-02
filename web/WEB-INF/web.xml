@@ -70,6 +70,17 @@
         <url-pattern> /skillprogetto </url-pattern>
     </servlet-mapping>
     
+          <!-- UPDATE PROFILO-->
+    <servlet>
+        <servlet-name> UpdateProfilo </servlet-name>
+        <servlet-class> Servlets.UpdateProfilo </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> UpdateProfilo </servlet-name>
+        <url-pattern> /updateprofilo </url-pattern>
+    </servlet-mapping>
+    
            <!-- TASK DA AGGIUNGERE DURANTE LA CREAZIONE DEL PROGETTO -->
     <servlet>
         <servlet-name> TaskSkillProgetto </servlet-name>
@@ -79,6 +90,17 @@
     <servlet-mapping>
         <servlet-name> TaskSkillProgetto </servlet-name>
         <url-pattern> /taskskillprogetto </url-pattern>
+    </servlet-mapping>
+    
+               <!-- UPLOAD CURRICULUM -->
+    <servlet>
+        <servlet-name> UploadCurriculum </servlet-name>
+        <servlet-class> Servlets.UploadCurriculum  </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> UploadCurriculum  </servlet-name>
+        <url-pattern> /uploadcurriculum </url-pattern>
     </servlet-mapping>
     
     
