@@ -108,12 +108,12 @@ public class Databasee {
         
         //data una stringa, mi restituisce una lista di sviluppatori che hanno quel nome / cognome. (tutto o in parte) ** MANCA L'AVATAR/IMMAGINE fatta in THUUMBNAIL!!
         public static ResultSet searchSviluppatori(String nome) throws SQLException{
-            String query="SELECT sviluppatore.nome, sviluppatore.cognome FROM `sviluppatore` WHERE sviluppatore.nome LIKE '"+nome+"%' OR sviluppatore.cognome LIKE '"+nome+"%'";
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome, sviluppatore.id FROM `sviluppatore` WHERE sviluppatore.nome LIKE '"+nome+"%' OR sviluppatore.cognome LIKE '"+nome+"%'";
             return Databasee.executeQuery(query);
         }
         //data una stringa, mi restituisce una lista di progetti che ha quel nome
         public static ResultSet searchProgetti(String nome) throws SQLException{
-            String query="SELECT progetto.titolo, progetto.descrizione FROM `progetto` WHERE progetto.titolo LIKE '"+nome+"%'";
+            String query="SELECT progetto.titolo, progetto.descrizione, progetto.id FROM `progetto` WHERE progetto.titolo LIKE '"+nome+"%'";
             return Databasee.executeQuery(query);
         }
         
