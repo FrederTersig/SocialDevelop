@@ -135,6 +135,14 @@ public class Databasee {
             return Databasee.executeQuery(query);
         }
         
+        /*Query che, dato un progetto, ci ridà una lista di SVILUPPATORI che non fanno parte di quel progetto (NO COORDINATORI NO COLLABORATORI)*/
+        
+        public static ResultSet getElencoPossSvilup(int idprogetto) throws SQLException{
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome FROM progetto, taskprogetto, skillscelte, sviluppatore, skillperognitask, skill, livello WHERE progetto.id = "+ idprogetto +" AND taskprogetto.idprogetto = progetto.id AND skillscelte.idtaskprogetto = taskprogetto.id  AND (skillperognitask.id = skillscelte.idskillperognitask AND skill.id = skillperognitask.idskill) AND (livello.idskill = skill.id AND sviluppatore.id = livello.idsviluppatore) AND sviluppatore.id NOT IN( SELECT sviluppatore.id FROM progetto, taskprogetto, collaboratore, sviluppatore WHERE progetto.id="+ idprogetto +" AND taskprogetto.idprogetto = progetto.id AND collaboratore.idtaskprogetto = taskprogetto.id AND sviluppatore.id = collaboratore.idsviluppatore) AND sviluppatore.id NOT IN( SELECT sviluppatore.id FROM progetto, coordinatore, sviluppatore WHERE progetto.id = " + idprogetto + " AND progetto.idcoordinatore = coordinatore.id AND coordinatore.id = sviluppatore.id)";
+            return Databasee.executeQuery(query);
+        }
+        
+        
         
         public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
         String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome, sviluppatore.cognome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";
