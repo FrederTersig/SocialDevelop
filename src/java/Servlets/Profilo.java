@@ -70,11 +70,11 @@ public class Profilo extends HttpServlet {
                 id = 0;
                 data.put("id", id);
             }     
-            
+            int idPro=3;
             ArrayList<Sviluppatore> detSvilupp = null;
             try{
                 Databasee.connect();
-                ResultSet ex = Databasee.getInfoProfilo(id); // SBAGLIATO, devo avere l'id del profilo CLICCATO
+                ResultSet ex = Databasee.getInfoProfilo(idPro); // SBAGLIATO, devo avere l'id del profilo CLICCATO***************************************
                 detSvilupp = new ArrayList<Sviluppatore>();
                 String nome = ex.getString("nome");
                 String cognome = ex.getString("cognome");
@@ -95,7 +95,7 @@ public class Profilo extends HttpServlet {
             ArrayList<Skill> listaSkill = null;
             try{//Prova la connessione al Database
                 Databasee.connect();
-                ResultSet ex = Databasee.getSvilupSkills(id); // DA METTERE ID DELLO SVILUPPATORE CLICCATO!!!!!!!!!!!!!!
+                ResultSet ex = Databasee.getSvilupSkills(idPro); // DA METTERE ID DELLO SVILUPPATORE CLICCATO!!!!!!!!!!!!!!*******************************************
                 listaSkill = new ArrayList<Skill>();
                 while (ex.next()) {
                         String nome = ex.getString("nome");
@@ -114,7 +114,7 @@ public class Profilo extends HttpServlet {
             ArrayList<Valutazione> detValutazione = null;
             try{
                 Databasee.connect();
-                ResultSet ex = Databasee.getValutazioniProf(id);
+                ResultSet ex = Databasee.getValutazioniProf(idPro); //****************************************************************
                 detValutazione = new ArrayList<Valutazione>();
                 while(ex.next()){
                    int punteggio = ex.getInt("punteggio");
