@@ -72,25 +72,30 @@ public class Profilo extends HttpServlet {
             }     
             int idPro=3;
             ArrayList<Sviluppatore> detSvilupp = null;
+            //Sviluppatore prova = null;
             try{
                 Databasee.connect();
                 ResultSet ex = Databasee.getInfoProfilo(idPro); // SBAGLIATO, devo avere l'id del profilo CLICCATO***************************************
                 detSvilupp = new ArrayList<Sviluppatore>();
-                String nome = ex.getString("nome");
-                String cognome = ex.getString("cognome");
-                String dataNascita= ex.getString("data");
-                String email = ex.getString("email");
-                int telefono= ex.getInt("telefono");
-                String indirizzo= ex.getString("indirizzo");
-                Sviluppatore lista = new Sviluppatore(nome,cognome,dataNascita,email,telefono,indirizzo);
-                detSvilupp.add(lista);
+                while(ex.next()){
+                    String nome = ex.getString("nome");
+                    String cognome = ex.getString("cognome");
+                    String email = ex.getString("email");
+                    String telefono= (String) ex.getString("telefono");
+                    String indirizzo= ex.getString("indirizzo");
+                    Date nascita = ex.getDate("data");
+                    Sviluppatore lista = new Sviluppatore(nome,cognome,email,telefono,indirizzo,nascita);
+                    detSvilupp.add(lista);
+                }
+                
                 Databasee.close();
             }catch(NamingException e) {
             }catch (SQLException e) {
             }catch (Exception ex) {
                     Logger.getLogger(Profilo.class.getName()).log(Level.SEVERE, null, ex);
             }
-            data.put("profilo", detSvilupp);
+            
+            data.put("profiloSv", detSvilupp);
             
             ArrayList<Skill> listaSkill = null;
             try{//Prova la connessione al Database

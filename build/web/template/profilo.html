@@ -24,19 +24,18 @@
                 <div class="col-9">
                     <h3 class="text-center">Dati Anagrafici</h3><br><br>
                     <div class="row">
-                        <#if profilo ??>
-                        <#list profilo as Sviluppatore>
+                        <#if profiloSv ??>
+                        <#list profiloSv as Sviluppatore>
                         <div class="col-6">
                             <!-- due colonne con i dati anagrafici -->
-                            <
-                            <p>Nome : ${Sviluppatore.getNome()}<br>
-                                Cognome : Merola<br>
-                                Indirizzo : Via Napoli,10</p>
+                            <p>Nome: ${Sviluppatore.getNome()}<br>
+                               Cognome: ${Sviluppatore.getCognome()}<br>
+                               Indirizzo: ${Sviluppatore.getIndirizzo()}</p>
                         </div>
                         <div class="col-6">
-                            <p>Nome : Mario<br>
-                                Cognome : Merola<br>
-                                Indirizzo : Via Napoli,10</p>
+                            <p>Data Di Nascita: ${Sviluppatore.getDataDiNascita()}<br>
+                               Telefono: ${Sviluppatore.getTelefono()}<br>
+                               Email: ${Sviluppatore.getEmail()}</p>
                         </div>
                         </#list>
                         </#if>

@@ -55,14 +55,7 @@ public class DettagliProgetto extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    /*
-    
-                // DA MODIFICARE
-                
 
-                //PROVA
-    */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
@@ -103,7 +96,6 @@ public class DettagliProgetto extends HttpServlet {
                         System.out.println("UGUALI? >> "+ ko.absolute(2) + " " + collabora );
                         System.out.println("/////////////////////////");
                         //int prova = ko.getInt("visibilità");
-                        
                         Databasee.close();
                     }catch(NamingException e) {
                     }catch (SQLException e) {
@@ -112,7 +104,6 @@ public class DettagliProgetto extends HttpServlet {
                     }
                 }else{
                     System.out.println("Non esiste userid");
-                    
                 }
             }else{
                 System.out.println("Non esiste la sessione mentre si è in dettagliProgetto");

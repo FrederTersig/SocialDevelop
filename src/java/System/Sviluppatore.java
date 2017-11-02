@@ -5,6 +5,8 @@
  */
 package System;
 
+import java.sql.Date;
+
 /**
  *
  * @author user1
@@ -13,15 +15,15 @@ public class Sviluppatore {
     private int id;
     private String nome;
     private String cognome;
-    private String dataDiNascita;
+    private Date dataDiNascita;
     private String email;
-    private int telefono;
+    private String telefono;
     private String curriculum;
     private String indirizzo;
     private String password;
     private int idImmagine;
 
-    public Sviluppatore(int id, String nome, String cognome, String dataDiNascita, String email, int telefono, String curriculum, String indirizzo, String password, int idImmagine){
+    public Sviluppatore(int id, String nome, String cognome, Date dataDiNascita, String email, String telefono, String curriculum, String indirizzo, String password, int idImmagine){
         this.id=id;
         this.nome=nome;
         this.cognome=cognome;
@@ -40,13 +42,13 @@ public class Sviluppatore {
     }
     
    //Sviluppatore che ci viene dato dalla pagina "profilo" NON PERSONALE
-    public Sviluppatore(String nome, String cognome, String data, String email, int telefono, String indirizzo){
+    public Sviluppatore(String nome, String cognome, String email, String telefono, String indirizzo, Date data){
         this.nome = nome;
         this.cognome = cognome;
-        this.dataDiNascita = data;
         this.email = email; 
         this.telefono = telefono;
         this.indirizzo = indirizzo;
+        this.dataDiNascita = data;
 
         
     }
@@ -79,11 +81,11 @@ public class Sviluppatore {
         return cognome;
     }
         
-    public void setDataDiNascita(String dataDiNascita){
+    public void setDataDiNascita(Date dataDiNascita){
         this.dataDiNascita=dataDiNascita;
     }
     
-    public String getDataDiNascita(){
+    public Date getDataDiNascita(){
         return dataDiNascita;
     }
     
@@ -97,11 +99,11 @@ public class Sviluppatore {
     }
     
         
-    public void setTelefono(int telefono){
+    public void setTelefono(String telefono){
         this.telefono=telefono;
     }
     
-    public int getTelefono(){
+    public String getTelefono(){
         return telefono;
     }
     
