@@ -15,13 +15,13 @@ public class Sviluppatore {
     private String cognome;
     private String dataDiNascita;
     private String email;
-    private int telefono;
+    private String telefono;
     private String curriculum;
     private String indirizzo;
     private String password;
-    private int idImmagine;
+    private String immagine;
 
-    public Sviluppatore(int id, String nome, String cognome, String dataDiNascita, String email, int telefono, String curriculum, String indirizzo, String password, int idImmagine){
+    public Sviluppatore(int id, String nome, String cognome, String dataDiNascita, String email, String telefono, String curriculum, String indirizzo, String password, String immagine){
         this.id=id;
         this.nome=nome;
         this.cognome=cognome;
@@ -31,16 +31,23 @@ public class Sviluppatore {
         this.curriculum=curriculum;
         this.indirizzo=indirizzo;
         this.password=password;
-        this.idImmagine=idImmagine;
+        this.immagine=immagine;
     }
     
     public Sviluppatore(String nome, String cognome){
         this.nome = nome;
         this.cognome = cognome;
     }
+       
+    public Sviluppatore(int id, String nome, String cognome){
+        this.nome = nome;
+        this.cognome = cognome;
+        this.id=id;
+    }
+    
     
    //Sviluppatore che ci viene dato dalla pagina "profilo" NON PERSONALE
-    public Sviluppatore(String nome, String cognome, String data, String email, int telefono, String indirizzo){
+    public Sviluppatore(String nome, String cognome, String data, String email, String telefono, String indirizzo){
         this.nome = nome;
         this.cognome = cognome;
         this.dataDiNascita = data;
@@ -97,11 +104,11 @@ public class Sviluppatore {
     }
     
         
-    public void setTelefono(int telefono){
+    public void setTelefono(String telefono){
         this.telefono=telefono;
     }
     
-    public int getTelefono(){
+    public String getTelefono(){
         return telefono;
     }
     
@@ -131,12 +138,12 @@ public class Sviluppatore {
         return password;
     }
     
-        public void setIdImmagine(int idImmagine){
-        this.idImmagine=idImmagine;
+        public void setIdImmagine(String immagine){
+        this.immagine=immagine;
     }
     
-    public int getIdImmagine(){
-        return idImmagine;
+    public String getIdImmagine(){
+        return immagine;
     }
     
    
