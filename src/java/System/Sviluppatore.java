@@ -23,11 +23,9 @@ public class Sviluppatore {
     private String password;
     private String immagine;
 
-<<<<<<< HEAD
-    public Sviluppatore(int id, String nome, String cognome, Date dataDiNascita, String email, String telefono, String curriculum, String indirizzo, String password, int idImmagine){
-=======
-    public Sviluppatore(int id, String nome, String cognome, String dataDiNascita, String email, String telefono, String curriculum, String indirizzo, String password, String immagine){
->>>>>>> f30efe19e911322a1744a1421dd81e8280d29335
+
+
+    public Sviluppatore(int id, String nome, String cognome, Date dataDiNascita, String email, String telefono, String curriculum, String indirizzo, String password, String immagine){
         this.id=id;
         this.nome=nome;
         this.cognome=cognome;
@@ -53,11 +51,9 @@ public class Sviluppatore {
     
     
    //Sviluppatore che ci viene dato dalla pagina "profilo" NON PERSONALE
-<<<<<<< HEAD
-    public Sviluppatore(String nome, String cognome, String email, String telefono, String indirizzo, Date data){
-=======
-    public Sviluppatore(String nome, String cognome, String data, String email, String telefono, String indirizzo){
->>>>>>> f30efe19e911322a1744a1421dd81e8280d29335
+
+    public Sviluppatore(String nome, String cognome, Date data, String email, String telefono, String indirizzo){
+
         this.nome = nome;
         this.cognome = cognome;
         this.email = email; 
