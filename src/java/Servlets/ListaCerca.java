@@ -228,9 +228,12 @@ Map<String, Object> data = new HashMap<String, Object>();
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
+            }else if("d_progetti".equals(action)){
+                
+            }else if("d_sviluppatori".equals(action)){
+            
             }
     }
-
     /**
      * Returns a short description of the servlet.
      *
