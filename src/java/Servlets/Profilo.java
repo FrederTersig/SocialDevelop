@@ -5,7 +5,9 @@
  */
 package Servlets;
 
+import System.Skill;
 import System.Sviluppatore; 
+import System.Valutazione;
 import Util.DataUtile;
 import Util.Databasee;
 import Util.FreeMarker;
@@ -68,7 +70,70 @@ public class Profilo extends HttpServlet {
                 id = 0;
                 data.put("id", id);
             }     
+            int idPro=3;
+            ArrayList<Sviluppatore> detSvilupp = null;
+            try{
+                Databasee.connect();
+                ResultSet ex = Databasee.getInfoProfilo(idPro); // SBAGLIATO, devo avere l'id del profilo CLICCATO***************************************
+                detSvilupp = new ArrayList<Sviluppatore>();
+                String nome = ex.getString("nome");
+                String cognome = ex.getString("cognome");
+                String dataNascita= ex.getString("data");
+                String email = ex.getString("email");
+                int telefono= ex.getInt("telefono");
+                String indirizzo= ex.getString("indirizzo");
+                Sviluppatore lista = new Sviluppatore(nome,cognome,dataNascita,email,telefono,indirizzo);
+                detSvilupp.add(lista);
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Profilo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            data.put("profilo", detSvilupp);
             
+            ArrayList<Skill> listaSkill = null;
+            try{//Prova la connessione al Database
+                Databasee.connect();
+                ResultSet ex = Databasee.getSvilupSkills(idPro); // DA METTERE ID DELLO SVILUPPATORE CLICCATO!!!!!!!!!!!!!!*******************************************
+                listaSkill = new ArrayList<Skill>();
+                while (ex.next()) {
+                        String nome = ex.getString("nome");
+                        int competenza = ex.getInt("preparazione");
+                        
+                        Skill lista = new Skill(nome, competenza);
+                        listaSkill.add(lista);            
+                }
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Profilo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            data.put("skill", listaSkill);
+            ArrayList<Valutazione> detValutazione = null;
+            try{
+                Databasee.connect();
+                ResultSet ex = Databasee.getValutazioniProf(idPro); //****************************************************************
+                detValutazione = new ArrayList<Valutazione>();
+                while(ex.next()){
+                   int punteggio = ex.getInt("punteggio");
+                   String nome = ex.getString("nome"); 
+                   String cognome = ex.getString("cognome");
+                   String titolo = ex.getString("titolo");
+                   String descrizione = ex.getString("descrizione");
+                   
+                   Valutazione lista = new Valutazione(punteggio,nome,cognome,titolo,descrizione);
+                   detValutazione.add(lista);
+                }
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            data.put("valutazioni", detValutazione);
+            //DEVI AGGIUNGERE TUTTO SU DATA
             FreeMarker.process("profilo.html", data, response, getServletContext());
     }
 

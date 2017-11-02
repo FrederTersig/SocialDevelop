@@ -12,6 +12,7 @@ package System;
 public class Skill {
     private int id;
     private String nome;
+    private int competenza;
     private int idAdmin;
     
     public Skill(int id, String nome, int idAdmin){
@@ -19,8 +20,18 @@ public class Skill {
         this.nome=nome;
         this.idAdmin=idAdmin;
     }
+    //SKILL con il proprio livello di preparazione
+    public Skill(String nome, int competenza){
+        this.nome=nome;
+        this.competenza = competenza;
+    }
     
-        public Skill(String nome){
+
+    public int getCompetenza(){
+        return this.competenza;
+    }
+    
+    public Skill(String nome){
        
         this.nome=nome;
      
