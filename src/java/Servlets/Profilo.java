@@ -55,6 +55,8 @@ public class Profilo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
+            int idPro = (int) request.getSession(true).getAttribute("idsviluppatore");
+            data.put("idsviluppatore",idPro);
             HttpSession s = SecurityLayer.checkSession(request);
             if(s != null){//condizione per vedere se la sessione esiste. 
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
@@ -70,7 +72,7 @@ public class Profilo extends HttpServlet {
                 id = 0;
                 data.put("id", id);
             }     
-            int idPro=3;
+
             ArrayList<Sviluppatore> detSvilupp = null;
             //Sviluppatore prova = null;
             try{

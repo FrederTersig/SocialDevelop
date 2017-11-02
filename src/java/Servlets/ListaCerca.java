@@ -80,7 +80,8 @@ Map<String, Object> data = new HashMap<String, Object>();
                     while (co.next()) {
                             String titolo = co.getString("titolo");
                             String descrizione = co.getString("descrizione");
-                            Progetto lista = new Progetto(titolo, descrizione);
+                            int codice= co.getInt("id");
+                            Progetto lista = new Progetto(titolo, descrizione,codice);
                             prog.add(lista);            
                             numProgetti +=1;
                     }
@@ -103,7 +104,8 @@ Map<String, Object> data = new HashMap<String, Object>();
                     while(co.next()){
                         String nome = co.getString("nome");
                         String cognome = co.getString("cognome");
-                        Sviluppatore lista = new Sviluppatore(nome,cognome);
+                        int codice= co.getInt("id");
+                        Sviluppatore lista = new Sviluppatore(codice,nome,cognome);
                         svilup.add(lista);
                         numSviluppatori +=1;
                     }
@@ -228,10 +230,56 @@ Map<String, Object> data = new HashMap<String, Object>();
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
-            }else if("d_progetti".equals(action)){
+            }else if("d_progetto".equals(action)){
+                //INIZIO >>
                 
-            }else if("d_sviluppatori".equals(action)){
-            
+                System.out.println("HO CLICCATO IL BOTTONE DI UN PROGETTO");
+                int num = Integer.parseInt(request.getParameter("dettagli"));
+                data.put("idprogetto", num);
+                HttpSession s = SecurityLayer.checkSession(request);
+                if(s != null){//condizione per vedere se la sessione esiste. 
+                    System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
+                    if(s.getAttribute("id") != null){ 
+                        id = (int) s.getAttribute("id");
+                    }else{ 
+                        id=0;
+                    }              
+                    s.setAttribute("idprogetto",num);   
+                }else{
+                    System.out.println("Ho cliccato, Non esiste sessione, come passo i dati del progetto?");
+                    id = 0;
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("idprogetto", num);         
+                }   
+                data.put("id", id); 
+                response.sendRedirect("dettagliProgetto");
+                
+                // FINE <<
+            }else if("d_sviluppatore".equals(action)){
+                //INIZIO >>
+                
+                System.out.println("HO CLICCATO IL BOTTONE DI UNO SVILUPPATORE");
+                int num = Integer.parseInt(request.getParameter("dettagli"));
+                data.put("idsviluppatore", num);
+                HttpSession s = SecurityLayer.checkSession(request);
+                if(s != null){//condizione per vedere se la sessione esiste. 
+                    System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
+                    if(s.getAttribute("id") != null){ 
+                        id = (int) s.getAttribute("id");
+                    }else{ 
+                        id=0;
+                    }              
+                    s.setAttribute("idsviluppatore",num);   
+                }else{
+                    System.out.println("Ho cliccato, Non esiste sessione, come passo i dati dello sviluppatore?");
+                    id = 0;
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("idsviluppatore", num);         
+                }   
+                data.put("id", id); 
+                response.sendRedirect("profilo");
+                
+                // FINE <<
             }
     }
     /**

@@ -31,7 +31,7 @@
                                 <p class="col-2 my-auto" style="color: green;">Data Creazione</p>
                                 
                                 
-                                <button type="submit" class="btn btn-outline-primary col-1" name="dettagli" value=""> Entra -> </button>
+                                <button type="submit" class="btn btn-outline-primary col-1" name="dettagli" value="${Progetto.getId()}"> Entra -> </button>
                                 <!-- VA MESSO ANCHE l'ID COSI DA POTER ENTRARE NEL DETTAGLIO PROGETTO!!! ${Progetto.id} -->
                                 <input type="hidden" name="value"  value="d_progetto">
                             </div>
@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-6 d-inline-block">
 
-                                <button type="submit" class="btn btn-outline-primary" name="dettagli" value=""> Visualizza Profilo -> </button>
+                                <button type="submit" class="btn btn-outline-primary" name="dettagli" value="${Sviluppatore.getId()}"> Visualizza Profilo -> </button>
                                 <input type="hidden" name="value"  value="d_sviluppatore">
                             </div>
                             
