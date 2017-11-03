@@ -13,43 +13,41 @@
                     <#if nometask ??>
                     <#if tipo ??>
                     
-                    
-                    <#list tipo as Tipo>
-                    <#if Tipo.tipo == false>
+                <#list tipo as Tipo>
+                <#if Tipo.tipo == false>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <img src="..." alt="..." class="rounded-0 d-inline-block">
-                        <#list nomeprogetto as NomeProgetto>${NomeProgetto.titolo}<#continue></#list> <a href="#" class="alert-link"><#list nometask as NomeTask>${NomeTask.nome}<#continue></#list></a>. Give it a click if you like.
-                    </div>
                     
-     </#if>
-      </#list> 
+                        <img src="..." alt="..." class="rounded-0 d-inline-block">
+                        <#list nomeprogetto as NomeProgetto>${NomeProgetto.titolo}</#list> <a href="#" class="alert-link"> </a>.<br>
+                      <#list nometask as NomeTask>${NomeTask.nome}/</#list> <a href="#" class="alert-link"> </a>.
+                   
+                    </div>
+                </#if>
+             </#list>
+                  
+   
       </#if> </#if> </#if> 
       
            
         </div>
         <h4 class="text-center"> PANNELLO DOMANDE </h4>
         <div class="col-12 bg-danger req_container" id="req_tab">
+            
+             <#if nomeprogetto ??>
+                    <#if nometask ??>
+                    <#if tipo ??>
+                     <#list tipo as Tipo>
+                  <#list nomeprogetto as NomeProgetto>
+                  <#list nometask as NomeTask>
+                   
+                    <#if Tipo.tipo == true>
                     <div class="alert alert-dark clearfix" role="alert">
                         <img src="..." alt="..." class="rounded-0 d-inline-block">
-                        This is a dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+                        ${NomeProgetto.titolo}<a href="#" class="alert-link">${NomeTask.nome}</a>
                     </div>
-                    <div class="alert alert-dark clearfix" role="alert">
-                        <img src="..." alt="..." class="rounded-0 d-inline-block">
-                        This is a dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-                    </div>
-                    <div class="alert alert-dark clearfixv" role="alert">
-                        <img src="..." alt="..." class="rounded-0 d-inline-block">
-                        This is a dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-                    </div>
-                    <div class="alert alert-dark clearfix" role="alert">
-                        <img src="..." alt="..." class="rounded-0 d-inline-block">
-                        This is a dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-                    </div>
-                    <div class="alert alert-dark clearfix" role="alert">
-                        <img src="..." alt="..." class="rounded-0 d-inline-block">
-                        This is a dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-                    </div>
-        </div>
+             </#if>
+      </#list></#list></#list>
+      </#if> </#if> </#if> 
         
     </div>
 

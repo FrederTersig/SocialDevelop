@@ -47,6 +47,7 @@ import javax.servlet.http.HttpSession;
 public class Task2 extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
+    public int idt=0;
     //public int idt=0;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -66,15 +67,19 @@ public class Task2 extends HttpServlet {
                 if(s.getAttribute("id") != null) id = (int) s.getAttribute("id");
                 else id=0;
                 System.out.println("ID ?? > " + id );
-                data.put("id", id);    
+                data.put("id", id); 
+                 idt=Integer.parseInt(request.getParameter("idt"));
+           s.setAttribute("idt", idt);
             }else{
                 id = 0;
                 data.put("id", id);
+                    HttpSession z = request.getSession(true);
+                       idt=Integer.parseInt(request.getParameter("idt"));
+           z.setAttribute("idt", idt);
             } 
             
-            int idt=Integer.parseInt(request.getParameter("idt"));
-           s.setAttribute("idt", idt);
-             System.out.println(idt + "SEEEEEEEE");
+           
+
             
             System.out.println(idt + "SEEEEEEEE");
             try{

@@ -78,8 +78,11 @@ public class PanRichieste extends HttpServlet {
        ArrayList<Richieste> rich=new ArrayList<Richieste>();
            while(ric.next()){
                 String nomepr=ric.getString("progetto.titolo");
+                System.out.println(nomepr);
                 String nometaskp=ric.getString("task.nome");
+                System.out.println(nometaskp);
                 boolean ti=ric.getBoolean("richieste.tipo");
+                System.out.println(ti);
                 Progetto p=new Progetto(nomepr);
                 Task t=new Task(nometaskp);
                 Richieste r=new Richieste(ti);
