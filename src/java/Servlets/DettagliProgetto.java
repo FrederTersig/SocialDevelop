@@ -303,6 +303,10 @@ public class DettagliProgetto extends HttpServlet {
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
+            }else if("ins_commento".equals(action)){
+                System.out.println("INSERISCO UN COMMENTO!");
+                String prova = request.getParameter("commentoVisibile");
+                System.out.println("PROVA>>>" + prova);
             }
     }
 
