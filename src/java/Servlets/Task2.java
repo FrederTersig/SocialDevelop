@@ -31,6 +31,7 @@ import javax.naming.NamingException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -71,6 +72,7 @@ public class Task2 extends HttpServlet {
             } 
             
             int idt=Integer.parseInt(request.getParameter("idt"));
+            s.setAttribute("idtaskprogetto", idt);
             System.out.println(idt + "SEEEEEEEE");
             try{
                 Databasee.connect();
@@ -143,6 +145,7 @@ public class Task2 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             String action = request.getParameter("value");
+             HttpSession s = SecurityLayer.checkSession(request);
             if("login".equals(action)){ // SE il metodo post è il login....
                 System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
                 String EmailL = request.getParameter("email");
@@ -153,7 +156,7 @@ public class Task2 extends HttpServlet {
                        if(EmailL.equals("admin@admin.it") && PassL.equals("admin")){
                            id = LoginValidate.validateOfficer(EmailL, PassL);
                            try{ 
-                        HttpSession s = SecurityLayer.createSession(request, EmailL, id);
+                        s = SecurityLayer.createSession(request, EmailL, id);
                         System.out.println("Sessione Creata, Connesso!");
                         data.put("nome",EmailL);
                         data.put("id",id);
@@ -182,7 +185,7 @@ public class Task2 extends HttpServlet {
                     FreeMarker.process("task.html", data, response, getServletContext());
                 } else {
                     try{ 
-                        HttpSession s = SecurityLayer.createSession(request, EmailL, id);
+                        s = SecurityLayer.createSession(request, EmailL, id);
                         System.out.println("Sessione Creata, Connesso!");
                         data.put("nome",EmailL);
                         data.put("id",id);
@@ -210,7 +213,7 @@ public class Task2 extends HttpServlet {
                 System.out.println("COMINCIA LA RICERCA!");
                 String SearchStringa = request.getParameter("ricerca");
                 System.out.println("RICERCA IN CORSO::::: >>>" + SearchStringa);           
-                HttpSession s = SecurityLayer.checkSession(request);
+                s = SecurityLayer.checkSession(request);
                 if(s != null){//condizione per vedere se la sessione esiste.                    
                     s.setAttribute("ricerca",SearchStringa);   
                 }else{
@@ -219,6 +222,35 @@ public class Task2 extends HttpServlet {
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
+            }
+            
+            if("candidati".equals(action)){
+                try {
+                    Databasee.connect();
+                    Map<String,Object> map=new HashMap<String,Object>();
+                    int ids=(int) s.getAttribute("id");
+                    int idtapr=(int) s.getAttribute("idtaskprogetto");
+                    int idcoor=(int) s.getAttribute("idcoor");
+                    Calendar c = Calendar.getInstance();
+                    int year=c.get(Calendar.YEAR);
+                    int month= c.get(Calendar.MONTH)+1;
+                    int day=c.get(Calendar.DAY_OF_MONTH);
+                    String today=year + "/" + month + "/" + day;
+                    map.put("idsviluppatore", ids);
+                    map.put("idtaskprogetto", idtapr);
+                    map.put("idcoordinatore", idcoor);
+                    map.put("datacreazione", today);
+                    map.put("tipo", 1);
+                    
+                    Databasee.insertRecord("richieste", map);
+                    System.out.println("INSERIMENTO AVVENUTO CON SUCCESSO");
+                    Databasee.close();
+                    response.sendRedirect("profilo");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Task2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(Task2.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
     }
 

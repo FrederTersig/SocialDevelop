@@ -127,6 +127,8 @@ public class DettagliProgetto extends HttpServlet {
                         String cognome = mo.getString("cognome");
                         String descrizione = mo.getString("descrizione");
                         String titolo = mo.getString("titolo");
+                        int idcoor=mo.getInt("coordinatore.id");
+                        s.setAttribute("idcoor", idcoor);
                         Progetto nuova = new Progetto(nome,cognome,titolo,descrizione);
                         progettoDet.add(nuova);
                     }

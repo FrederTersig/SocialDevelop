@@ -104,7 +104,7 @@ public class Databasee {
         
         //dato un idprogetto, mi restituisce nome e cognome del coordinatore
         public static ResultSet selectProgettoDetail(int idprogetto) throws SQLException{
-            String query = "SELECT sviluppatore.nome, sviluppatore.cognome, progetto.titolo, progetto.descrizione, progetto.datacreazione FROM progetto, sviluppatore, coordinatore WHERE (progetto.id = "+idprogetto+") AND (progetto.idcoordinatore = coordinatore.id) AND (coordinatore.idsviluppatore = sviluppatore.id)";
+            String query = "SELECT coordinatore.id, sviluppatore.nome, sviluppatore.cognome, progetto.titolo, progetto.descrizione, progetto.datacreazione FROM progetto, sviluppatore, coordinatore WHERE (progetto.id = "+idprogetto+") AND (progetto.idcoordinatore = coordinatore.id) AND (coordinatore.idsviluppatore = sviluppatore.id)";
             return Databasee.executeQuery(query);
         }
         //Dato un idtask, mi restituisce i dettagli del task, con le skill prerequisito e i collaboratori che ci stanno lavorando e i loro nomi!.
