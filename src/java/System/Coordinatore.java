@@ -18,6 +18,10 @@ public class Coordinatore {
         this.idSviluppatore=idSviluppatore;
     }
     
+      public Coordinatore(int id){
+        this.id=id;
+      
+    }
  
     
     public int getId(){

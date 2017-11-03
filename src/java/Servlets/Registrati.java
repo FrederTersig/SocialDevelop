@@ -186,8 +186,9 @@ public class Registrati extends HttpServlet {
                         data.put("id",id);
                         //RequestDispatcher rd = request.getRequestDispatcher("index"); //<- dispatch di una richiesta ad un'altra servlet.
                         s.setAttribute("id", id);
-                        processRequest(request, response);
-                        FreeMarker.process("registrati.html", data, response, getServletContext());
+                        //processRequest(request, response);
+                        //FreeMarker.process("registrati.html", data, response, getServletContext());
+                        response.sendRedirect("index");
                     }catch(Exception e2){
                         System.out.println("Errore nel creare la sessione");
                         Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);

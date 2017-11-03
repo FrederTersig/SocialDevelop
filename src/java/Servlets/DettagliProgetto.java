@@ -7,6 +7,7 @@ package Servlets;
 
 import System.Admin;
 import System.Commenti;
+import System.Coordinatore;
 import System.Progetto;
 import System.Sviluppatore;
 import System.TaskProgetto;
@@ -46,6 +47,7 @@ import javax.servlet.http.HttpSession;
 public class DettagliProgetto extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
+   
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -118,20 +120,25 @@ public class DettagliProgetto extends HttpServlet {
             System.out.println("---------");
             // Parte dove si recuperano le informazioni del progetto dal database
             ArrayList<Progetto> progettoDet =null;
+            ArrayList<Coordinatore> cor=null;
+            
                 try{
                     progettoDet = new ArrayList<Progetto>();
                     Databasee.connect();
                     ResultSet mo = Databasee.selectProgettoDetail(num);
+                     cor=new ArrayList<Coordinatore>();
                     while(mo.next()){
                         String nome = mo.getString("nome");
                         String cognome = mo.getString("cognome");
                         String descrizione = mo.getString("descrizione");
                         String titolo = mo.getString("titolo");
                         int idcoor=mo.getInt("coordinatore.id");
-                        s.setAttribute("idcoor", idcoor);
+                       Coordinatore idcoo=new Coordinatore(idcoor);
                         Progetto nuova = new Progetto(nome,cognome,titolo,descrizione);
+                        cor.add(idcoo);
                         progettoDet.add(nuova);
                     }
+                   
                     Databasee.close();
                 }catch(NamingException e) {
                 }catch (SQLException e) {
@@ -139,6 +146,7 @@ public class DettagliProgetto extends HttpServlet {
                         Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             data.put("progettodettaglio", progettoDet);
+            data.put("idcoordinatore", cor);
             
             //Chiamata per prendere informazioni dei task presenti nel progetto
             ArrayList<TaskProgetto> taskProg=null;

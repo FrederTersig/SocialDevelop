@@ -29,8 +29,11 @@
         <div class="container">
             <p><b>TASK:</b></p>                
             <#if taskprogetto ??>
+            <#if idcoordinatore ??>
+            <#list idcoordinatore as IdCoordinatore>
                 <#list taskprogetto as TaskProgetto>
-                <a href="task?idt=${TaskProgetto.id}"><div class="row">
+                
+                <a href="task?idt=${TaskProgetto.id}&idc=${IdCoordinatore.id}"><div class="row">
                         <div class="col-7">${TaskProgetto.getNome()}</div>
                         <div class="col-2">${TaskProgetto.getnumCollaboratori()}</div>
                         <div class="col-2">
@@ -43,6 +46,8 @@
                     </div>
                 </a>
                 </#list>
+                </#list>
+                </#if>
             </#if>
         </div>
         <!-- SEZIONE DEI COMMENTI DEL PROGETTO! -->

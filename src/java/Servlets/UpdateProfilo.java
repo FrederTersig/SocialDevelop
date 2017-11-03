@@ -95,15 +95,27 @@ public class UpdateProfilo extends HttpServlet {
              b=b+a;
          }
          System.out.println(b);
+          ArrayList<Skill> ski=new ArrayList<Skill>();
+         if(b!=""){
          ResultSet skillm=Databasee.selectRecord("skill",b);
-         ArrayList<Skill> ski=new ArrayList<Skill>();
          
-         while(skillm.next()){
+          while(skillm.next()){
              int id=skillm.getInt("id");
              String nome=skillm.getString("nome");
              Skill c=new Skill(id, nome);
              ski.add(c);
          }
+         } else {
+             ResultSet skillm=Databasee.selectRecord2("skill");
+              while(skillm.next()){
+             int id=skillm.getInt("id");
+             String nome=skillm.getString("nome");
+             Skill c=new Skill(id, nome);
+             ski.add(c);}
+         }
+        
+         
+        
          data.put("skill",ski);
          
          ResultSet cur=Databasee.selectRecord("sviluppatore","sviluppatore.id=" + s.getAttribute("id"));

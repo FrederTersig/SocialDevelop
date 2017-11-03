@@ -47,6 +47,7 @@ import javax.servlet.http.HttpSession;
 public class Task2 extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
+    //public int idt=0;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -72,7 +73,9 @@ public class Task2 extends HttpServlet {
             } 
             
             int idt=Integer.parseInt(request.getParameter("idt"));
-            s.setAttribute("idtaskprogetto", idt);
+           s.setAttribute("idt", idt);
+             System.out.println(idt + "SEEEEEEEE");
+            
             System.out.println(idt + "SEEEEEEEE");
             try{
                 Databasee.connect();
@@ -145,7 +148,7 @@ public class Task2 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             String action = request.getParameter("value");
-             HttpSession s = SecurityLayer.checkSession(request);
+            
             if("login".equals(action)){ // SE il metodo post è il login....
                 System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
                 String EmailL = request.getParameter("email");
@@ -156,7 +159,7 @@ public class Task2 extends HttpServlet {
                        if(EmailL.equals("admin@admin.it") && PassL.equals("admin")){
                            id = LoginValidate.validateOfficer(EmailL, PassL);
                            try{ 
-                        s = SecurityLayer.createSession(request, EmailL, id);
+                        HttpSession s = SecurityLayer.createSession(request, EmailL, id);
                         System.out.println("Sessione Creata, Connesso!");
                         data.put("nome",EmailL);
                         data.put("id",id);
@@ -185,7 +188,7 @@ public class Task2 extends HttpServlet {
                     FreeMarker.process("task.html", data, response, getServletContext());
                 } else {
                     try{ 
-                        s = SecurityLayer.createSession(request, EmailL, id);
+                        HttpSession s = SecurityLayer.createSession(request, EmailL, id);
                         System.out.println("Sessione Creata, Connesso!");
                         data.put("nome",EmailL);
                         data.put("id",id);
@@ -213,7 +216,7 @@ public class Task2 extends HttpServlet {
                 System.out.println("COMINCIA LA RICERCA!");
                 String SearchStringa = request.getParameter("ricerca");
                 System.out.println("RICERCA IN CORSO::::: >>>" + SearchStringa);           
-                s = SecurityLayer.checkSession(request);
+                HttpSession s = SecurityLayer.checkSession(request);
                 if(s != null){//condizione per vedere se la sessione esiste.                    
                     s.setAttribute("ricerca",SearchStringa);   
                 }else{
@@ -225,19 +228,21 @@ public class Task2 extends HttpServlet {
             }
             
             if("candidati".equals(action)){
+                 HttpSession s = SecurityLayer.checkSession(request);
                 try {
                     Databasee.connect();
                     Map<String,Object> map=new HashMap<String,Object>();
                     int ids=(int) s.getAttribute("id");
-                    int idtapr=(int) s.getAttribute("idtaskprogetto");
-                    int idcoor=(int) s.getAttribute("idcoor");
+                    //int idtapr=(int) s.getAttribute("idtaskp");
+                    
+                    int idcoor=Integer.parseInt(request.getParameter("idc"));
                     Calendar c = Calendar.getInstance();
                     int year=c.get(Calendar.YEAR);
                     int month= c.get(Calendar.MONTH)+1;
                     int day=c.get(Calendar.DAY_OF_MONTH);
                     String today=year + "/" + month + "/" + day;
                     map.put("idsviluppatore", ids);
-                    map.put("idtaskprogetto", idtapr);
+                    map.put("idtaskprogetto", s.getAttribute("idt"));
                     map.put("idcoordinatore", idcoor);
                     map.put("datacreazione", today);
                     map.put("tipo", 1);
