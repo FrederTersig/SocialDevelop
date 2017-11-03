@@ -34,6 +34,10 @@ public class Richieste {
         this.tipo=tipo;
     }
     
+        public Richieste(boolean tipo){
+      
+        this.tipo=tipo;
+    }
   
     
     public int getId(){

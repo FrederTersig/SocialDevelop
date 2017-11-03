@@ -5,8 +5,10 @@ package Servlets;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import System.Progetto;
 import System.Richieste;
 import System.Sviluppatore;
+import System.Task;
 import Util.DataUtile;
 import Util.Databasee;
 import Util.FreeMarker;
@@ -52,7 +54,7 @@ public class PanRichieste extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, Exception {
             response.setContentType("text/html;charset=UTF-8");
             HttpSession s = SecurityLayer.checkSession(request);
             if(s != null){//condizione per vedere se la sessione esiste. 
@@ -68,7 +70,28 @@ public class PanRichieste extends HttpServlet {
             }else{
                 id = 0;
                 data.put("id", id);
-            }     
+            }
+            Databasee.connect();
+           ResultSet ric=Databasee.selectRecord("sviluppatore,richieste,taskprogetto,task,progetto", "richieste.idsviluppatore=sviluppatore.id AND sviluppatore.id=" + id + " AND richieste.idtaskprogetto=taskprogetto.id AND taskprogetto.idtask=task.id AND taskprogetto.idprogetto=progetto.id");
+       ArrayList<Progetto> pro=new ArrayList<Progetto>();
+       ArrayList<Task> tas=new ArrayList<Task>();
+       ArrayList<Richieste> rich=new ArrayList<Richieste>();
+           while(ric.next()){
+                String nomepr=ric.getString("progetto.titolo");
+                String nometaskp=ric.getString("task.nome");
+                boolean ti=ric.getBoolean("richieste.tipo");
+                Progetto p=new Progetto(nomepr);
+                Task t=new Task(nometaskp);
+                Richieste r=new Richieste(ti);
+                pro.add(p);
+                tas.add(t);
+                rich.add(r);
+            }
+           Databasee.close();
+            data.put("nomeprogetto", pro);
+            data.put("nometask", tas);
+            data.put("tipo", rich);
+            
             
             FreeMarker.process("panRichieste.html", data, response, getServletContext());
     }
@@ -85,7 +108,13 @@ public class PanRichieste extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(PanRichieste.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(PanRichieste.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
