@@ -47,7 +47,7 @@ import javax.servlet.http.HttpSession;
 public class DettagliProgetto extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
-   
+   int num=0;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,7 +63,7 @@ public class DettagliProgetto extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             System.out.println("Richiedo di entrare in dettagliProgetto!");
             // request.getSession andrà bene per utenti loggati e non?
-            int num = (int) request.getSession(true).getAttribute("idprogetto");
+            num = (int) request.getSession(true).getAttribute("idprogetto");
             data.put("idprogetto",num);
             HttpSession s = SecurityLayer.checkSession(request);
             Boolean collabora = false;
@@ -308,6 +308,46 @@ public class DettagliProgetto extends HttpServlet {
                 String prova = request.getParameter("commentoVisibile");
                 System.out.println("PROVA>>>" + prova);
             }
+           if("commenta".equals(action)) {
+                String vis=request.getParameter("commentoVisibile");
+              System.out.println(vis);
+               String comment=request.getParameter("comment");
+               
+               System.out.println(comment);
+                Map<String,Object> commenti=new HashMap<String,Object>();
+               if("NonVisibile".equals(vis)){
+                   try {
+                       commenti.put("idsviluppatore", id);
+                       commenti.put("idprogetto", num);
+                       commenti.put("testo", comment);
+                       commenti.put("visibilità", 1);
+                       Databasee.connect();
+                       Databasee.insertRecord("commenti", commenti);
+                       Databasee.close();
+                       response.sendRedirect("dettagliProgetto");
+                   } catch (SQLException ex) {
+                       Logger.getLogger(DettagliProgetto.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (Exception ex) {
+                       Logger.getLogger(DettagliProgetto.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                   
+               }else{
+                   try {
+                       commenti.put("idsviluppatore", id);
+                       commenti.put("idprogetto", num);
+                       commenti.put("testo", comment);
+                       commenti.put("visibilità", 0);
+                       Databasee.connect();
+                       Databasee.insertRecord("commenti", commenti);
+                       Databasee.close();
+                       response.sendRedirect("dettagliProgetto");
+                   } catch (SQLException ex) {
+                       Logger.getLogger(DettagliProgetto.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (Exception ex) {
+                       Logger.getLogger(DettagliProgetto.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+               } 
+           }
     }
 
     /**
