@@ -28,10 +28,9 @@ public class Commenti {
         this.idProgetto=idProgetto;
        
      }
-    public Commenti(String testo, String nome, String cognome, boolean visib){ // MANCA IMMAGINE!!!!!!
+    public Commenti(String testo, boolean visib){ // MANCA IMMAGINE!!!!!!
         this.testo=testo;
-        this.nomeSvil=nome;
-        this.cognomeSvil=cognome;
+     
         this.visibilita=visib;
     }
     

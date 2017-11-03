@@ -62,28 +62,32 @@
                 <div class="p-2">
                     <!-- INIZIO COMMENTO -->
                     <#if commenti ??>
+                    <#if svil ??>
+                    <#list svil as Svil>
                         <#list commenti as Commenti>
-                            <#if collabora != false || Commenti.getVisibilita() != false>
+                            <#if collabora != false || Commenti.visibilita != false>
                                     <div class="row" style="background-color:grey;">
                                         <div class="card border-dark" style="max-width:10rem;">
                                             <img class="card-img-top" src="./img/utenteA.png" alt="fotoUtente"/>
                                             <div class="card-body">
                                                 <div class="card-title">
-                                                    ${Commenti.getCreatoreNome()}<br>
-                                                    ${Commenti.getCreatoreCognome()}<br>
+                                                    ${Svil.nome}<br>
+                                                    ${Svil.cognome}<br>
                                                 </div>
                                             </div> 
                                         </div>
                                     <!-- Fine Carta -->
                                         <div class="col-10 text-left mt-3 ">
-                                            <p>${Commenti.getTesto()}</p>
+                                            <p>${Commenti.testo}</p>
                                         </div> 
                                     </div>
                                     <!-- FINE DEL COMMENTO!! -->
                                     <hr><!-- Barra di separazione tra risposte -->
                             </#if>
                         </#list>
+                        </#list>
                     </#if>
+                     </#if>
                 </div><!-- FINE del primo FLEX (div con classe p-2) -->
                 
                 <!-- Inizia la parte della creazione della risposta/commento -->
