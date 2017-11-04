@@ -131,7 +131,7 @@ public class Databasee {
         
         //dato un idprogetto, ci restituisce TUTTI i commenti.
         public static ResultSet getCommentiProgetto(int idprogetto) throws SQLException{
-            String query="SELECT commenti.testo, commenti.visibilità, sviluppatore.nome, sviluppatore.cognome  FROM commenti, progetto, collaboratore, sviluppatore WHERE commenti.idprogetto = progetto.id AND progetto.id =" + idprogetto + " AND commenti.idsviluppatore = sviluppatore.id";
+            String query="SELECT commenti.testo, commenti.visibilità, sviluppatore.nome, sviluppatore.cognome  FROM commenti, progetto, collaboratore, sviluppatore WHERE commenti.idprogetto = progetto.id AND progetto.id = 1 AND commenti.idcollaboratore = collaboratore.id AND collaboratore.idsviluppatore=sviluppatore.id";
             return Databasee.executeQuery(query);
         }
         

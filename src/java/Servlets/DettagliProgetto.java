@@ -172,21 +172,17 @@ public class DettagliProgetto extends HttpServlet {
             data.put("taskprogetto", taskProg);
             
             ArrayList<Commenti> listaCommenti=null;
-            ArrayList<Sviluppatore> sv=null;
                 try{
                     Databasee.connect();
                     ResultSet co = Databasee.getCommentiProgetto(num);
                     listaCommenti = new ArrayList<Commenti>();
-                    sv = new ArrayList<Sviluppatore>();
                     while(co.next()) {
                         String testo = co.getString("testo");
                         Boolean visibil = co.getBoolean("visibilità");
                         String nome = co.getString("nome");
                         String cognome = co.getString("cognome");
-                        Commenti lista = new Commenti(testo,visibil);
-                        Sviluppatore svilu=new Sviluppatore(nome,cognome);
+                        Commenti lista = new Commenti(testo,nome,cognome,visibil);
                         listaCommenti.add(lista);
-                        sv.add(svilu);
                     }
                     Databasee.close();
                     
@@ -196,7 +192,6 @@ public class DettagliProgetto extends HttpServlet {
                         Logger.getLogger(Commenti.class.getName()).log(Level.SEVERE, null, ex);
                 }
             data.put("commenti", listaCommenti);
-              data.put("svil", sv);
             System.out.println("Check SESSIONE: COSA ABBIAMO??");
             System.out.println(data);
             FreeMarker.process("dettagliProgetto.html", data, response, getServletContext());
@@ -308,6 +303,10 @@ public class DettagliProgetto extends HttpServlet {
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
+            }else if("ins_commento".equals(action)){
+                System.out.println("INSERISCO UN COMMENTO!");
+                String prova = request.getParameter("commentoVisibile");
+                System.out.println("PROVA>>>" + prova);
             }
            if("commenta".equals(action)) {
                 String vis=request.getParameter("commentoVisibile");
