@@ -88,18 +88,19 @@
                 
                 <!-- Inizia la parte della creazione della risposta/commento -->
               
-                    
-                    <form method="post" role="form">
-                        <div class="form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="commentoVisibile" value="NonVisibile">
-                            Visibile a tutti
-                        </label>
-                    </div>
-                            <textarea class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" name="comment" id="inlineFormInputName2" placeholder="Scrivi qui la tua risposta"></textarea>
-                            <button type="submit" class="btn btn-primary">Rispondi</button>
-                            <input type="hidden" name="value"  value="commenta">
-                    </form>
+                    <#if collabora != false>
+                        <form method="post" role="form">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="check" value="no">
+                                    Visibile a tutti
+                                </label>
+                            </div>
+                                <textarea class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" name="comment" id="inlineFormInputName2" placeholder="Scrivi qui la tua risposta"></textarea>
+                                <button type="submit" class="btn btn-primary">Rispondi</button>
+                                <input type="hidden" name="value"  value="commenta">
+                        </form>
+                    </#if>
                     
         
             </div>

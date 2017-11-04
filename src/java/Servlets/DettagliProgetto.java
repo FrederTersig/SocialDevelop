@@ -47,7 +47,8 @@ import javax.servlet.http.HttpSession;
 public class DettagliProgetto extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
-   int num=0;
+    public int codiceCollaboratore=0;
+    int num=0; // Variabile dove si salva l'id progetto
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -91,12 +92,16 @@ public class DettagliProgetto extends HttpServlet {
                         System.out.println("APPENA PRIMA DI RESULTSET PER CHECKCOLLABORATORE!");
                         ResultSet ko = Databasee.checkCollaboratore(num, svil);
                         System.out.println("Risultato :::: ");
-                        //System.out.println(ko.absolute(0));
-                        //System.out.println(ko.absolute(1));
-                        System.out.println(ko.absolute(2));
                         collabora = ko.absolute(2);
+                        if(collabora){
+                            //SE lo sviluppatore è un collaboratore, registrami il suo id
+                            ResultSet cid = Databasee.getCollaboratoreId(num, svil);
+                            while(cid.next()){
+                                codiceCollaboratore = cid.getInt(1);
+                                System.out.println("HO L'ID DEL COLLABORATORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + codiceCollaboratore);
+                            }
+                        }
                         System.out.println("UGUALI? >> "+ ko.absolute(2) + " " + collabora );
-                        System.out.println("/////////////////////////");
                         //int prova = ko.getInt("visibilità");
                         Databasee.close();
                     }catch(NamingException e) {
@@ -303,21 +308,18 @@ public class DettagliProgetto extends HttpServlet {
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
-            }else if("ins_commento".equals(action)){
-                System.out.println("INSERISCO UN COMMENTO!");
-                String prova = request.getParameter("commentoVisibile");
-                System.out.println("PROVA>>>" + prova);
-            }
-           if("commenta".equals(action)) {
-                String vis=request.getParameter("commentoVisibile");
-              System.out.println(vis);
-               String comment=request.getParameter("comment");
-               
-               System.out.println(comment);
+            }else if("commenta".equals(action)) {
+                
+                //String action = request.getParameter("value");
+                
+                System.out.println("PROVO A MANDARE UN COMMENTA!!!");
+                String vis=request.getParameter("check"); // giusto
+                String comment=request.getParameter("comment"); // giusto
+   
                 Map<String,Object> commenti=new HashMap<String,Object>();
-               if("NonVisibile".equals(vis)){
-                   try {
-                       commenti.put("idsviluppatore", id);
+                if("no".equals(vis)){
+                    try {
+                       commenti.put("idcollaboratore", codiceCollaboratore);
                        commenti.put("idprogetto", num);
                        commenti.put("testo", comment);
                        commenti.put("visibilità", 1);
@@ -325,15 +327,15 @@ public class DettagliProgetto extends HttpServlet {
                        Databasee.insertRecord("commenti", commenti);
                        Databasee.close();
                        response.sendRedirect("dettagliProgetto");
-                   } catch (SQLException ex) {
+                    } catch (SQLException ex) {
                        Logger.getLogger(DettagliProgetto.class.getName()).log(Level.SEVERE, null, ex);
-                   } catch (Exception ex) {
+                    } catch (Exception ex) {
                        Logger.getLogger(DettagliProgetto.class.getName()).log(Level.SEVERE, null, ex);
-                   }
+                    }
                    
-               }else{
-                   try {
-                       commenti.put("idsviluppatore", id);
+                }else{
+                    try {
+                       commenti.put("idcollaboratore", codiceCollaboratore);
                        commenti.put("idprogetto", num);
                        commenti.put("testo", comment);
                        commenti.put("visibilità", 0);
@@ -341,13 +343,13 @@ public class DettagliProgetto extends HttpServlet {
                        Databasee.insertRecord("commenti", commenti);
                        Databasee.close();
                        response.sendRedirect("dettagliProgetto");
-                   } catch (SQLException ex) {
+                    } catch (SQLException ex) {
                        Logger.getLogger(DettagliProgetto.class.getName()).log(Level.SEVERE, null, ex);
-                   } catch (Exception ex) {
+                    } catch (Exception ex) {
                        Logger.getLogger(DettagliProgetto.class.getName()).log(Level.SEVERE, null, ex);
-                   }
-               } 
-           }
+                    }
+                } 
+            }
     }
 
     /**

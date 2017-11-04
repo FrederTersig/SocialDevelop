@@ -147,6 +147,11 @@ public class Databasee {
             return Databasee.executeQuery(query);
         }
         
+        public static ResultSet getCollaboratoreId(int idprogetto,int idsviluppatore) throws SQLException{
+            String query="SELECT DISTINCT collaboratore.id FROM  collaboratore, sviluppatore,taskprogetto, progetto WHERE " + idprogetto +" = taskprogetto.idprogetto AND collaboratore.idtaskprogetto = taskprogetto.id AND collaboratore.idsviluppatore = "+ idsviluppatore +" ";
+            return Databasee.executeQuery(query);
+        }
+        
         /*Query che, dato un progetto, ci ridà una lista di SVILUPPATORI che non fanno parte di quel progetto (NO COORDINATORI NO COLLABORATORI)*/
         
         public static ResultSet getElencoPossSvilup(int idprogetto) throws SQLException{
