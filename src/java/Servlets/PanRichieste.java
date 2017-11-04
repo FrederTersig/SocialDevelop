@@ -71,30 +71,44 @@ public class PanRichieste extends HttpServlet {
                 id = 0;
                 data.put("id", id);
             }
-            Databasee.connect();
-           ResultSet ric=Databasee.selectRecord("sviluppatore,richieste,taskprogetto,task,progetto", "richieste.idsviluppatore=sviluppatore.id AND sviluppatore.id=" + id + " AND richieste.idtaskprogetto=taskprogetto.id AND taskprogetto.idtask=task.id AND taskprogetto.idprogetto=progetto.id");
-       ArrayList<Progetto> pro=new ArrayList<Progetto>();
-       ArrayList<Task> tas=new ArrayList<Task>();
-       ArrayList<Richieste> rich=new ArrayList<Richieste>();
-           while(ric.next()){
-                String nomepr=ric.getString("progetto.titolo");
-                System.out.println(nomepr);
-                String nometaskp=ric.getString("task.nome");
-                System.out.println(nometaskp);
-                boolean ti=ric.getBoolean("richieste.tipo");
-                System.out.println(ti);
-                Progetto p=new Progetto(nomepr);
-                Task t=new Task(nometaskp);
-                Richieste r=new Richieste(ti);
-                pro.add(p);
-                tas.add(t);
-                rich.add(r);
+            ArrayList<Progetto> pro=null;
+            ArrayList<Task> tas=null;
+            ArrayList<Richieste> rich=null;
+            try{
+                Databasee.connect();
+                //Errore nel pannello domande: query formulata male.
+                //OTTIMALE per il pannello degli inviti , non per le domande.
+                ResultSet ric=Databasee.selectRecord("sviluppatore,richieste,taskprogetto,task,progetto", "richieste.idsviluppatore=sviluppatore.id AND sviluppatore.id=" + id + " AND richieste.idtaskprogetto=taskprogetto.id AND taskprogetto.idtask=task.id AND taskprogetto.idprogetto=progetto.id");
+                
+            
+                pro=new ArrayList<Progetto>();
+                tas=new ArrayList<Task>();
+                rich=new ArrayList<Richieste>();
+                while(ric.next()){
+                    String nomepr=ric.getString("progetto.titolo");
+                    System.out.println(nomepr);
+                    String nometaskp=ric.getString("task.nome");
+                    System.out.println(nometaskp);
+                    boolean ti=ric.getBoolean("richieste.tipo");
+                    System.out.println(ti);
+                    Progetto p=new Progetto(nomepr);
+                    Task t=new Task(nometaskp);
+                    Richieste r=new Richieste(ti);
+                    pro.add(p);
+                    tas.add(t);
+                    rich.add(r);
+                }
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
             }
-           Databasee.close();
+            
             data.put("nomeprogetto", pro);
             data.put("nometask", tas);
             data.put("tipo", rich);
-            
+            System.out.println("data>>>>>>>>>>>>" + data);
             
             FreeMarker.process("panRichieste.html", data, response, getServletContext());
     }
