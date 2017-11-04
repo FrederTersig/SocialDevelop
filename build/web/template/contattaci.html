@@ -10,11 +10,11 @@
 
         <p class="">Volete dei chiarimenti o avete dei dubbi riguardanti le funzionalità del sito? Non esitate a conttatarci, un operatore vi risponderà nel minor tempo possibile</p>
       <hr>
-      <form class="">
-      EMAIL: <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="La tua email"><br>
-      OGGETTO: <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="cosa ti serve?">
+      <form class="" method="POST">
+      EMAIL: <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" name="mittente" placeholder="La tua email"><br>
+      OGGETTO: <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" name="oggetto" placeholder="cosa ti serve?">
       <br>
-      DOMANDA: <br><textarea row="4" class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" placeholder="scrivi qui" cols="50"></textarea><br>
+      DOMANDA: <br><textarea row="4" class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" name="contenuto" placeholder="scrivi qui" cols="50"></textarea><br>
       <button type="submit" class="btn btn-primary">INVIA</button>
       </form>
     </div>

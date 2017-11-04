@@ -12,6 +12,7 @@ import Util.DataUtile;
 import Util.Databasee;
 import Util.FreeMarker;
 import Util.SecurityLayer;
+import com.sun.istack.internal.ByteArrayDataSource;
 /**/
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -28,12 +29,26 @@ import javax.naming.NamingException;
 /*Libreria Servlet*/
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+import sun.rmi.transport.Transport;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.mail.*;
+import Util.MailUtility;
+
+
 
 /**
  *
@@ -43,6 +58,8 @@ import javax.servlet.http.HttpSession;
 public class Contattaci extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
      public int id=0;
+     
+     public Contattaci(){ super(); }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -54,6 +71,7 @@ public class Contattaci extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+       
             response.setContentType("text/html;charset=UTF-8");
             HttpSession s = SecurityLayer.checkSession(request);
             if(s != null){//condizione per vedere se la sessione esiste. 
@@ -65,10 +83,15 @@ public class Contattaci extends HttpServlet {
             }else{
                 id = 0;
                 data.put("id", id);
-            }     
+            }  
             
             FreeMarker.process("contattaci.html", data, response, getServletContext());
-    }
+            }
+    
+    
+    
+    
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -175,6 +198,30 @@ public class Contattaci extends HttpServlet {
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
             }
+            
+            
+               
+    String mitt = request.getParameter("mittente");
+    String oggetto = request.getParameter("oggetto");
+    String testo = request.getParameter("contenuto");
+
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+
+    try
+    {
+      MailUtility.sendMail(mitt, oggetto, testo);
+      response.sendRedirect("contattaci");
+      out.println("Invio messaggio OK!");
+    }
+    catch (MessagingException exc)
+    {
+      out.println("Invio non riuscito!");
+      log("MessagingException: " + mitt);
+      log(exc.toString());
+    }
+            
+            
     }
 
     /**
