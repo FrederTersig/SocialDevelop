@@ -39,7 +39,7 @@ public class Progetto {
         this.descrizione=descrizione;
     }
     
-        public Progetto(String titolo){
+    public Progetto(String titolo){
         this.titolo=titolo;
         
     }

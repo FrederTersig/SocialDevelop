@@ -182,7 +182,7 @@ public class Databasee {
             if(sviluppatore){
                 query="SELECT richieste.idsviluppatore,richieste.idcoordinatore, progetto.titolo, task.nome, skill.nome, richieste.datacreazione, richieste.stato, richieste.tipo, richieste.idtaskprogetto FROM progetto, taskprogetto, task, richieste, skillscelte, skillperognitask, skill WHERE richieste.idsviluppatore = " + id + "  AND taskprogetto.id = richieste.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND task.id = taskprogetto.idtask AND taskprogetto.id = skillscelte.idtaskprogetto AND skillscelte.idskillperognitask = skillperognitask.id AND skillperognitask.idskill = skill.id";
             }else{
-                query="SELECT richieste.idsviluppatore,richieste.idcoordinatore, progetto.titolo, task.nome, skill.nome, richieste.datacreazione, richieste.stato, richieste.tipo, richieste.idtaskprogetto FROM progetto, taskprogetto, task, richieste, skillscelte, skillperognitask, skill WHERE richieste.idsviluppatore = " + id + "  AND taskprogetto.id = richieste.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND task.id = taskprogetto.idtask AND taskprogetto.id = skillscelte.idtaskprogetto AND skillscelte.idskillperognitask = skillperognitask.id AND skillperognitask.idskill = skill.id";
+                query="SELECT richieste.idsviluppatore,richieste.idcoordinatore, progetto.titolo, task.nome, skill.nome, richieste.datacreazione, richieste.stato, richieste.tipo, richieste.idtaskprogetto FROM progetto, taskprogetto, task, richieste, skillscelte, skillperognitask, skill WHERE richieste.idcoordinatore = " + id + "  AND taskprogetto.id = richieste.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND task.id = taskprogetto.idtask AND taskprogetto.id = skillscelte.idtaskprogetto AND skillscelte.idskillperognitask = skillperognitask.id AND skillperognitask.idskill = skill.id";
             }
             return Databasee.executeQuery(query);
         }
@@ -196,10 +196,15 @@ public class Databasee {
         
         //Dando l'id sviluppatore questa funzione checka SE lo sviluppatore è un coordinatore. SE lo è restituisce l'id del progetto, altrimenti restituisce NULL.
         public static ResultSet checkCoordinatore(int id) throws SQLException{
-            String query="SELECT DISTINCT IF ( coordinatore.idsviluppatore = " + id + " AND progetto.idcoordinatore = coordinatore.id, progetto.id  , NULL) FROM coordinatore, progetto";
+            String query="SELECT DISTINCT IF ( coordinatore.idsviluppatore = " + id + " AND progetto.idcoordinatore = coordinatore.id, progetto.id  , -1) FROM coordinatore, progetto";
             return Databasee.executeQuery(query);
         }
         
+        //dato id svilup, mi dà id coord
+        public static ResultSet getCoordId(int id) throws SQLException{
+            String query="SELECT DISTINCT IF ( coordinatore.idsviluppatore = " + id + ", coordinatore.id  , -1) FROM coordinatore";
+            return Databasee.executeQuery(query);
+        }
         //mi restituisce il nome del task del taskprogetto specificato:
         public static ResultSet getRichiestaTask(int idtaskprogetto) throws SQLException{
             String query="SELECT task.nome FROM taskprogetto, task WHERE taskprogetto.id = " + idtaskprogetto + " AND task.id = taskprogetto.idtask";

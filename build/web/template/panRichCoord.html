@@ -6,30 +6,28 @@
 </#if>
 <!-- panRichieste si riferisce primariamente agli SVILUPPATORI -->
 <div class="jumbotron jumbotron-fluid">
-    <#if isCoordinator==true>
         <form method="post" role="form">
-            <button type="submit" class="btn btn-primary " name="PannelloCoordinatore" value=""> Coordinatore > </button>
+            <button type="submit" class="btn btn-primary " name="PannelloSviluppatore" value=""> Sviluppatore > </button>
             <input type="hidden" name="value"  value=""> 
         </form>
-    </#if>
     
     <div class="container">
-        <h4 class="text-center"> Offerte </h4>
+        <h4 class="text-center"> Inviti </h4>
         <div class="col-12 bg-info req_container" id="req_tab">
-            <#if offerte ??>
-                <#list offerte as Richieste>
+            <#if inviti ??>
+                <#list inviti as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <div class="d-inline-block float-left">${Richieste.getProgTitolo()} / ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()} </div> <h4 class="d-inline-block float-right"> DISPONIBILE </h4>
+                        <div class="d-inline-block float-left"> Hai invitato ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} a partecipare in ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()} </div> <h4 class="d-inline-block float-right"> ATTESA </h4>
                     </div>
                 </#list>
             </#if>
         </div>
-        <h4 class="text-center"> Proposte </h4>
+        <h4 class="text-center"> Domande </h4>
         <div class="col-12 bg-info req_container" id="req_tab">
-            <#if proposte ??>
-                <#list proposte as Richieste>
+            <#if domande ??>
+                <#list domande as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <div class="d-inline-block float-left">Sei stato invitato in "${Richieste.getProgTitolo()}" per collaborare in " ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}". </div> 
+                        <div class="d-inline-block float-left">Hai ricevuto una richiesta di collaborazione da ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} per ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}. </div> 
                        
                         <form class="d-inline-block float-right" method="post" role="form">
                             <button type="submit" class="btn btn-primary " name="inviaProposta" value=""> ACCETTA/RIFIUTA </button>

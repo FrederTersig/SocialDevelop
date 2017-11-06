@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Federico Tersigni
  */
 //@WebServlet(urlPatterns = {"/Message"})
-public class PanRichieste extends HttpServlet {
+public class PanRichCoord extends HttpServlet {
     Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
     /**
@@ -72,87 +72,51 @@ public class PanRichieste extends HttpServlet {
                 data.put("id", id);
             }
             //Inizio Nuovo pannello
-            ArrayList<Integer> listaCoordProgId = null; //Lista che mi dà tutti i progetti di cui lo sviluppatore è coordinatore.
-            boolean isCoordinator=false;
+            ArrayList<Richieste> inviti=null;
+            ArrayList<Richieste> domande=null;
+            int idCoordinatore = 0;
             try{
                 Databasee.connect();
+                ResultSet cord = Databasee.getCoordId(id);
                 
-                ResultSet list = Databasee.checkCoordinatore(id);// GIUSTA!!!
-                listaCoordProgId = new ArrayList<Integer>();
-                while(list.next()){
-                    int idProg = list.getInt("progetto.id");
-                    if(idProg > -1){
-                        listaCoordProgId.add(idProg);
-                        if(!isCoordinator){
-                            isCoordinator=true;
-                        }
+                while(cord.next()){
+                    idCoordinatore = cord.getInt("id");
+                }
+                
+                //if(idCoordinatore > -1){
+                
+                    ResultSet req = Databasee.getRichieste(idCoordinatore, false); // ID sviluppatore + TRUE SE  E' SVILUPPATORE! iN QUESTO CASO SI!!! GIUSTISSIMA!!!!
+                    inviti = new ArrayList<Richieste>();
+                    while(req.next()){
+                        int reqIdCoord=req.getInt("idcoordinatore");      
+                        int reqIdSvil=req.getInt("idsviluppatore");                
+                        int reqIdTaskPro = req.getInt("idtaskprogetto");
+                        String reqTitolo=req.getString("progetto.titolo");                
+                        String reqTask=req.getString("task.nome");
+                        String reqSkill=req.getString("skill.nome");
+                        String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
+                        String reqStato=req.getString("stato");
+                        boolean reqTipo=req.getBoolean("tipo");             
+                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
+                        inviti.add(r);
                     }
                     
-                }
+                    domande = new ArrayList<Richieste>();
+                    
+                //}
                 Databasee.close();
             }catch(NamingException e) {
             }catch (SQLException e) {
             }catch (Exception ex) {
                     Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
             }
-            data.put("listaProgCoord",listaCoordProgId);
-            data.put("isCoordinator", isCoordinator);
-            System.out.println("Coordinatore? " + isCoordinator + " | ListaProgetti? "+ listaCoordProgId );
-            
-            ArrayList<Richieste> offerte=null;
-            try{
-                Databasee.connect();
-                
-                ResultSet req = Databasee.getListaJob(id); // GIUSTA!!!
-                offerte = new ArrayList<Richieste>();
-                while(req.next()){
-                    String reqTitolo=req.getString("titolo");
-                    String reqTask=req.getString("task.nome");
-                    String reqSkill=req.getString("skill.nome");
-                    Richieste r = new Richieste(reqTitolo, reqTask, reqSkill);
-                    offerte.add(r);
-                }
-                Databasee.close();
-            }catch(NamingException e) {
-            }catch (SQLException e) {
-            }catch (Exception ex) {
-                    Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            System.out.println(offerte);
-
-            data.put("offerte", offerte);
-            //Fine Nuovo Pannello
-            
-            ArrayList<Richieste> proposte=null;
-            try{
-                Databasee.connect();
-       
-                ResultSet req = Databasee.getRichieste(id, true); // ID sviluppatore + TRUE SE  E' SVILUPPATORE! iN QUESTO CASO SI!!! GIUSTISSIMA!!!!
-                proposte = new ArrayList<Richieste>();
-                while(req.next()){
-                    int reqIdCoord=req.getInt("idcoordinatore");      
-                    int reqIdSvil=req.getInt("idsviluppatore");                
-                    int reqIdTaskPro = req.getInt("idtaskprogetto");
-                    String reqTitolo=req.getString("progetto.titolo");                
-                    String reqTask=req.getString("task.nome");
-                    String reqSkill=req.getString("skill.nome");
-                    String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
-                    String reqStato=req.getString("stato");
-                    boolean reqTipo=req.getBoolean("tipo");             
-                    Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
-                    proposte.add(r);
-                }
-                Databasee.close();
-            }catch(NamingException e) {
-            }catch (SQLException e) {
-            }catch (Exception ex) {
-                    Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            data.put("proposte",proposte);
+            data.put("inviti",inviti);
+            data.put("domande",domande);
+            data.put("idCoordina", idCoordinatore);
             System.out.println("data>>>>>>>>>>>>" + data);
             
-            FreeMarker.process("panRichieste.html", data, response, getServletContext());
+            
+            FreeMarker.process("panRichCoord.html", data, response, getServletContext());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

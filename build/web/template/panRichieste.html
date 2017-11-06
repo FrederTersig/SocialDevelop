@@ -6,10 +6,12 @@
 </#if>
 <!-- panRichieste si riferisce primariamente agli SVILUPPATORI -->
 <div class="jumbotron jumbotron-fluid">
-    <form method="post" role="form">
-        <button type="submit" class="btn btn-primary " name="PannelloCoordinatore" value=""> Coordinatore > </button>
-        <input type="hidden" name="value"  value=""> 
-    </form>
+    <#if isCoordinator==true>
+        <form method="post" role="form">
+            <button type="submit" class="btn btn-primary " name="PannelloCoordinatore" value=""> Coordinatore > </button>
+            <input type="hidden" name="value"  value=""> 
+        </form>
+    </#if>
     
     <div class="container">
         <h4 class="text-center"> Offerte </h4>
