@@ -131,12 +131,18 @@ public class TaskSkillProgetto extends HttpServlet {
                 int membri =Integer.parseInt(request.getParameter("membri"));
                 int idcor=(int) a.getAttribute("idcoor");
         try {
+            String t=request.getParameter("t");
             Databasee.connect();
             ResultSet idprog=Databasee.selectMaxRecord("progetto", idcor + "=progetto.idcoordinatore");
             while(idprog.next()){
+                if("crea".equals(t)){
                 int idprogetto= idprog.getInt("id");
                 a.setAttribute("idprogetto", idprogetto);
                 map.put("idprogetto", idprogetto);
+                } else {
+                   int idprogetto = (int) a.getAttribute("idprogetto");
+                   map.put("idprogetto", idprogetto);
+                }
             }
             
             map.put("descrizione", descrizione);

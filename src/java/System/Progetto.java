@@ -39,6 +39,11 @@ public class Progetto {
         this.descrizione=descrizione;
     }
     
+      public Progetto(int id, String titolo){
+        this.titolo=titolo;
+        this.id=id;
+    }
+    
     public Progetto(String titolo){
         this.titolo=titolo;
         
