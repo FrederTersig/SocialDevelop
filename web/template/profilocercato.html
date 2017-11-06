@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<#if id == 0>
+    <#include "header.html">
+<#else>
+    <#include "logHeader.html">
+</#if>
+    <!-- Parte di "descrizione" della pagina -->
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <!-- Inizio Carta Profilo -->
+                <div class="col-3">
+                  <div class="card border-dark" style="max-width: 50rem;">
+                        <div class="card-header">
+                                <div class="row">
+                                    <img src="./img/utenteA.png" alt="fotoUtente" class="rounded-circle"/>
+                                </div>
+                        </div>		
+                  </div>
+         
+            </div>
+                <!-- Fine Carta Profilo -->
+               
+                <!-- Inizio Dati Anagrafici -->
+                <div class="col-9">
+                    <h3 class="text-center">Dati Anagrafici</h3><br><br>
+                    <div class="row">
+                        <#if profiloSv ??>
+                        <#list profiloSv as Sviluppatore>
+                        <div class="col-6">
+                            <!-- due colonne con i dati anagrafici -->
+                            <p>Nome: ${Sviluppatore.getNome()}<br>
+                               Cognome: ${Sviluppatore.getCognome()}<br>
+                               Indirizzo: ${Sviluppatore.getIndirizzo()}</p>
+                        </div>
+                        <div class="col-6">
+                            <p>Data Di Nascita: ${Sviluppatore.getDataDiNascita()}<br>
+                               Telefono: ${Sviluppatore.getTelefono()}<br>
+                               Email: ${Sviluppatore.getEmail()}</p>
+                        </div>
+                        </#list>
+                        </#if>
+                    </div>
+                </div>
+                <!-- Fine Dati Anagrafici -->
+            </div>
+            
+            <div class="col-6 mx-auto">
+                <p><h3 class="text-center">Livello delle Skills</h3><br>
+                <table class="table table-hover table-inverse">
+                  <thead class="thead">
+                      <tr>
+                        <th>Skill Conosciuta</th>
+                        <th>Competenza</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <#if skill ??>
+                      <#list skill as Skill>
+                      <tr>
+                        <th scope="row">${Skill.getNome()}</th>
+                        <td>${Skill.getCompetenza()}</td>
+                      </tr>
+                      </#list>
+                      </#if>
+                      
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Container della seconda parte di cose inerenti al profilo -->
+    <div class="container-fluid">
+        <div class="container">
+            <span class="text-center"><h2>Valutazione</h2></span>
+                <table class="table table-hover table-inverse">
+                  <thead class="thead">
+                      <tr>
+                        <th>Nome Progetto</th>
+                        <th>Coordinatore</th>
+                        <th>Punteggio</th>
+                        <th>Descrizione Task</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <#if valutazioni ??>
+                      <#list valutazioni as Valutazione>
+                      
+                      <tr>
+                        <th scope="row">${Valutazione.getNomeProg()}</th>
+                        <td>${Valutazione.getCoordCognome()}, ${Valutazione.getCoordNome()}</td>
+                        <td>${Valutazione.getPunteggio()}</td>
+                        <td>${Valutazione.getDescrizione()}</td>
+                      </tr>
+                      </#list>
+                      </#if>
+                     
+                  </tbody>
+                </table>
+
+            
+        </div>
+    </div>
+
+ <#include "footer.html">
+ <!-- PIAZZARE IL FOOTER -->
+
+

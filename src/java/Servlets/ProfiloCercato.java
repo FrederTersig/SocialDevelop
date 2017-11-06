@@ -6,42 +6,39 @@
 package Servlets;
 
 import System.Admin;
-import System.Progetto;
+import System.Skill;
 import System.Sviluppatore;
-import Util.DataUtile;
+import System.Valutazione;
 import Util.Databasee;
 import Util.FreeMarker;
 import Util.SecurityLayer;
-/**/
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import static java.util.Objects.isNull;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
-/*Libreria Servlet*/
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 /**
  *
- * @author Federico Tersigni
+ * @author user1
  */
-//@WebServlet(name = "ListaCerca", urlPatterns = {"/ListaCerca"})
-public class ListaCerca extends HttpServlet {
-Map<String, Object> data = new HashMap<String, Object>();
+@WebServlet(name = "ProfiloCercato", urlPatterns = {"/ProfiloCercato"})
+public class ProfiloCercato extends HttpServlet {
+ Map<String, Object> data = new HashMap<String, Object>();
     public int id=0;
+    int num=0;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,78 +49,109 @@ Map<String, Object> data = new HashMap<String, Object>();
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            response.setContentType("text/html;charset=UTF-8");
-            String ricercaStr = (String) request.getSession(true).getAttribute("ricerca");
-            HttpSession s = SecurityLayer.checkSession(request);
-            if(s != null){
+            throws ServletException, IOException, Exception {
+        response.setContentType("text/html;charset=UTF-8");
+  HttpSession s = SecurityLayer.checkSession(request);
+  
+  
+   if(s != null){//condizione per vedere se la sessione esiste. 
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
+                
                 if(s.getAttribute("id") != null){
                     id = (int) s.getAttribute("id");
+                    
                 }
+                
                 else{
                     id=0;
-                }  
-            }else{
-                id = 0; 
-            }     
-            data.put("id", id);
-            if(ricercaStr != ""){
-                ArrayList<Progetto> prog = null;
-                int numProgetti=0;
-                int numSviluppatori=0;
-                data.put("stringa",ricercaStr);
-                try{//Prova la connessione al Database
-                    Databasee.connect();
-                    ResultSet co = Databasee.searchProgetti(ricercaStr);
-                    prog = new ArrayList<Progetto>();
-                    while (co.next()) {
-                            String titolo = co.getString("titolo");
-                            String descrizione = co.getString("descrizione");
-                            String datacreazione=co.getString("datacreazione");
-                            int codice= co.getInt("id");
-                            Progetto lista = new Progetto(titolo, descrizione,codice,datacreazione);
-                            prog.add(lista);            
-                            numProgetti +=1;
-                    }
-                    Databasee.close();
-                }catch(NamingException e) {
-                }catch (SQLException e) {
-                }catch (Exception ex) {
-                        Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                data.put("progetti", prog);
-                data.put("numProgetti",numProgetti);
-                System.out.println("ECCO PROVA PROG, COSA C'E' ??");
-                System.out.println(prog);
-                ArrayList<Sviluppatore> svilup = null;
-                //manca  la parte dello sviluppatore!
-                try{
-                    Databasee.connect();
-                    ResultSet co = Databasee.searchSviluppatori(ricercaStr);
-                    svilup = new ArrayList<Sviluppatore>();
-                    while(co.next()){
-                        String nome = co.getString("nome");
-                        String cognome = co.getString("cognome");
-                        int codice= co.getInt("id");
-                        Sviluppatore lista = new Sviluppatore(codice,nome,cognome);
-                        svilup.add(lista);
-                        numSviluppatori +=1;
-                    }
-                    Databasee.close();
-                }catch(NamingException e) {
-                }catch (SQLException e) {
-                }catch (Exception ex) {
-                        Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                data.put("sviluppatori",svilup);
-                data.put("numSviluppatori", numSviluppatori);
-                System.out.println("CHECK DI DATA!");
-                System.out.println(data);
+                System.out.println("ID ?? > " + id );
+                data.put("id", id);    
             }else{
+                id = 0;
+                data.put("id", id);
+             
                 
+            }     
+  
+  
+  ArrayList<Sviluppatore> detSvilupp = null;
+            try{
+                Databasee.connect();
+                ResultSet ex = Databasee.getInfoProfilo(num); 
+                detSvilupp = new ArrayList<Sviluppatore>();
+                while(ex.next()){
+                    String nome = ex.getString("nome");
+                    String cognome = ex.getString("cognome");
+                    String email = ex.getString("email");
+                    String telefono= (String) ex.getString("telefono");
+                    String indirizzo= ex.getString("indirizzo");
+                    Date nascita = ex.getDate("data");
+                    Sviluppatore lista = new Sviluppatore(nome,cognome,nascita,email,telefono,indirizzo);
+                    detSvilupp.add(lista);
+                }
+                
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Profilo.class.getName()).log(Level.SEVERE, null, ex);
             }
-            FreeMarker.process("listaCerca.html", data, response, getServletContext());
+    data.put("profiloSv", detSvilupp);
+    
+                ArrayList<Skill> listaSkill = null;
+            try{//Prova la connessione al Database
+                Databasee.connect();
+                ResultSet ex = Databasee.getSvilupSkills(num); 
+                listaSkill = new ArrayList<Skill>();
+                while (ex.next()) {
+                        String nome = ex.getString("nome");
+                        int competenza = ex.getInt("preparazione");
+                        
+                        Skill lista = new Skill(nome, competenza);
+                        listaSkill.add(lista);            
+                }
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Profilo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            data.put("skill", listaSkill);
+            ArrayList<Valutazione> detValutazione = null;
+            try{
+                Databasee.connect();
+                ResultSet ex = Databasee.getValutazioniProf(num); 
+                detValutazione = new ArrayList<Valutazione>();
+                while(ex.next()){
+                   int punteggio = ex.getInt("punteggio");
+                   String nome = ex.getString("nome"); 
+                   String cognome = ex.getString("cognome");
+                   String titolo = ex.getString("titolo");
+                   String descrizione = ex.getString("descrizione");
+                   
+                   Valutazione lista = new Valutazione(punteggio,nome,cognome,titolo,descrizione);
+                   detValutazione.add(lista);
+                }
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            data.put("valutazioni", detValutazione);
+            Databasee.connect();
+            ResultSet coo=Databasee.selectRecord("coordinatore,sviluppatore","sviluppatore.id=" + id + " AND sviluppatore.id=coordinatore.idsviluppatore");
+           
+            if(coo.next()!=false){
+                data.put("coord",1);
+            } else{
+                data.put("coord",0);
+            }
+            Databasee.close();
+            //DEVI AGGIUNGERE TUTTO SU DATA
+            FreeMarker.process("profilocercato.html", data, response, getServletContext());
+  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -138,7 +166,11 @@ Map<String, Object> data = new HashMap<String, Object>();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+     try {
+         processRequest(request, response);
+     } catch (Exception ex) {
+         Logger.getLogger(ProfiloCercato.class.getName()).log(Level.SEVERE, null, ex);
+     }
     }
 
     /**
@@ -152,8 +184,9 @@ Map<String, Object> data = new HashMap<String, Object>();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String action = request.getParameter("value");
-            if("login".equals(action)){ // SE il metodo post è il login....
+          String action = request.getParameter("value");
+     try {
+          if("login".equals(action)){ // SE il metodo post è il login....
                 System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
                 String EmailL = request.getParameter("email");
                 String PassL = request.getParameter("password");
@@ -190,7 +223,7 @@ Map<String, Object> data = new HashMap<String, Object>();
                     //out.println("<script type=\"text/javascript\">");
                     //out.println("alert('User or password incorrect');");
                     //out.println("</script>");
-                   response.sendRedirect("index");
+                    FreeMarker.process("listaCerca.html", data, response, getServletContext());
                 } else {
                     try{ 
                         HttpSession s = SecurityLayer.createSession(request, EmailL, id);
@@ -199,8 +232,8 @@ Map<String, Object> data = new HashMap<String, Object>();
                         data.put("id",id);
                         //RequestDispatcher rd = request.getRequestDispatcher("index"); //<- dispatch di una richiesta ad un'altra servlet.
                         s.setAttribute("id", id);
-                        
-                        response.sendRedirect("index");
+                        processRequest(request, response);
+                        FreeMarker.process("listaCerca.html", data, response, getServletContext());
                     }catch(Exception e2){
                         System.out.println("Errore nel creare la sessione");
                         Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
@@ -231,36 +264,11 @@ Map<String, Object> data = new HashMap<String, Object>();
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
-            }else if("d_progetto".equals(action)){
-                //INIZIO >>
-                
-                System.out.println("HO CLICCATO IL BOTTONE DI UN PROGETTO");
-                int num = Integer.parseInt(request.getParameter("dettagli"));
-                data.put("idprogetto", num);
-                HttpSession s = SecurityLayer.checkSession(request);
-                if(s != null){//condizione per vedere se la sessione esiste. 
-                    System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
-                    if(s.getAttribute("id") != null){ 
-                        id = (int) s.getAttribute("id");
-                    }else{ 
-                        id=0;
-                    }              
-                    s.setAttribute("idprogetto",num);   
-                }else{
-                    System.out.println("Ho cliccato, Non esiste sessione, come passo i dati del progetto?");
-                    id = 0;
-                    HttpSession z = request.getSession(true);
-                    z.setAttribute("idprogetto", num);         
-                }   
-                data.put("id", id); 
-                response.sendRedirect("dettagliProgetto");
-                
-                // FINE <<
-            }else if("d_sviluppatore".equals(action)){
-                //INIZIO >>
-                
-                System.out.println("HO CLICCATO IL BOTTONE DI UNO SVILUPPATORE");
-                int num = Integer.parseInt(request.getParameter("dettagli"));
+            }
+                         
+         if("d_sviluppatore".equals(action)){
+         System.out.println("HO CLICCATO IL BOTTONE DI UNO SVILUPPATORE");
+                num = Integer.parseInt(request.getParameter("dettagli"));
                 data.put("idsviluppatore", num);
                 HttpSession s = SecurityLayer.checkSession(request);
                 if(s != null){//condizione per vedere se la sessione esiste. 
@@ -278,12 +286,13 @@ Map<String, Object> data = new HashMap<String, Object>();
                     z.setAttribute("idsviluppatore", num); 
                     System.out.println(z.getAttribute("idsviluppatore") + "//////(//////");
                 }   
-                data.put("id", id); 
-                response.sendRedirect("profilocercato");
-                
-                // FINE <<
-            }
+                data.put("id", id);
+         processRequest(request, response);}
+     } catch (Exception ex) {
+         Logger.getLogger(ProfiloCercato.class.getName()).log(Level.SEVERE, null, ex);
+     }
     }
+
     /**
      * Returns a short description of the servlet.
      *

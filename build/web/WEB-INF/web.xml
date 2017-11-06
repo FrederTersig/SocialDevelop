@@ -254,6 +254,17 @@
         <servlet-name> Profilo </servlet-name>
         <url-pattern> /profilo </url-pattern>
     </servlet-mapping>
+    
+        <!-- profilo cercato -->
+    <servlet>
+        <servlet-name> ProfiloCercato </servlet-name>
+        <servlet-class> Servlets.ProfiloCercato </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> ProfiloCercato </servlet-name>
+        <url-pattern> /profilocercato </url-pattern>
+    </servlet-mapping>
 
     <!-- task -->
     <servlet>
