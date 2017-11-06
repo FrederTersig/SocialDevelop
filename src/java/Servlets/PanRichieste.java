@@ -131,18 +131,20 @@ public class PanRichieste extends HttpServlet {
        
                 ResultSet req = Databasee.getRichieste(id, true); // ID sviluppatore + TRUE SE  E' SVILUPPATORE! iN QUESTO CASO SI!!! GIUSTISSIMA!!!!
                 proposte = new ArrayList<Richieste>();
-                while(req.next()){
-                    int reqIdCoord=req.getInt("idcoordinatore");      
-                    int reqIdSvil=req.getInt("idsviluppatore");                
-                    int reqIdTaskPro = req.getInt("idtaskprogetto");
-                    String reqTitolo=req.getString("progetto.titolo");                
-                    String reqTask=req.getString("task.nome");
-                    String reqSkill=req.getString("skill.nome");
-                    String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
-                    String reqStato=req.getString("stato");
-                    boolean reqTipo=req.getBoolean("tipo");             
-                    Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
-                    proposte.add(r);
+                while(req.next()){ // proposte sono tipo 0!
+                    boolean reqTipo=req.getBoolean("tipo");   
+                    if(!reqTipo){ // mi deve mostrare solo proposte mandate dai coordinatori allo sviluppatore
+                        int reqIdCoord=req.getInt("idcoordinatore");      
+                        int reqIdSvil=req.getInt("idsviluppatore");                
+                        int reqIdTaskPro = req.getInt("idtaskprogetto");
+                        String reqTitolo=req.getString("progetto.titolo");                
+                        String reqTask=req.getString("task.nome");
+                        String reqSkill=req.getString("skill.nome");
+                        String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
+                        String reqStato=req.getString("stato");           
+                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
+                        proposte.add(r);
+                    }
                 }
                 Databasee.close();
             }catch(NamingException e) {
