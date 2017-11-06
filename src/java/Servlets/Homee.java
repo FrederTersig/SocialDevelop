@@ -58,7 +58,7 @@ public class Homee extends HttpServlet {
             ArrayList<Progetto> prog = null;
             try{//Prova la connessione al Database
                 Databasee.connect();
-                ResultSet co = Databasee.selectProgettoUltimi5();
+                ResultSet co = Databasee.selectProgettoUltimi10();
                 prog = new ArrayList<Progetto>();
                 while (co.next()) {
                         String titolo = co.getString("titolo");
@@ -195,6 +195,29 @@ public class Homee extends HttpServlet {
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
+            }
+            
+            if("d_progetto".equals(action)){
+                 System.out.println("HO CLICCATO IL BOTTONE DI UN PROGETTO");
+                int num = Integer.parseInt(request.getParameter("dettagli"));
+                data.put("idprogetto", num);
+                HttpSession s = SecurityLayer.checkSession(request);
+                if(s != null){//condizione per vedere se la sessione esiste. 
+                    System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
+                    if(s.getAttribute("id") != null){ 
+                        id = (int) s.getAttribute("id");
+                    }else{ 
+                        id=0;
+                    }              
+                    s.setAttribute("idprogetto",num);   
+                }else{
+                    System.out.println("Ho cliccato, Non esiste sessione, come passo i dati del progetto?");
+                    id = 0;
+                    HttpSession z = request.getSession(true);
+                    z.setAttribute("idprogetto", num);         
+                }   
+                data.put("id", id); 
+                response.sendRedirect("dettagliProgetto");
             }
  
     }

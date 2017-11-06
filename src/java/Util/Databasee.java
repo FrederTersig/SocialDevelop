@@ -79,8 +79,8 @@ public class Databasee {
        
      }
      
-      public static ResultSet selectProgettoUltimi5() throws SQLException {
-        String query = "SELECT titolo, descrizione, id FROM progetto ORDER BY id DESC LIMIT 4";
+      public static ResultSet selectProgettoUltimi10() throws SQLException {
+        String query = "SELECT titolo, descrizione, id FROM progetto ORDER BY id DESC LIMIT 10";
         return Databasee.executeQuery(query);
        
      }

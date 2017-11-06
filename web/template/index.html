@@ -30,21 +30,43 @@
     <div class="container">
         <!-- Container delle cards -->
         <div class="card-deck">
-            <#if progetti ??>
-            <#list progetti as Progetto>
+          
             <!-- Inizio "Mazzo" di carte -->
-                <div class="card"> <!-- card-img-top 277x180 -->
-                    <img class="card-img-top" src="template/img/anteprima.png" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">${Progetto.titolo}</h4>
-                      <p class="card-text">Descrizione riassuntiva del progetto dove si parla in generale di cosa si vuole fare e accenni su altre caratteristiche del progetto.</p>
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </#list>
-            </#if>
+                   <div class="container">
+                       <center><div class="row">
+                           <p><b>ULTIMI 10 PROGETTI CREATI</b></p>
+                           </div></center>
+            <!-- bisogna decorarla! -->
+            <div class="list-group">
+                <form method="post" role="form">
+                    <#if progetti ??>
+                        <#list progetti as Progetto>
+                        <div class="list-group-item container">
+                            <div class="row">
+
+                                <p class="text-center col-2 my-auto">${Progetto.titolo}</p>
+                                <p class="col-7 my-auto" style="overflow: hidden; text-overflow: ellipsis;">${Progetto.descrizione}</p>
+                                <p class="col-2 my-auto" style="color: green;">Data Creazione</p>
+                                
+                                
+                                <button type="submit" class="btn btn-outline-primary col-1" name="dettagli" value="${Progetto.id}"> Entra -> </button>
+                                
+                                <input type="hidden" name="value"  value="d_progetto">
+                            </div>
+
+                        </div>
+                        <!--Collaboratori/Limite Massimo: Numero di collaboratori presenti / Numero massimo di collaboratori disponibili. Potrebbe essere 
+                        sostituito dalla scritta "full" in rosso quando il numero dei collaboratori è uguale al limite massimo. La scritta poi è in verde se
+                        il numero dei collaboratori è minore del limite massimo-->
+
+                        </#list>
+                    </#if>
+                </form>
+
+            </div>
+           
+    </div>
+           
         <!-- fine carta --> 
         </div>
     </div>
