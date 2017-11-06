@@ -7,7 +7,7 @@
 <!-- panRichieste si riferisce primariamente agli SVILUPPATORI -->
 <div class="jumbotron jumbotron-fluid">
     <form method="post" role="form">
-        <button type="submit" class="btn btn-primary col-1" name="PannelloCoordinatore" value=""> Coordinatore > </button>
+        <button type="submit" class="btn btn-primary " name="PannelloCoordinatore" value=""> Coordinatore > </button>
         <input type="hidden" name="value"  value=""> 
     </form>
     
@@ -27,7 +27,12 @@
             <#if proposte ??>
                 <#list proposte as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <div class="d-inline-block float-left">Sei stato invitato in "${Richieste.getProgTitolo()}" per collaborare in " ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}". </div> <h4 class="d-inline-block float-right"> ACCETTI/RIFIUTI </h4>
+                        <div class="d-inline-block float-left">Sei stato invitato in "${Richieste.getProgTitolo()}" per collaborare in " ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}". </div> 
+                       
+                        <form class="d-inline-block float-right" method="post" role="form">
+                            <button type="submit" class="btn btn-primary " name="inviaProposta" value=""> ACCETTA/RIFIUTA </button>
+                            <input type="hidden" name="value"  value=""> 
+                        </form>
                     </div>
                 </#list>
             </#if>
