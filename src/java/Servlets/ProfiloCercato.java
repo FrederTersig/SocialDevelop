@@ -86,8 +86,9 @@ public class ProfiloCercato extends HttpServlet {
                     String email = ex.getString("email");
                     String telefono= (String) ex.getString("telefono");
                     String indirizzo= ex.getString("indirizzo");
+                    String immagine= ex.getString("immagine");
                     Date nascita = ex.getDate("data");
-                    Sviluppatore lista = new Sviluppatore(nome,cognome,nascita,email,telefono,indirizzo);
+                    Sviluppatore lista = new Sviluppatore(nome,cognome,nascita,email,telefono,indirizzo,immagine);
                     detSvilupp.add(lista);
                 }
                 

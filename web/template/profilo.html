@@ -12,9 +12,13 @@
                 <div class="col-3">
                   <div class="card border-dark" style="max-width: 50rem;">
                         <div class="card-header">
-                                <div class="row">
-                                    <img src="./img/utenteA.png" alt="fotoUtente" class="rounded-circle"/>
-                                </div>
+                                
+                                     <#if profiloSv ??>
+                        <#list profiloSv as Sviluppatore>
+                                    <img height="200" width="200" src="${Sviluppatore.getImmagine()}" alt="fotoUtente" class="rounded-circle"/>
+                                      </#list>
+                        </#if>
+                               
                         </div>		
                   </div>
                     <a href="updateprofilo">MODIFICA PROFILO</a><br>

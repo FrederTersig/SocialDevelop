@@ -57,7 +57,7 @@ public class Sviluppatore {
     
    //Sviluppatore che ci viene dato dalla pagina "profilo" NON PERSONALE
 
-    public Sviluppatore(String nome, String cognome, Date data, String email, String telefono, String indirizzo){
+    public Sviluppatore(String nome, String cognome, Date data, String email, String telefono, String indirizzo, String immagine){
 
         this.nome = nome;
         this.cognome = cognome;
@@ -65,7 +65,7 @@ public class Sviluppatore {
         this.telefono = telefono;
         this.indirizzo = indirizzo;
         this.dataDiNascita = data;
- 
+        this.immagine=immagine;
     }
     
     
@@ -148,11 +148,11 @@ public class Sviluppatore {
         return password;
     }
     
-        public void setIdImmagine(String immagine){
+        public void setImmagine(String immagine){
         this.immagine=immagine;
     }
     
-    public String getIdImmagine(){
+    public String getImmagine(){
         return immagine;
     }
     
