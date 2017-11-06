@@ -159,6 +159,7 @@ public class CreaProgetto extends HttpServlet {
             
              String nomePro = request.getParameter("nome");
                 String descrizione = request.getParameter("descrizione");
+                String datas=request.getParameter("data");
 Calendar c = Calendar.getInstance();
 
 System.out.println(c.getTime());	/* Rappresentazione come stringa in base al tuo Locale */
@@ -189,6 +190,7 @@ int idco=0;
             map.put("titolo", nomePro);
             map.put("descrizione", descrizione);
             map.put("datacreazione", today);
+            map.put("datascad",datas);
             Databasee.insertRecord("progetto", map);
            
             Databasee.close();

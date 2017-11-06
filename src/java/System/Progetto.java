@@ -23,6 +23,7 @@ public class Progetto {
     private String dataCreazione;
     private String nomeCoordinatore;
     private String cognomeCoordinatore;
+     private String datascad;
     private int idImmagine;
     
     public Progetto(int id, int idCoordinatore, String titolo, String descrizione, String dataCreazione, int idImmagine){
@@ -38,6 +39,13 @@ public class Progetto {
         this.titolo=titolo;
         this.descrizione=descrizione;
     }
+    
+      public Progetto(String titolo, String descrizione, String datascad){
+        this.titolo=titolo;
+        this.descrizione=descrizione;
+        this.datascad=datascad;
+    }
+    
     
       public Progetto(int id, String titolo){
         this.titolo=titolo;
@@ -65,6 +73,11 @@ public class Progetto {
     public String getNomeCoord(){
         return nomeCoordinatore;
     }
+    
+      public String getDataScad(){
+        return datascad;
+    }
+    
     public String getCognomeCoord(){
         return cognomeCoordinatore;
     }

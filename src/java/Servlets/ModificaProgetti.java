@@ -12,6 +12,7 @@ import Util.FreeMarker;
 import Util.SecurityLayer;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,11 +109,13 @@ public class ModificaProgetti extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
      try {
+         String m=request.getParameter("m");
          Databasee.connect();
          HttpSession s = SecurityLayer.checkSession(request);
          int idpr=Integer.parseInt(request.getParameter("progetti"));
          s.setAttribute("idprogetto", idpr);
          System.out.println(idpr);
+         if("task".equals(m)){
          ResultSet task=Databasee.selectRecord("progetto,taskprogetto,task", "progetto.id=" + idpr + " AND progetto.id=taskprogetto.idprogetto AND taskprogetto.idtask=task.id");
          ArrayList<TaskProgetto> tas=new ArrayList<TaskProgetto>();
          while(task.next()){
@@ -125,6 +128,28 @@ public class ModificaProgetti extends HttpServlet {
          data.put("taskp",tas);
          Databasee.close();
         FreeMarker.process("modificaprogetti2.html", data, response, getServletContext());
+         } else {
+             
+             
+             ResultSet prog=Databasee.selectRecord("progetto", "progetto.id=" + idpr);
+         ArrayList<Progetto> pro=new ArrayList<Progetto>();
+         while(prog.next()){
+             String titolo=prog.getString("titolo");
+             String descrizione=prog.getString("descrizione");
+             String datascad=prog.getString("datascad");
+             if(datascad==null){
+                 datascad="non definita";
+             }
+             System.out.println(datascad);
+             Progetto t=new Progetto(titolo,descrizione,datascad);
+             pro.add(t);
+            
+         }
+         data.put("pro",pro);
+         Databasee.close();
+        FreeMarker.process("modificaprogetti3.html", data, response, getServletContext());
+             
+         }
      } catch (Exception ex) {
          Logger.getLogger(ModificaProgetti.class.getName()).log(Level.SEVERE, null, ex);
      }

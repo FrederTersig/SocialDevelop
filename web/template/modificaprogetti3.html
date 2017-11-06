@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+    <#include "logHeader.html">
+
+<div class="registrati">
+    <h1 class="centro">AGGIORNA PROGETTO</h1>
+    <p class="testoreg">aggiorna i dati del progetto</p>
+  <hr>
+  <form method="post" action="modificaprogetti3">
+      <div class="row">
+          <#if pro ??>
+          <#list pro as Pro>
+          <div class="col-md-6">
+        Descrizione attuale: ${Pro.descrizione}<input type="text" name="descrizione" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVA DESCRIZIONE">
+          </div>
+           <div class="col-md-6">
+        Titolo attuale: ${Pro.titolo}<input type="text" name="titolo" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO TITOLO">
+           </div>
+          <div class="col-md-6">
+        Data Scadenza attuale: ${Pro.getDataScad()}<input type="date" name="ds" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="DATA SCADENZA">
+           </div>
+          </#list>
+          </#if>
+            <input type="hidden" name="value" value="registra">
+            </div>
+        <br>
+
+        <button type="submit" class="btn btn-primary">MODIFICA</button>
+    </form>
+
+ 
+  
+</div>
+
+
+  <#include "footer.html">
