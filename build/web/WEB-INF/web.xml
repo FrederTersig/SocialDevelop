@@ -226,8 +226,16 @@
         <servlet-name> PanRichieste </servlet-name>
         <url-pattern> /panRichieste </url-pattern>
     </servlet-mapping>
-    <!-- LOGIN, IMPORTANTE!! -->
- 
+    <!-- Coordinatori Messagge -->
+    <servlet>
+        <servlet-name> PanRichCoord </servlet-name>
+        <servlet-class> Servlets.PanRichCoord </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> PanRichCoord </servlet-name>
+        <url-pattern> /panRichCoord </url-pattern>
+    </servlet-mapping>
 
     <!--progettiOUT -->
     <session-config>

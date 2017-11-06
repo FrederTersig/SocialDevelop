@@ -72,36 +72,78 @@ public class PanRichCoord extends HttpServlet {
                 data.put("id", id);
             }
             //Inizio Nuovo pannello
-            ArrayList<Richieste> inviti=null;
-            ArrayList<Richieste> domande=null;
+            ArrayList<Richieste> inviti=null; // tipo richiesta = 0 > inviata dal coordinatore
+            ArrayList<Richieste> domande=null; // tipo richiesta = 1 > inviata dallo sviluppatore
             int idCoordinatore = 0;
             try{
                 Databasee.connect();
                 ResultSet cord = Databasee.getCoordId(id);
-                
+                System.out.println("idCoordinatore preso?");
                 while(cord.next()){
-                    idCoordinatore = cord.getInt("id");
+                    System.out.println("Quanti ID Coordinatore?");
+                    int i = cord.getInt(1);
+                    if(i > -1){
+                        idCoordinatore = i;
+                    }
                 }
-                
+                System.out.println("id coordinatore FINALE >>>>>>>>>" + idCoordinatore);
                 //if(idCoordinatore > -1){
                 
                     ResultSet req = Databasee.getRichieste(idCoordinatore, false); // ID sviluppatore + TRUE SE  E' SVILUPPATORE! iN QUESTO CASO SI!!! GIUSTISSIMA!!!!
                     inviti = new ArrayList<Richieste>();
                     while(req.next()){
-                        int reqIdCoord=req.getInt("idcoordinatore");      
-                        int reqIdSvil=req.getInt("idsviluppatore");                
-                        int reqIdTaskPro = req.getInt("idtaskprogetto");
-                        String reqTitolo=req.getString("progetto.titolo");                
-                        String reqTask=req.getString("task.nome");
-                        String reqSkill=req.getString("skill.nome");
-                        String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
-                        String reqStato=req.getString("stato");
-                        boolean reqTipo=req.getBoolean("tipo");             
-                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
-                        inviti.add(r);
+                        boolean reqTipo=req.getBoolean("tipo"); 
+                        if(!reqTipo){//inviate da coordinatori
+                            int reqIdCoord=req.getInt("idcoordinatore");      
+                            int reqIdSvil=req.getInt("idsviluppatore"); 
+                            // MI SERVE NOME/COGNOME SVILUPPATORE!
+                            
+                            ResultSet aSvil = Databasee.getSviluppGener(reqIdSvil);
+                            String nomeS="";
+                            String cognS="";
+                            while(aSvil.next()){
+                                nomeS = aSvil.getString(1);
+                                cognS = aSvil.getString(2);
+                            }
+                            int reqIdTaskPro = req.getInt("idtaskprogetto");
+                            String reqTitolo=req.getString("progetto.titolo");                
+                            String reqTask=req.getString("task.nome");
+                            String reqSkill=req.getString("skill.nome");
+                            String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
+                            String reqStato=req.getString("stato");
+
+                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
+                            inviti.add(r);
+                        }
                     }
                     
+                    ResultSet req2 = Databasee.getRichieste(idCoordinatore,false);
                     domande = new ArrayList<Richieste>();
+                    while(req2.next()){
+                        boolean reqTipo=req2.getBoolean("tipo"); 
+                        if(reqTipo){ //inviate da utenti/sviluppatori
+                            int reqIdCoord=req2.getInt("idcoordinatore");      
+                            int reqIdSvil=req2.getInt("idsviluppatore");
+                            
+                            ResultSet aSvil = Databasee.getSviluppGener(reqIdSvil);
+                            String nomeS="";
+                            String cognS="";
+                            while(aSvil.next()){
+                                nomeS = aSvil.getString(1);
+                                cognS = aSvil.getString(2);
+                            }
+                            System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" + nomeS + cognS);
+                            int reqIdTaskPro = req2.getInt("idtaskprogetto");
+                            String reqTitolo=req2.getString("progetto.titolo");                
+                            String reqTask=req2.getString("task.nome");
+                            String reqSkill=req2.getString("skill.nome");
+                            String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
+                            String reqStato=req2.getString("stato");
+
+                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
+                            domande.add(r);
+                        }
+                    }
                     
                 //}
                 Databasee.close();
