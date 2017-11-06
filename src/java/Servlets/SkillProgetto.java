@@ -168,26 +168,59 @@ public int idtp=0;
                Databasee.close();
                String azione = request.getParameter("fine");
                System.out.println(azione);
+               
+               
                if(azione.equals("indietro")){
-ArrayList<Task> compiti = null;
-    
-       
-                  try {
-                      Databasee.connect();
-                  } catch (Exception ex) {
-                      Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
-                  }
-             ResultSet task= Databasee.selectTask();
-            compiti = new ArrayList<Task>();
-            while (task.next()) {
-                        String tas = task.getString("nome");
-                        int idt= task.getInt("id");
-                        Task lista = new Task(idt,tas);
-                        compiti.add(lista);            
-                }
-            
-            Databasee.close();
-             data.put("task", compiti);
+                   Databasee.connect();
+          ResultSet task=Databasee.selectRecord("progetto,taskprogetto,task", "progetto.id=" + a.getAttribute("idprogetto") + " AND progetto.id=taskprogetto.idprogetto AND taskprogetto.idtask=task.id");
+         int numRows=0;
+         while(task.next()){
+             numRows++;
+             System.out.println(numRows);
+         }
+         numRows--;
+         String c="";
+         String b="";
+         int i=0;
+         task.absolute(0);
+         
+             while(task.next()){
+             int idta=task.getInt("task.id");
+             if(i<numRows){
+                 c="task.id!=" + idta + " AND ";
+                 i++;
+             }
+             else{
+                 c="task.id!=" + idta;
+             }
+             b=b+c;
+         }
+             
+                      System.out.println(b);
+          ArrayList<Task> ta=new ArrayList<Task>();
+         if(b!=""){
+         ResultSet taskm=Databasee.selectRecord("task",b);
+         
+          while(taskm.next()){
+             int id=taskm.getInt("id");
+             String nome=taskm.getString("nome");
+             Task d=new Task(id, nome);
+             ta.add(d);
+         }
+         } else {
+             ResultSet taskm=Databasee.selectRecord2("task");
+              while(taskm.next()){
+             int id=taskm.getInt("id");
+             String nome=taskm.getString("nome");
+             Task d=new Task(id, nome);
+             ta.add(d);}
+         }
+        
+         
+        
+         data.put("task",ta);
+             
+         Databasee.close();
         FreeMarker.process("taskskillprogetto.html", data, response, getServletContext());
                
                } 

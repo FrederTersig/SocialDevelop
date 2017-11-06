@@ -7,6 +7,7 @@ package Servlets;
 
 import System.Skill;
 import System.Task;
+import System.TaskProgetto;
 import Util.Databasee;
 import Util.FreeMarker;
 import Util.SecurityLayer;
@@ -83,7 +84,71 @@ public class ModificaProgetti2 extends HttpServlet {
          HttpSession s = SecurityLayer.checkSession(request);
           int idpro=(int) s.getAttribute("idprogetto");
          if("mt".equals(t)){
+             int idt=Integer.parseInt(request.getParameter("task"));
+             s.setAttribute("idtaskprogetto",idt);
+             ResultSet tp=Databasee.selectRecord("taskprogetto","taskprogetto.id=" + idt);
+             ArrayList<TaskProgetto> tapr=new ArrayList<TaskProgetto>();
+             while(tp.next()){
+                 String descrizione=tp.getString("descrizione");
+                 int nc=tp.getInt("numcollaboratori");
+                 TaskProgetto tas=new TaskProgetto(nc,descrizione);
+                 tapr.add(tas);
+             }
+             data.put("desc", tapr);
              
+            int idtask=Integer.parseInt(request.getParameter("task"));
+                      ResultSet skil=Databasee.selectRecord("skillscelte,skill,skillperognitask", "skillscelte.idtaskprogetto=" + idtask + " AND skillscelte.idskillperognitask=skillperognitask.id AND skillperognitask.idskill=skill.id");
+         int numRows=0;
+         while(skil.next()){
+             numRows++;
+             System.out.println(numRows);
+         }
+         numRows--;
+         String a="";
+         String b="";
+         int i=0;
+         skil.absolute(0);
+         
+         while(skil.next()){
+             int idsk=skil.getInt("skill.id");
+             if(i<numRows){
+                 a="skill.id!=" + idsk + " AND ";
+                 i++;
+             }
+             else{
+                 a="skill.id!=" + idsk;
+             }
+             b=b+a;
+         }
+         System.out.println(b);
+          ArrayList<Skill> ski=new ArrayList<Skill>();
+         if(b!=""){
+             ResultSet idtak2=Databasee.selectRecord("taskprogetto,task", "taskprogetto.id=" + idtask + " AND taskprogetto.idtask=task.id");
+             int idtask2=0;
+             while(idtak2.next()){
+                 idtask2=idtak2.getInt("task.id");
+             }
+         ResultSet skillm=Databasee.selectRecord("skill,skillperognitask,task",b + " AND task.id=" + idtask2 + " AND skillperognitask.idskill=skill.id AND skillperognitask.idtask=task.id");
+         
+          while(skillm.next()){
+             int id=skillm.getInt("skill.id");
+             String nome=skillm.getString("skill.nome");
+             Skill c=new Skill(id, nome);
+             ski.add(c);
+         }
+         } else {
+             ResultSet skillm=Databasee.selectRecord2("skill");
+              while(skillm.next()){
+             int id=skillm.getInt("id");
+             String nome=skillm.getString("nome");
+             Skill c=new Skill(id, nome);
+             ski.add(c);}
+         }
+        
+         
+        
+         data.put("skill",ski);
+             FreeMarker.process("updatetaskprog.html", data, response, getServletContext());
          } else {
           ResultSet task=Databasee.selectRecord("progetto,taskprogetto,task", "progetto.id=" + idpro + " AND progetto.id=taskprogetto.idprogetto AND taskprogetto.idtask=task.id");
          int numRows=0;

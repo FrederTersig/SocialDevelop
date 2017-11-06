@@ -104,6 +104,17 @@
         <url-pattern> /modificaprogetti2 </url-pattern>
     </servlet-mapping>
     
+                     <!-- MODIFICA PROGETTI3-->
+    <servlet>
+        <servlet-name> UpdateTaskProgetto </servlet-name>
+        <servlet-class> Servlets.UpdateTaskProgetto </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> UpdateTaskProgetto </servlet-name>
+        <url-pattern> /updatetaskprogetto </url-pattern>
+    </servlet-mapping>
+    
            <!-- TASK DA AGGIUNGERE DURANTE LA CREAZIONE DEL PROGETTO -->
     <servlet>
         <servlet-name> TaskSkillProgetto </servlet-name>
