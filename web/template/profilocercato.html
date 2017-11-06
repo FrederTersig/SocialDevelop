@@ -12,12 +12,24 @@
                 <div class="col-3">
                   <div class="card border-dark" style="max-width: 50rem;">
                         <div class="card-header">
-                                <div class="row">
-                                    <img src="./img/utenteA.png" alt="fotoUtente" class="rounded-circle"/>
-                                </div>
+                                <#if profiloSv ??>
+                        <#list profiloSv as Sviluppatore>
+                        <#if Sviluppatore.getImmagine() ??>
+                                    <img height="200" width="200" src="${Sviluppatore.getImmagine()}" alt="fotoUtente" class="rounded-circle"/>
+                                    <#else>
+                                    <img height="200" width="200" src="template/img/default.jpg" alt="fotoUtente" class="rounded-circle"/>
+                                    </#if>
+                                    </#list>
+                        </#if>
                         </div>		
                   </div>
-         
+         <#if profiloSv ??>
+                        <#list profiloSv as Sviluppatore>
+                        <#if Sviluppatore.getCurriculum() ??>
+                     <a href="${Sviluppatore.getCurriculum()}">VISUALIZZA CURRICULUM</a>
+                     </#if>
+                                    </#list>
+                        </#if>
             </div>
                 <!-- Fine Carta Profilo -->
                

@@ -128,7 +128,7 @@ int id=0;
                     File storeFile = new File(filePath);
                     System.out.println("STOREFILE" + storeFile);
 
-                    map.put("curriculum", "template/img/upload/" + fileName);
+                    map.put("curriculum", "template/imgupload/" + fileName);
                     // saves the file on disk
                     item.write(storeFile);
 

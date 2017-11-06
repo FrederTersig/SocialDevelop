@@ -15,17 +15,28 @@
                                 
                                      <#if profiloSv ??>
                         <#list profiloSv as Sviluppatore>
+                        <#if Sviluppatore.getImmagine() ??>
                                     <img height="200" width="200" src="${Sviluppatore.getImmagine()}" alt="fotoUtente" class="rounded-circle"/>
-                                      </#list>
+                                    <#else>
+                                    <img height="200" width="200" src="template/img/default.jpg" alt="fotoUtente" class="rounded-circle"/>
+                                    </#if>
+                                    </#list>
                         </#if>
                                
                         </div>		
                   </div>
                     <a href="updateprofilo">MODIFICA PROFILO</a><br>
                     <#if coord==1>
-                    <a href="modificaprogetti">MODIFICA PROGETTI</a>
+                    <a href="modificaprogetti">MODIFICA PROGETTI</a><br>
                     </#if>
-                    
+                                <#if profiloSv ??>
+                        <#list profiloSv as Sviluppatore>
+                        <#if Sviluppatore.getCurriculum() ??>
+                     <a href="${Sviluppatore.getCurriculum()}">VISUALIZZA CURRICULUM</a>
+                     </#if>
+                                    </#list>
+                        </#if>
+                               
                   
                 </div>
                 <!-- Fine Carta Profilo -->
