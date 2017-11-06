@@ -74,21 +74,22 @@ public class PanRichieste extends HttpServlet {
             //Inizio Nuovo pannello
             ArrayList<Integer> listaCoordProgId = null; //Lista che mi dà tutti i progetti di cui lo sviluppatore è coordinatore.
             boolean isCoordinator=false;
+           
             try{
                 Databasee.connect();
                 
                 ResultSet list = Databasee.checkCoordinatore(id);// GIUSTA!!!
                 listaCoordProgId = new ArrayList<Integer>();
                 while(list.next()){
-                    int idProg = list.getInt("progetto.id");
+                    int idProg = list.getInt(1);
                     if(idProg > -1){
                         listaCoordProgId.add(idProg);
                         if(!isCoordinator){
                             isCoordinator=true;
                         }
-                    }
-                    
+                    }   
                 }
+                
                 Databasee.close();
             }catch(NamingException e) {
             }catch (SQLException e) {

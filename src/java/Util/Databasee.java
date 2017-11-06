@@ -118,6 +118,12 @@ public class Databasee {
             return Databasee.executeQuery(query);
         }
         
+        public static ResultSet getSviluppGener(int id) throws SQLException{
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome FROM sviluppatore WHERE sviluppatore.id = "+id;
+            return Databasee.executeQuery(query);
+        }   
+           
+           
         //data una stringa, mi restituisce una lista di sviluppatori che hanno quel nome / cognome. (tutto o in parte) ** MANCA L'AVATAR/IMMAGINE fatta in THUUMBNAIL!!
         public static ResultSet searchSviluppatori(String nome) throws SQLException{
             String query="SELECT sviluppatore.nome, sviluppatore.cognome, sviluppatore.id FROM `sviluppatore` WHERE sviluppatore.nome LIKE '"+nome+"%' OR sviluppatore.cognome LIKE '"+nome+"%'";

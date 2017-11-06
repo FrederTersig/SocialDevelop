@@ -24,8 +24,6 @@ public class Richieste {
     private String stato;
     private boolean tipo;
     //Aggiunte per richieste "veloci"
-
-    
     private String nomeSvil,cognSvil,nomeCoord,cognCoord,taskNome,progTitolo,skillNome; 
     //NOTA*** Manca data inizio/fine
     
@@ -56,6 +54,20 @@ public class Richieste {
         this.stato=stato;
         this.tipo=tipo;
         
+        
+    }
+    public Richieste(String nomeSvil, String cognSvil, int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto){
+        this.idSviluppatore=idSviluppatore;
+        this.idCoordinatore=idCoordinatore;
+        this.idTaskProgetto=idtaskprogetto;
+        this.taskNome = taskNome;
+        this.progTitolo = progTitolo;
+        this.skillNome = skillNome;
+        this.dataCreazione = dataCreazione;
+        this.stato=stato;
+        this.tipo=tipo;
+        this.nomeSvil = nomeSvil;
+        this.cognSvil = cognSvil;
         
     }
     // Per le richieste generiche
