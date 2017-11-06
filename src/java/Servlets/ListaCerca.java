@@ -80,8 +80,9 @@ Map<String, Object> data = new HashMap<String, Object>();
                     while (co.next()) {
                             String titolo = co.getString("titolo");
                             String descrizione = co.getString("descrizione");
+                            String datacreazione=co.getString("datacreazione");
                             int codice= co.getInt("id");
-                            Progetto lista = new Progetto(titolo, descrizione,codice);
+                            Progetto lista = new Progetto(titolo, descrizione,codice,datacreazione);
                             prog.add(lista);            
                             numProgetti +=1;
                     }

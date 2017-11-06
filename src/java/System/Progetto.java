@@ -20,7 +20,7 @@ public class Progetto {
     private int idCoordinatore;
     private String titolo;
     private String descrizione;
-    private String dataCreazione;
+    private String datacreazione;
     private String nomeCoordinatore;
     private String cognomeCoordinatore;
      private String datascad;
@@ -31,7 +31,7 @@ public class Progetto {
         this.idCoordinatore=idCoordinatore;
         this.titolo=titolo;
         this.descrizione=descrizione;
-        this.dataCreazione=dataCreazione;
+        this.datacreazione=dataCreazione;
         this.idImmagine=idImmagine;
     }
     
@@ -61,6 +61,13 @@ public class Progetto {
         this.titolo=titolo;
         this.descrizione=descrizione;
         this.id = id;
+    }
+    
+       public Progetto(String titolo, String descrizione, int id, String datacreazione){
+        this.titolo=titolo;
+        this.descrizione=descrizione;
+        this.id = id;
+        this.datacreazione=datacreazione;
     }
     //progetto per il dettaglioProgetto - nome,cognome,titolo,descrizione
     public Progetto(String nome, String cognome, String titolo, String descrizione){
@@ -117,11 +124,11 @@ public class Progetto {
     }
     
       public void setDataCreazione(String dataCreazione){
-        this.dataCreazione=dataCreazione;
+        this.datacreazione=dataCreazione;
     }
     
     public String getDataCreazione(){
-        return dataCreazione;
+        return datacreazione;
     }
     
      public void setIdImmagine(int idImmagine){

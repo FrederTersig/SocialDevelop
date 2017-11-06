@@ -74,13 +74,13 @@ public class Databasee {
     }
      
      public static ResultSet selectProgetto(String table) throws SQLException {
-        String query = "SELECT titolo, descrizione, id FROM " + table;
+        String query = "SELECT titolo, descrizione,datacreazione, id FROM " + table;
         return Databasee.executeQuery(query);
        
      }
      
       public static ResultSet selectProgettoUltimi10() throws SQLException {
-        String query = "SELECT titolo, descrizione, id FROM progetto ORDER BY id DESC LIMIT 10";
+        String query = "SELECT datacreazione,titolo, descrizione, id FROM progetto ORDER BY id DESC LIMIT 10";
         return Databasee.executeQuery(query);
        
      }
@@ -131,7 +131,7 @@ public class Databasee {
         }
         //data una stringa, mi restituisce una lista di progetti che ha quel nome
         public static ResultSet searchProgetti(String nome) throws SQLException{
-            String query="SELECT progetto.titolo, progetto.descrizione, progetto.id FROM `progetto` WHERE progetto.titolo LIKE '"+nome+"%'";
+            String query="SELECT progetto.titolo, progetto.descrizione, progetto.id, progetto.datacreazione FROM `progetto` WHERE progetto.titolo LIKE '"+nome+"%'";
             return Databasee.executeQuery(query);
         }
         

@@ -84,7 +84,8 @@ public class ListaProgetti extends HttpServlet {
                         String titolo = co.getString("titolo");
                         String descrizione = co.getString("descrizione");
                         int idProg = co.getInt("id");
-                        Progetto lista = new Progetto(titolo, descrizione,idProg);
+                        String datacreazione=co.getString("datacreazione");
+                        Progetto lista = new Progetto(titolo, descrizione,idProg,datacreazione);
                         prog.add(lista);            
                 }
                 Databasee.close();

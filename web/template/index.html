@@ -33,9 +33,9 @@
           
             <!-- Inizio "Mazzo" di carte -->
                    <div class="container">
-                       <center><div class="row">
+                       <div class="row">
                            <p><b>ULTIMI 10 PROGETTI CREATI</b></p>
-                           </div></center>
+                           </div>
             <!-- bisogna decorarla! -->
             <div class="list-group">
                 <form method="post" role="form">
@@ -46,7 +46,7 @@
 
                                 <p class="text-center col-2 my-auto">${Progetto.titolo}</p>
                                 <p class="col-7 my-auto" style="overflow: hidden; text-overflow: ellipsis;">${Progetto.descrizione}</p>
-                                <p class="col-2 my-auto" style="color: green;">Data Creazione</p>
+                                <p class="col-2 my-auto" style="color: green;">${Progetto.getDataCreazione()}</p>
                                 
                                 
                                 <button type="submit" class="btn btn-outline-primary col-1" name="dettagli" value="${Progetto.id}"> Entra -> </button>
