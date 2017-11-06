@@ -23,6 +23,11 @@ public class Richieste {
     private String dataCreazione;
     private String stato;
     private boolean tipo;
+    //Aggiunte per richieste "veloci"
+
+    
+    private String nomeSvil,cognSvil,nomeCoord,cognCoord,taskNome,progTitolo,skillNome; 
+    //NOTA*** Manca data inizio/fine
     
     public Richieste(int id, int idSviluppatore, int idCoordinatore, int idTaskProgetto, String dataCreazione, String stato, boolean tipo){
         this.id=id;
@@ -34,12 +39,63 @@ public class Richieste {
         this.tipo=tipo;
     }
     
-        public Richieste(boolean tipo){
+    public Richieste(boolean tipo){
       
         this.tipo=tipo;
     }
-  
     
+    // Proposte
+    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto){
+        this.idSviluppatore=idSviluppatore;
+        this.idCoordinatore=idCoordinatore;
+        this.idTaskProgetto=idtaskprogetto;
+        this.taskNome = taskNome;
+        this.progTitolo = progTitolo;
+        this.skillNome = skillNome;
+        this.dataCreazione = dataCreazione;
+        this.stato=stato;
+        this.tipo=tipo;
+        
+        
+    }
+    // Per le richieste generiche
+    public Richieste(String nomeSvil,String cognSvil,String nomeCoord,String cognCoord,String taskNome,String progTitolo,String skillNome){
+        this.nomeSvil = nomeSvil;
+        this.cognSvil = cognSvil;
+        this.nomeCoord = nomeCoord;
+        this.cognCoord = cognCoord;
+        this.taskNome = taskNome;
+        this.progTitolo = progTitolo;
+        this.skillNome = skillNome;
+    }
+    // Per visualizzare le offeret
+    public Richieste(String progTitolo, String taskNome, String skillNome){
+        this.taskNome = taskNome;
+        this.progTitolo = progTitolo;
+        this.skillNome = skillNome;
+    }
+    
+    public String getNomeSvil(){
+        return nomeSvil;
+    }
+    public String getCognSvil(){
+        return cognSvil;
+    }
+    public String getNomeCoord(){
+        return nomeCoord;
+    }
+    public String getCognCoord(){
+        return cognCoord;
+    }
+    public String getTaskNome(){
+        return taskNome;
+    }
+    public String getProgTitolo(){
+        return progTitolo;
+    }
+    public String getSkillNome(){
+        return skillNome;
+    }
     public int getId(){
         return id;
     }

@@ -71,32 +71,19 @@ public class PanRichieste extends HttpServlet {
                 id = 0;
                 data.put("id", id);
             }
-            ArrayList<Progetto> pro=null;
-            ArrayList<Task> tas=null;
-            ArrayList<Richieste> rich=null;
+            //Inizio Nuovo pannello
+            ArrayList<Richieste> offerte=null;
             try{
                 Databasee.connect();
-                //Errore nel pannello domande: query formulata male.
-                //OTTIMALE per il pannello degli inviti , non per le domande.
-                ResultSet ric=Databasee.selectRecord("sviluppatore,richieste,taskprogetto,task,progetto", "richieste.idsviluppatore=sviluppatore.id AND sviluppatore.id=" + id + " AND richieste.idtaskprogetto=taskprogetto.id AND taskprogetto.idtask=task.id AND taskprogetto.idprogetto=progetto.id");
                 
-            
-                pro=new ArrayList<Progetto>();
-                tas=new ArrayList<Task>();
-                rich=new ArrayList<Richieste>();
-                while(ric.next()){
-                    String nomepr=ric.getString("progetto.titolo");
-                    System.out.println(nomepr);
-                    String nometaskp=ric.getString("task.nome");
-                    System.out.println(nometaskp);
-                    boolean ti=ric.getBoolean("richieste.tipo");
-                    System.out.println(ti);
-                    Progetto p=new Progetto(nomepr);
-                    Task t=new Task(nometaskp);
-                    Richieste r=new Richieste(ti);
-                    pro.add(p);
-                    tas.add(t);
-                    rich.add(r);
+                ResultSet req = Databasee.getListaJob(id); // GIUSTA!!!
+                offerte = new ArrayList<Richieste>();
+                while(req.next()){
+                    String reqTitolo=req.getString("titolo");
+                    String reqTask=req.getString("task.nome");
+                    String reqSkill=req.getString("skill.nome");
+                    Richieste r = new Richieste(reqTitolo, reqTask, reqSkill);
+                    offerte.add(r);
                 }
                 Databasee.close();
             }catch(NamingException e) {
@@ -104,10 +91,45 @@ public class PanRichieste extends HttpServlet {
             }catch (Exception ex) {
                     Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
             }
+            System.out.println("FINE DELLE OFFERTE; RULLO DI TAMBURIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+            System.out.println(offerte);
+            System.out.println("TISHTISHTISH");
+            data.put("offerte", offerte);
+            //Fine Nuovo Pannello
             
-            data.put("nomeprogetto", pro);
-            data.put("nometask", tas);
-            data.put("tipo", rich);
+            ArrayList<Richieste> proposte=null;
+            try{
+                Databasee.connect();
+                System.out.println("CONNETTO E PREPARO:: VEDIAMOOOOOOOOOOOOOOO");
+                ResultSet req = Databasee.getRichieste(id, true); // ID sviluppatore + TRUE SE  E' SVILUPPATORE! iN QUESTO CASO SI!!! GIUSTISSIMA!!!!
+                proposte = new ArrayList<Richieste>();
+                while(req.next()){
+                    
+                    int reqIdCoord=req.getInt("idcoordinatore");
+                    System.out.println("----------------------------------------------------------------------------------");
+                    int reqIdSvil=req.getInt("idsviluppatore");
+                    System.out.println("STA ENTRANDO???");
+                    int reqIdTaskPro = req.getInt("idtaskprogetto");
+                    String reqTitolo=req.getString("progetto.titolo");
+                    System.out.println("STA ENTRANDO???");
+                    String reqTask=req.getString("task.nome");
+                    String reqSkill=req.getString("skill.nome");
+                    String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!
+                    System.out.println("STA ENTRANDO???");
+                    String reqStato=req.getString("stato");
+                    boolean reqTipo=req.getBoolean("tipo");
+                    
+                    System.out.println("STA Eaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa??");
+                    Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
+                    proposte.add(r);
+                }
+                Databasee.close();
+            }catch(NamingException e) {
+            }catch (SQLException e) {
+            }catch (Exception ex) {
+                    Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            data.put("proposte",proposte);
             System.out.println("data>>>>>>>>>>>>" + data);
             
             FreeMarker.process("panRichieste.html", data, response, getServletContext());

@@ -175,7 +175,56 @@ public class Databasee {
             
         }
         
+        //Query che dato un idSviluppatore OPPURE un idcoordinatore mi ridà la lista delle richieste/inviti/domande/ecc che hanno.
+        // SE sviluppatore = TRUE allora trattiamo l'id immesso come se fosse dello sviluppatore, altrimenti lo trattiamo come coordinatore.
+        public static ResultSet getRichieste(int id, boolean sviluppatore) throws SQLException{
+            String query = "";
+            if(sviluppatore){
+                query="SELECT richieste.idsviluppatore,richieste.idcoordinatore, progetto.titolo, task.nome, skill.nome, richieste.datacreazione, richieste.stato, richieste.tipo, richieste.idtaskprogetto FROM progetto, taskprogetto, task, richieste, skillscelte, skillperognitask, skill WHERE richieste.idsviluppatore = " + id + "  AND taskprogetto.id = richieste.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND task.id = taskprogetto.idtask AND taskprogetto.id = skillscelte.idtaskprogetto AND skillscelte.idskillperognitask = skillperognitask.id AND skillperognitask.idskill = skill.id";
+            }else{
+                query="SELECT richieste.idsviluppatore,richieste.idcoordinatore, progetto.titolo, task.nome, skill.nome, richieste.datacreazione, richieste.stato, richieste.tipo, richieste.idtaskprogetto FROM progetto, taskprogetto, task, richieste, skillscelte, skillperognitask, skill WHERE richieste.idsviluppatore = " + id + "  AND taskprogetto.id = richieste.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND task.id = taskprogetto.idtask AND taskprogetto.id = skillscelte.idtaskprogetto AND skillscelte.idskillperognitask = skillperognitask.id AND skillperognitask.idskill = skill.id";
+            }
+            return Databasee.executeQuery(query);
+        }
+        // Dopo questa query manca: Query CheckCoordinatore(mi serve anche per il profilo!!)
+        // Query con cui prendo i dettagli dello sviluppatore (solo nome/cognome)
+        // Query con cui prendo i dettagli di un coordinatore (solo nome/cognome)
+        public static ResultSet getIdentitaSvil(int id) throws SQLException{
+            String query="SELECT sviluppatore.nome, sviluppatore.cognome FROM sviluppatore WHERE sviluppatore.id =" + id + " ";
+            return Databasee.executeQuery(query);
+        }
+        
+        //Dando l'id sviluppatore questa funzione checka SE lo sviluppatore è un coordinatore. SE lo è restituisce l'id del progetto, altrimenti restituisce NULL.
+        public static ResultSet checkCoordinatore(int id) throws SQLException{
+            String query="SELECT DISTINCT IF ( coordinatore.idsviluppatore = " + id + " AND progetto.idcoordinatore = coordinatore.id, progetto.id  , NULL) FROM coordinatore, progetto";
+            return Databasee.executeQuery(query);
+        }
+        
+        //mi restituisce il nome del task del taskprogetto specificato:
+        public static ResultSet getRichiestaTask(int idtaskprogetto) throws SQLException{
+            String query="SELECT task.nome FROM taskprogetto, task WHERE taskprogetto.id = " + idtaskprogetto + " AND task.id = taskprogetto.idtask";
+            return Databasee.executeQuery(query);
+        }
+        
+        //mi restituisce il nome del progetto che ha quel determinato id:
+        public static ResultSet getNomeProgetto(int idprogetto) throws SQLException{
+            String query="SELECT progetto.titolo FROM progetto WHERE progetto.id = " + idprogetto ;
+            return Databasee.executeQuery(query);
+        }
      
+        /* Query che mi dà la lista di possibili task a cui uno sviluppatore può iscriversi.
+        ** Di quali elementi devo tener conto? : 1) TASKPROGETTO.STATO (SE 0 significa che deve essere ancora completato, altrimenti è completo e quindi chiuso!)
+        ** 2) SE RIESCO IN TEMPO: tenere conto del numero di collaboratori!!!!!
+        ** La query deve, dato un IDSVILUPPATORE, darci una lista di task( + progetto a cui appartiene) a cui lo sviluppatore può "domandare" l'adesione.
+        ** OVVIAMENTE se il determinato taskProgetto ha stato = 1, non viene visuualizzato perché significa che è stato COMPLETATO!!!!
+        */
+        public static ResultSet getListaJob(int idsvil) throws SQLException{
+            String query="SELECT progetto.titolo, task.nome, skill.nome FROM livello, skill, skillperognitask, task, skillscelte, taskprogetto, progetto WHERE livello.idsviluppatore = " + idsvil + " AND skill.id = livello.idskill AND skillperognitask.idskill = skill.id AND (task.id = skillperognitask.idtask) AND skillscelte.idskillperognitask = skillperognitask.id AND taskprogetto.id = skillscelte.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND taskprogetto.stato = 0";
+            return Databasee.executeQuery(query);
+        }
+        
+        
+        
         public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
         String query = "SELECT skill.nome, livello.preparazione, sviluppatore.nome, sviluppatore.cognome FROM progetto, taskprogetto, skillscelte, skillperognitask, skill, livello, sviluppatore";
         return Databasee.executeQuery(query);

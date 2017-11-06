@@ -4,53 +4,36 @@
 <#else>
     <#include "logHeader.html">
 </#if>
-<!-- Jumbotron che copre tutto + 2 riquadri per i tipi di richiesta + Riquadri all'interno dei riquadri che simboleggiano le richieste -->
+<!-- panRichieste si riferisce primariamente agli SVILUPPATORI -->
 <div class="jumbotron jumbotron-fluid">
+    <form method="post" role="form">
+        <button type="submit" class="btn btn-primary col-1" name="PannelloCoordinatore" value=""> Coordinatore > </button>
+        <input type="hidden" name="value"  value=""> 
+    </form>
+    
     <div class="container">
-        <h4 class="text-center"> PANNELLO INVITI </h4>
+        <h4 class="text-center"> Offerte </h4>
         <div class="col-12 bg-info req_container" id="req_tab">
-                    <#if nomeprogetto ??>
-                    <#if nometask ??>
-                    <#if tipo ??>
-                    
-                <#list tipo as Tipo>
-                <#if Tipo.tipo == false>
+            <#if offerte ??>
+                <#list offerte as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                    
-                        <img src="..." alt="..." class="rounded-0 d-inline-block">
-                        <#list nomeprogetto as NomeProgetto>${NomeProgetto.titolo}</#list> <a href="#" class="alert-link"> </a>.<br>
-                      <#list nometask as NomeTask>${NomeTask.nome}/</#list> <a href="#" class="alert-link"> </a>.
-                   
+                        <div class="d-inline-block float-left">${Richieste.getProgTitolo()} / ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()} </div> <h4 class="d-inline-block float-right"> DISPONIBILE </h4>
                     </div>
-                </#if>
-             </#list>
-                  
-   
-      </#if> </#if> </#if> 
-      
-           
+                </#list>
+            </#if>
         </div>
-        <h4 class="text-center"> PANNELLO DOMANDE </h4>
-        <div class="col-12 bg-danger req_container" id="req_tab">
-            
-             <#if nomeprogetto ??>
-                    <#if nometask ??>
-                    <#if tipo ??>
-                     <#list tipo as Tipo>
-                  <#list nomeprogetto as NomeProgetto>
-                  <#list nometask as NomeTask>
-                   
-                    <#if Tipo.tipo == true>
+        <h4 class="text-center"> Proposte </h4>
+        <div class="col-12 bg-info req_container" id="req_tab">
+            <#if proposte ??>
+                <#list proposte as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <img src="..." alt="..." class="rounded-0 d-inline-block">
-                        ${NomeProgetto.titolo}<a href="#" class="alert-link">${NomeTask.nome}</a>
+                        <div class="d-inline-block float-left">Sei stato invitato in "${Richieste.getProgTitolo()}" per collaborare in " ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}". </div> <h4 class="d-inline-block float-right"> ACCETTI/RIFIUTI </h4>
                     </div>
-             </#if>
-      </#list></#list></#list>
-      </#if> </#if> </#if> 
+                </#list>
+            </#if>
+        </div>
+        
         
     </div>
-
-
 </div>
 <#include "footer.html">
