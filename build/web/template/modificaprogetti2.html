@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+    <#include "logHeader.html">
+
+        <div class="creanewp">
+            <h1 class="">LISTA PROGETTI DI CUI SEI COORDINATORE</h1>
+            <p class="testoreg">Scegli un progetto da modificare</p>
+            <hr>
+            <form method="POST" action="modificaprogetti2">
+                <select name="task">
+                    <#if taskp ??>
+                    <#list taskp as Taskp>
+                    <option value="${Taskp.numCollaboratori}">${Taskp.descrizione}</option>
+                    </#list>
+                    </#if>
+                </select>
+            
+                <button type="submit" name="t" value="mt" class="btn btn-primary">MODIFICA TASK</button>
+                <button type="submit" name="t" value="at" class="btn btn-primary">AGGIUNGI NUOVO TASK</button>
+            </form>
+        </div> <!-- chiusura creap -->
+<#include "footer.html">

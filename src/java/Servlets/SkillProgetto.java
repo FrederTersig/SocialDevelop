@@ -133,10 +133,12 @@ public int idtp=0;
              String[] skill = request.getParameterValues("skill");
               String[] punteggio =request.getParameterValues("livmin");
              int cont2=0;
+           
                        for(int i=0; i<punteggio.length; i++){
                            if(punteggio[i]!=""){
                            cont2++;}
                        }
+                         if(cont2==skill.length){
                        String[] prep= new String[cont2];
                        
                        int cont3=0;
@@ -213,12 +215,15 @@ ArrayList<Task> compiti = null;
          data.put("nominati",svi);
          FreeMarker.process("invita.html", data, response, getServletContext());
                }
+          
             } catch (SQLException ex) {
               Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
           } catch (Exception ex) {
               Logger.getLogger(SkillProgetto.class.getName()).log(Level.SEVERE, null, ex);
           }
-                                           
+             } else {
+                 response.sendRedirect("index");
+             }                               
                        
     
     }

@@ -81,6 +81,29 @@
         <url-pattern> /updateprofilo </url-pattern>
     </servlet-mapping>
     
+              <!-- MODIFICA PROGETTI-->
+    <servlet>
+        <servlet-name> ModificaProgetti </servlet-name>
+        <servlet-class> Servlets.ModificaProgetti </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> ModificaProgetti </servlet-name>
+        <url-pattern> /modificaprogetti </url-pattern>
+    </servlet-mapping>
+    
+    
+                 <!-- MODIFICA PROGETTI2-->
+    <servlet>
+        <servlet-name> ModificaProgetti2 </servlet-name>
+        <servlet-class> Servlets.ModificaProgetti2 </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name> ModificaProgetti2 </servlet-name>
+        <url-pattern> /modificaprogetti2 </url-pattern>
+    </servlet-mapping>
+    
            <!-- TASK DA AGGIUNGERE DURANTE LA CREAZIONE DEL PROGETTO -->
     <servlet>
         <servlet-name> TaskSkillProgetto </servlet-name>

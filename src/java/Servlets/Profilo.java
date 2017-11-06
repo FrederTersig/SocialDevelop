@@ -53,7 +53,7 @@ public class Profilo extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, Exception {
             response.setContentType("text/html;charset=UTF-8");
             HttpSession s = SecurityLayer.checkSession(request);
             int idPro = (int) s.getAttribute("id");
@@ -141,6 +141,15 @@ public class Profilo extends HttpServlet {
                     Logger.getLogger(Homee.class.getName()).log(Level.SEVERE, null, ex);
             }
             data.put("valutazioni", detValutazione);
+            Databasee.connect();
+            ResultSet coo=Databasee.selectRecord("coordinatore,sviluppatore","sviluppatore.id=" + id + " AND sviluppatore.id=coordinatore.idsviluppatore");
+           
+            if(coo.next()!=false){
+                data.put("coord",1);
+            } else{
+                data.put("coord",0);
+            }
+            Databasee.close();
             //DEVI AGGIUNGERE TUTTO SU DATA
             FreeMarker.process("profilo.html", data, response, getServletContext());
     }
@@ -157,7 +166,13 @@ public class Profilo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Profilo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Profilo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
