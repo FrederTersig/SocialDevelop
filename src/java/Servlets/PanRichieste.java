@@ -104,35 +104,23 @@ public class PanRichieste extends HttpServlet {
             
             ArrayList<Richieste> offerte=null;
             try{
-                Databasee.connect();
-                
+                Databasee.connect();               
                 ResultSet req = Databasee.getListaJob(id); // GIUSTA!!!
                 offerte = new ArrayList<Richieste>();
                 while(req.next()){
-                    //idsvil,idcoord,titolo,tasknome,skillnome,datacreazione,stato,tipo,idtaskprogetto
                     int idCoordinatore=req.getInt("progetto.idcoordinatore");
                     int idTaskProgetto=req.getInt("taskprogetto.id");
-
                     String reqTitolo=req.getString("titolo");
                     String reqTask=req.getString("task.nome");
                     String reqSkill=req.getString("skill.nome");
-
                     int inviataOff=0;
                     String reqStato="Disponibile";
-                    //QUERY per vedere se bottone giusto o sbagliato
-                    
                     ResultSet check = Databasee.isInviteDone(id, idCoordinatore, idTaskProgetto);
-
                         reqStato="Attesa";
                         if(check.absolute(2)){
                             inviataOff=1;
                             reqStato="Attesa";
-                        }
-                        
-                        
-                 
-                    
-                    
+                        }              
                     boolean reqTipo=true; //equivale a 1
                     Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, reqSkill,"2017-00-00",reqStato,reqTipo,idTaskProgetto,inviataOff);
                     offerte.add(r);
@@ -302,6 +290,27 @@ public class PanRichieste extends HttpServlet {
                         Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
+                response.sendRedirect("panRichieste");
+            }else if("Accetta".equals(action)){
+                System.out.println("ACCETTA");
+                Map<String, Object> map = new HashMap<String, Object>();
+                //int idSvil = Integer.parseInt(request.getParameter("sviluppatore"));
+                int idTP = Integer.parseInt(request.getParameter("taskprog"));
+                map.put("idsviluppatore", id);
+                map.put("idtaskprogetto",idTP);
+                    
+                try{
+                    Databasee.connect();
+                    
+                    Databasee.insertRecord("collaboratore", map);
+                    Databasee.close();
+                }catch(NamingException e) {
+                    System.out.println(e );
+                }catch (SQLException e) {
+                    System.out.println(e );
+                }catch (Exception ex) {
+                        Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 response.sendRedirect("panRichieste");
             }
     }

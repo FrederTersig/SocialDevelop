@@ -49,9 +49,14 @@
                        
                         <form class="d-inline-block float-right" method="post" role="form">
                             <button type="submit" class="btn btn-primary " name="accettaProposta" value=""> ACCETTA</button>
-                            <input type="hidden" name="value"  value=""> 
+                            <input type="hidden" name="value"  value="Accetta"> 
+                            
                             <button type="submit" class="btn btn-danger " name="rifiutaProposta" value=""> RIFIUTA </button>
-                            <input type="hidden" name="value"  value=""> 
+                            <input type="hidden" name="value"  value="deleteOfferta"> 
+                            
+                            <input type="hidden" name="sviluppatore"  value="${Richieste.getIdSviluppatore()}"> 
+                            <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"> 
+                            <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
                         </form>
                     </div>
                 </#list>
