@@ -238,12 +238,18 @@ public class Databasee {
             String query="IINSERT INTO `richieste` (`id`, `idsviluppatore`, `idcoordinatore`, `idtaskprogetto`, `datacreazione`, `stato`, `tipo`) VALUES (NULL, '10', '2', '5', '2017-11-05', 'Attesa', '1');";
             return Databasee.updateQuery(query);
         }
-        public static Boolean deleteRichiesta(int idsv, int idcoo, int idtp, boolean tipo) throws SQLException{
+        public static Boolean deleteRichiesta(int idsv, int idcoo, int idtp) throws SQLException{
             //MANCA DATA! DA MODIFICARE TOTALMENTE!!!!!!!!!!!!!!!!!!!!!!!
             //DELETE FROM richieste WHERE richieste.idcoordinatore=1 AND richieste.idsviluppatore = 1 AND richieste.idtaskprogetto =1 AND richieste.stato = "Attesa Coordinatore" AND richieste.tipo=1 AND richieste.datacreazione =
-            String query="DELETE FROM richieste WHERE richieste.idcoordinatore="+ idcoo +" AND richieste.idsviluppatore = "+ idsv +" AND richieste.idtaskprogetto ="+ idtp +" AND richieste.stato = "+"Attesa"+" AND richieste.tipo="+tipo;
+            String query="DELETE FROM richieste WHERE richieste.idcoordinatore="+ idcoo +" AND richieste.idsviluppatore = "+ idsv +" AND richieste.idtaskprogetto ="+ idtp;
             return Databasee.updateQuery(query);
         }
+        
+        public static ResultSet isInviteDone(int ids,int idc, int idtp) throws SQLException{
+            String query="SELECT DISTINCT IF ( richieste.idsviluppatore = " + ids + " AND richieste.idcoordinatore = " + idc + " AND richieste.idtaskprogetto = " + idtp + " , true, false) FROM richieste";
+            return Databasee.executeQuery(query);
+        }
+        
         
         
         public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.
@@ -326,7 +332,7 @@ public class Databasee {
     }
       
       
-          public static boolean insertRecord(String table, Map<String, Object> data) throws SQLException {
+        public static boolean insertRecord(String table, Map<String, Object> data) throws SQLException {
         // Generazione query
         String query = "INSERT INTO " + table + " SET ";
         Object value;

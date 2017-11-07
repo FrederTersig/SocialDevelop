@@ -23,6 +23,7 @@ public class Richieste {
     private String dataCreazione;
     private String stato;
     private boolean tipo;
+    private int inviata;
     //Aggiunte per richieste "veloci"
     private String nomeSvil,cognSvil,nomeCoord,cognCoord,taskNome,progTitolo,skillNome; 
     //NOTA*** Manca data inizio/fine
@@ -41,7 +42,7 @@ public class Richieste {
       
         this.tipo=tipo;
     }
-    
+   
     
     // Proposte
     public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto){
@@ -54,6 +55,19 @@ public class Richieste {
         this.dataCreazione = dataCreazione;
         this.stato=stato;
         this.tipo=tipo;
+    }
+    //listaJob
+    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int inviata){
+        this.idSviluppatore=idSviluppatore;
+        this.idCoordinatore=idCoordinatore;
+        this.idTaskProgetto=idtaskprogetto;
+        this.taskNome = taskNome;
+        this.progTitolo = progTitolo;
+        this.skillNome = skillNome;
+        this.dataCreazione = dataCreazione;
+        this.stato=stato;
+        this.tipo=tipo;
+        this.inviata=inviata;
     }
     public Richieste(String nomeSvil, String cognSvil, int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto){
         this.idSviluppatore=idSviluppatore;
@@ -109,6 +123,9 @@ public class Richieste {
     }
     public int getId(){
         return id;
+    }
+    public int getInviata(){
+        return inviata;
     }
     
       public void setIdSviluppatore(int idSviluppatore){

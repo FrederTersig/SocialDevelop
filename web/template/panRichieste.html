@@ -17,17 +17,24 @@
         <div class="col-12 bg-info req_container" id="req_tab">
             <#if offerte ??>
                 <#list offerte as Richieste>
+                
                     <div class="alert alert-dark clearfix" role="alert">
                         <div class="d-inline-block float-left">${Richieste.getProgTitolo()} / ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()} </div> 
                         <!-- SE esiste questa stessa richiesta mandata dallo stesso sviluppatore, mostra ANNULLA OFFERTA -->
                         <form class="d-inline-block float-right" method="post" role="form">
-                            <button type="submit" class="btn btn-primary " name="inviaOfferta" value=""> INVIA OFFERTA </button>
-                            <input type="hidden" name="value"  value="insertOfferta"> 
-                            <input type="hidden" name="coordinatore_"  value="${Richieste.getIdCoordinatore()}"> 
-                            <input type="hidden" name="taskprog_"  value="${Richieste.getIdTaskProgetto()}"> 
-                            
+                        <#if Richieste.getInviata() == 1>
                             <button type="submit" class="btn btn-danger " name="cancellaOfferta" value=""> ANNULLA </button>
-                            <input type="hidden" name="value"  value="deleteOfferta"> 
+                            <input type="hidden" name="value" value="deleteOfferta">
+ 
+                        
+                        <#else>
+                        
+                            <button type="submit" class="btn btn-primary " name="inviaOfferta" value=""> INVIA OFFERTA </button>
+                            <input type="hidden" name="value"  value="insertOfferta"/> 
+
+                        </#if>
+                            <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"/> 
+                            <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"/> 
                         </form>
                     </div>
                 </#list>
