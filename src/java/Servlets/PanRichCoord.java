@@ -111,8 +111,23 @@ public class PanRichCoord extends HttpServlet {
                             String reqSkill=req.getString("skill.nome");
                             String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
                             String reqStato=req.getString("stato");
+                            
+                            int numCollaboratori=req.getInt("taskprogetto.numcollaboratori");
+                            //FACCIO IL CHECK DEL NUMCOLLABORATORI: SE E' PIENO BISOGNA DIRLO!
+                            //INIZIO
+                            Integer n=null;
+                            ResultSet part=Databasee.contCollaboratori(reqIdTaskPro);
+                            while(part.next()){
+                                int collat=part.getInt("num");
+                                n=new Integer(collat);
+                            }
+                            int taskEccesso=0;
+                            if(n >= numCollaboratori){
+                                taskEccesso=1;
+                            }
+                            //FINE
 
-                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
+                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro, taskEccesso);
                             inviti.add(r);
                         }
                     }
@@ -139,8 +154,23 @@ public class PanRichCoord extends HttpServlet {
                             String reqSkill=req2.getString("skill.nome");
                             String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
                             String reqStato=req2.getString("stato");
+                            
+                            int numCollaboratori=req.getInt("taskprogetto.numcollaboratori");
+                            //FACCIO IL CHECK DEL NUMCOLLABORATORI: SE E' PIENO BISOGNA DIRLO!
+                            //INIZIO
+                            Integer n=null;
+                            ResultSet part=Databasee.contCollaboratori(reqIdTaskPro);
+                            while(part.next()){
+                                int collat=part.getInt("num");
+                                n=new Integer(collat);
+                            }
+                            int taskEccesso=0;
+                            if(n >= numCollaboratori){
+                                taskEccesso=1;
+                            }
+                            //FINE
 
-                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
+                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro, taskEccesso);
                             domande.add(r);
                         }
                     }
