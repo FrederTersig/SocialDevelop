@@ -31,6 +31,8 @@ import javax.naming.NamingException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +40,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+
 /**
  *
  * @author Federico Tersigni
@@ -85,7 +89,30 @@ public class ListaProgetti extends HttpServlet {
                         String descrizione = co.getString("descrizione");
                         int idProg = co.getInt("id");
                         String datacreazione=co.getString("datacreazione");
-                        Progetto lista = new Progetto(titolo, descrizione,idProg,datacreazione);
+                        String datascad=co.getString("datascad");
+                            System.out.println(datascad);
+                            int scad=1;
+                            if(datascad!=null){
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                 java.util.Date daConfrontare = sdf.parse(datascad);
+
+                 // Catturo la data di oggi
+                 java.util.Date oggi = java.util.GregorianCalendar.getInstance().getTime( );
+
+                 // Faccio confronto
+                 if(oggi.compareTo(daConfrontare)<0) {
+                 System.out.println("in corso");
+                 scad=1;
+                 } else if(oggi.compareTo(daConfrontare)>0) {
+                     scad=0;
+                 System.out.println("finito");
+                 } else if(oggi.compareTo(daConfrontare) == 0) {
+                     scad=2;
+                 System.out.println("ultimo giorno");
+                 }}
+                        
+                        
+                        Progetto lista = new Progetto(titolo, descrizione,idProg,datacreazione,scad);
                         prog.add(lista);            
                 }
                 Databasee.close();
@@ -95,6 +122,7 @@ public class ListaProgetti extends HttpServlet {
                     Logger.getLogger(Progetto.class.getName()).log(Level.SEVERE, null, ex);
             }
             data.put("progetti", prog);
+            
             FreeMarker.process("listaProgetti.html", data, response, getServletContext());
     }
 

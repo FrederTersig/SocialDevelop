@@ -57,7 +57,7 @@ public class Sviluppatore {
     
    //Sviluppatore che ci viene dato dalla pagina "profilo" NON PERSONALE
 
-    public Sviluppatore(String nome, String cognome, Date data, String email, String telefono, String indirizzo, String immagine){
+    public Sviluppatore(String nome, String cognome, Date data, String email, String telefono, String indirizzo, String immagine, String curriculum){
 
         this.nome = nome;
         this.cognome = cognome;
@@ -66,6 +66,7 @@ public class Sviluppatore {
         this.indirizzo = indirizzo;
         this.dataDiNascita = data;
         this.immagine=immagine;
+        this.curriculum=curriculum;
     }
     
     
@@ -127,7 +128,7 @@ public class Sviluppatore {
         this.curriculum=curriculum;
     }
     
-    public String getCurrciulum(){
+    public String getCurriculum(){
         return curriculum;
     }
     

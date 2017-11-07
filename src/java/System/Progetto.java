@@ -25,6 +25,7 @@ public class Progetto {
     private String cognomeCoordinatore;
      private String datascad;
     private int idImmagine;
+    private int scad;
     
     public Progetto(int id, int idCoordinatore, String titolo, String descrizione, String dataCreazione, int idImmagine){
         this.id=id;
@@ -68,6 +69,16 @@ public class Progetto {
         this.descrizione=descrizione;
         this.id = id;
         this.datacreazione=datacreazione;
+        this.scad=scad;
+    }
+       
+       
+          public Progetto(String titolo, String descrizione, int id, String datacreazione, int scad){
+        this.titolo=titolo;
+        this.descrizione=descrizione;
+        this.id = id;
+        this.datacreazione=datacreazione;
+        this.scad=scad;
     }
     //progetto per il dettaglioProgetto - nome,cognome,titolo,descrizione
     public Progetto(String nome, String cognome, String titolo, String descrizione){
@@ -97,6 +108,10 @@ public class Progetto {
     
     public int getId(){
         return id;
+    }
+    
+    public int getScad(){
+        return scad;
     }
     
       public void setIdCoordinatore(int idCoordinatore){

@@ -22,6 +22,7 @@
                 <form method="post" role="form">
                     <#if progetti ??>
                         <#list progetti as Progetto>
+                        <#if Progetto.getScad()==1>
                         <div class="list-group-item container">
                             <div class="row">
 
@@ -39,7 +40,7 @@
                         <!--Collaboratori/Limite Massimo: Numero di collaboratori presenti / Numero massimo di collaboratori disponibili. Potrebbe essere 
                         sostituito dalla scritta "full" in rosso quando il numero dei collaboratori è uguale al limite massimo. La scritta poi è in verde se
                         il numero dei collaboratori è minore del limite massimo-->
-
+</#if>
                         </#list>
                     </#if>
                 </form>
@@ -47,6 +48,37 @@
             </div>
             <div>
                 <p class="text-center">Progetti Finiti</p>
+                
+                            <div class="list-group">
+                <form method="post" role="form">
+                    <#if progetti ??>
+                        <#list progetti as Progetto>
+                        <#if Progetto.getScad()==0>
+                        <div class="list-group-item container">
+                            <div class="row">
+
+                                <p class="text-center col-2 my-auto">${Progetto.titolo}</p>
+                                <p class="col-7 my-auto" style="overflow: hidden; text-overflow: ellipsis;">${Progetto.descrizione}</p>
+                                <p class="col-2 my-auto" style="color: green;">${Progetto.getDataCreazione()}</p>
+                                
+                                
+                                <button type="submit" class="btn btn-outline-primary col-1" name="dettagli" value="${Progetto.id}"> Entra -> </button>
+                                
+                                <input type="hidden" name="value"  value="d_progetto">
+                            </div>
+
+                        </div>
+                        <!--Collaboratori/Limite Massimo: Numero di collaboratori presenti / Numero massimo di collaboratori disponibili. Potrebbe essere 
+                        sostituito dalla scritta "full" in rosso quando il numero dei collaboratori è uguale al limite massimo. La scritta poi è in verde se
+                        il numero dei collaboratori è minore del limite massimo-->
+</#if>
+                        </#list>
+                    </#if>
+                </form>
+
+            </div>
+                
+                
             </div>
     </div> <!-- /container -->
       <!-- fine secondo mazzo di carte -->
