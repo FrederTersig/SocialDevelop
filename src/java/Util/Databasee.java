@@ -74,7 +74,7 @@ public class Databasee {
     }
      
      public static ResultSet selectProgetto(String table) throws SQLException {
-        String query = "SELECT titolo, descrizione,datacreazione, id FROM " + table;
+        String query = "SELECT titolo, descrizione,datacreazione,datascad, id FROM " + table;
         return Databasee.executeQuery(query);
        
      }
