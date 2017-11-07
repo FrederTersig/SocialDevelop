@@ -37,6 +37,40 @@
         <url-pattern> /invita </url-pattern>
     </servlet-mapping>
     
+        <!-- VALUTA -->
+    <servlet>
+        <servlet-name> Valuta </servlet-name>
+        <servlet-class> Servlets.Valuta </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>  Valuta </servlet-name>
+        <url-pattern> /valutazione </url-pattern>
+    </servlet-mapping>
+    
+          <!-- VALUTA2 -->
+    <servlet>
+        <servlet-name> TaskVal</servlet-name>
+        <servlet-class> Servlets.TaskVal </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>  TaskVal </servlet-name>
+        <url-pattern> /taskval </url-pattern>
+    </servlet-mapping>
+    
+    
+            <!-- VALUTA3 -->
+    <servlet>
+        <servlet-name> ListColl</servlet-name>
+        <servlet-class> Servlets.ListColl </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>  ListColl</servlet-name>
+        <url-pattern> /listcoll </url-pattern>
+    </servlet-mapping>
+    
     <!-- REGISTRATI -->
     <servlet>
         <servlet-name> Registrati </servlet-name>

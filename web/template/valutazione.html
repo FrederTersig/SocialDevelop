@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+    <#include "logHeader.html">
+
+        <div class="creanewp">
+            <h1 class="">LISTA PROGETTI DI CUI SEI COORDINATORE</h1>
+            <p class="testoreg">Scegli un progetto da modificare</p>
+            <hr>
+            <form method="POST">
+                <select name="progetti">
+                    <#if progetti ??>
+                    <#list progetti as Progetti>
+                    <option name="progetti" value="${Progetti.id}">${Progetti.titolo}</option>
+                    </#list>
+                    </#if>
+                </select>
+            
+                <button type="submit" name="value" value="valuta" class="btn btn-primary">VALUTA</button>
+                
+            </form>
+        </div> <!-- chiusura creap -->
+<#include "footer.html">
