@@ -18,7 +18,10 @@
                         <form class="d-inline-block float-right" method="post" role="form">
                             <!-- manca if -->
                             <button type="submit" class="btn btn-danger " name="cancellaInvito" value=""> Annulla </button>
-                            <input type="hidden" name="value"  value="deleteInvito"> 
+                            <input type="hidden" name="value"  value="deleteOfferta"> 
+                            <input type="hidden" name="sviluppatore"  value="${Richieste.getIdSviluppatore()}"> 
+                            <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"> 
+                            <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
                         </form>
                     </div>
                 </#list>
@@ -30,13 +33,23 @@
                 <#list domande as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
                         <div class="d-inline-block float-left">Hai ricevuto una richiesta di collaborazione da ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} per ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}. </div> 
-                       
-                        <form class="d-inline-block float-right" method="post" role="form">
-                            <button type="submit" class="btn btn-primary " name="accettaDomanda" value=""> ACCETTA</button>
-                            <input type="hidden" name="value"  value=""> 
-                            <button type="submit" class="btn btn-danger " name="rifiutaDomanda" value=""> RIFIUTA </button>
-                            <input type="hidden" name="value"  value=""> 
-                        </form>
+                        <div class="d-inline-block float-right row">
+                            <form method="post" role="form">
+                                <button type="submit" class="btn btn-primary col-12" name="accettaProposta" value=""> ACCETTA</button>
+                                <input type="hidden" name="value"  value="Accetta"> 
+                                <input type="hidden" name="sviluppatore"  value="${Richieste.getIdSviluppatore()}"> 
+                                <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"> 
+                                <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
+                            </form>
+                            <form method="post" role="form">
+                                <button type="submit" class="btn btn-danger col-12" name="rifiutaProposta" value=""> RIFIUTA </button>
+                                <input type="hidden" name="value"  value="deleteOfferta"> 
+
+                                <input type="hidden" name="sviluppatore"  value="${Richieste.getIdSviluppatore()}"> 
+                                <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"> 
+                                <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
+                            </form>
+                        </div>
                     </div>
                 </#list>
             </#if>

@@ -178,7 +178,8 @@ int idco=0;
             Databasee.connect();
             ResultSet coor=Databasee.selectRecord("sviluppatore,coordinatore", a.getAttribute("id") + "=coordinatore.idsviluppatore");
             if(!coor.next()){
-            Databasee.insertRecord("coordinatore", map);}
+                Databasee.insertRecord("coordinatore", map);
+            }
           
             map.clear();
             ResultSet coo=Databasee.selectRecord2("sviluppatore,coordinatore", a.getAttribute("id") + "=coordinatore.idsviluppatore");

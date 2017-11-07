@@ -30,6 +30,8 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -102,29 +104,33 @@ public class PanRichieste extends HttpServlet {
             
             ArrayList<Richieste> offerte=null;
             try{
-                Databasee.connect();
-                
+                Databasee.connect();               
                 ResultSet req = Databasee.getListaJob(id); // GIUSTA!!!
                 offerte = new ArrayList<Richieste>();
                 while(req.next()){
-                    //idsvil,idcoord,titolo,tasknome,skillnome,datacreazione,stato,tipo,idtaskprogetto
-                    
+                    int idCoordinatore=req.getInt("progetto.idcoordinatore");
+                    int idTaskProgetto=req.getInt("taskprogetto.id");
                     String reqTitolo=req.getString("titolo");
                     String reqTask=req.getString("task.nome");
                     String reqSkill=req.getString("skill.nome");
-                    
-  
-                    int idCoordinatore=req.getInt("progetto.idcoordinatore");
-                    int idTaskProgetto=req.getInt("taskprogetto.id");
-                    //data da inserire!
-                    String reqStato="Attesa";
+                    int inviataOff=0;
+                    String reqStato="Disponibile";
+                    ResultSet check = Databasee.isInviteDone(id, idCoordinatore, idTaskProgetto);
+                        reqStato="Attesa";
+                        if(check.absolute(2)){
+                            inviataOff=1;
+                            reqStato="Attesa";
+                        }              
                     boolean reqTipo=true; //equivale a 1
-                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, reqSkill, "2017",reqStato,reqTipo,idTaskProgetto);
+                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, reqSkill,"2017-00-00",reqStato,reqTipo,idTaskProgetto,inviataOff);
                     offerte.add(r);
+                    System.out.println("???" + r + inviataOff);
                 }
                 Databasee.close();
             }catch(NamingException e) {
+                System.out.println(e);
             }catch (SQLException e) {
+                System.out.println(e);
             }catch (Exception ex) {
                     Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -227,25 +233,97 @@ public class PanRichieste extends HttpServlet {
                 response.sendRedirect("listaCerca");
             }else if("insertOfferta".equals(action)){
                 System.out.println("invia offerta!");
-                boolean a=false;
+                Map<String, Object> map = new HashMap<String, Object>();
+                ArrayList<Richieste> offerte=null;
                 try{ //INSERT PROVA
                     Databasee.connect();
-                    System.out.println("CONNESSO??");
-                    int idCoord_ = Integer.parseInt(request.getParameter("coordinatore_"));
-                    System.out.println("CONNESSO??" + idCoord_);
-                    int idTP_ = Integer.parseInt(request.getParameter("taskprog_"));
-                    System.out.println("CONNESSO??" + idTP_);
-                    Databasee.insertRichiesta(id, idCoord_, idTP_, "Attesa"); // ID sviluppatore + TRUE SE  E' SVILUPPATORE! iN QUESTO CASO SI!!! GIUSTISSIMA!!!!
-                    System.out.println("RISULTATO EEEEEEEEEEEEEEEEE " + a);
+                    System.out.println("Cominciamo");
+                    //Altra prova
+                    Calendar c = Calendar.getInstance();
+
+                    System.out.println(c.getTime());	/* Rappresentazione come stringa in base al tuo Locale */
+                    System.out.println(c.get(Calendar.YEAR)); /* Ottieni l'anno */
+                    System.out.println(c.get(Calendar.MONTH)); /* Ottieni il mese */
+                    System.out.println(c.get(Calendar.DAY_OF_MONTH)); /* Ottieni il giorno */
+                    int year=c.get(Calendar.YEAR);
+                    int month= c.get(Calendar.MONTH)+1;
+                    int day=c.get(Calendar.DAY_OF_MONTH);
+                    String today=year + "/" + month + "/" + day;
+                    
+                    int idCoord = Integer.parseInt(request.getParameter("coordinatore"));
+                    int idTP = Integer.parseInt(request.getParameter("taskprog"));
+                    
+                    map.put("idsviluppatore", id);
+                    map.put("idcoordinatore",idCoord);
+                    map.put("idtaskprogetto",idTP);
+                    map.put("stato","Attesa");
+                    map.put("tipo",1);
+                    map.put("datacreazione",today);
+                    Databasee.insertRecord("richieste", map);
+                        
+                    
                     
                     Databasee.close();
                 }catch(NamingException e) {
+                    System.out.println(e );
                 }catch (SQLException e) {
+                    System.out.println(e );
                 }catch (Exception ex) {
                         Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-                FreeMarker.process("panRichieste.html", data, response, getServletContext());
+                response.sendRedirect("panRichieste");
+            }else if("deleteOfferta".equals(action)){
+                System.out.println("Cancelliamo");
+                int idCoord = Integer.parseInt(request.getParameter("coordinatore"));
+                int idTP = Integer.parseInt(request.getParameter("taskprog"));
+                try{ //INSERT PROVA
+                    Databasee.connect();
+                    Databasee.deleteRichiesta(id, idCoord, idTP);
+               
+                    Databasee.close();
+                }catch(NamingException e) {
+                    System.out.println(e );
+                }catch (SQLException e) {
+                    System.out.println(e );
+                }catch (Exception ex) {
+                        Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                response.sendRedirect("panRichieste");
+            }else if("Accetta".equals(action)){
+                System.out.println("ACCETTA");
+                Map<String, Object> map = new HashMap<String, Object>();
+                int idCoord = Integer.parseInt(request.getParameter("coordinatore"));
+                int idTP = Integer.parseInt(request.getParameter("taskprog"));
+                map.put("idsviluppatore", id);
+                map.put("idtaskprogetto",idTP);
+                    
+                try{
+                    Databasee.connect();
+                    
+                    Databasee.insertRecord("collaboratore", map);
+                    Databasee.close();
+                }catch(NamingException e) {
+                    System.out.println(e );
+                }catch (SQLException e) {
+                    System.out.println(e );
+                }catch (Exception ex) {
+                        Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try{ 
+                    Databasee.connect();
+                    Databasee.deleteRichiesta(id, idCoord, idTP);
+               
+                    Databasee.close();
+                }catch(NamingException e) {
+                    System.out.println(e );
+                }catch (SQLException e) {
+                    System.out.println(e );
+                }catch (Exception ex) {
+                        Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                response.sendRedirect("panRichieste");
             }
     }
 
