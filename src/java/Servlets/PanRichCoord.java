@@ -240,18 +240,31 @@ public class PanRichCoord extends HttpServlet {
                 response.sendRedirect("panRichCoord");
             }else if("Accetta".equals(action)){
                 System.out.println("ACCETTA");
+                //ACCETTI RICHIESTA, INSERT AL COLLABORATORE E CANCELLI RICHIESTA!!!!
                 Map<String, Object> map = new HashMap<String, Object>();
                 int idSvil = Integer.parseInt(request.getParameter("sviluppatore"));
                 int idTP = Integer.parseInt(request.getParameter("taskprog"));
-                
+                int idCoord = Integer.parseInt(request.getParameter("coordinatore"));
                 
                 map.put("idsviluppatore", idSvil);
                 map.put("idtaskprogetto",idTP);
                     
                 try{
                     Databasee.connect();
-                    
                     Databasee.insertRecord("collaboratore", map);
+                    Databasee.close();
+                }catch(NamingException e) {
+                    System.out.println(e );
+                }catch (SQLException e) {
+                    System.out.println(e );
+                }catch (Exception ex) {
+                        Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                try{ 
+                    Databasee.connect();
+                    Databasee.deleteRichiesta(idSvil, idCoord, idTP);
+               
                     Databasee.close();
                 }catch(NamingException e) {
                     System.out.println(e );

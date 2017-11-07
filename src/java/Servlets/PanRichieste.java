@@ -294,7 +294,7 @@ public class PanRichieste extends HttpServlet {
             }else if("Accetta".equals(action)){
                 System.out.println("ACCETTA");
                 Map<String, Object> map = new HashMap<String, Object>();
-                //int idSvil = Integer.parseInt(request.getParameter("sviluppatore"));
+                int idCoord = Integer.parseInt(request.getParameter("coordinatore"));
                 int idTP = Integer.parseInt(request.getParameter("taskprog"));
                 map.put("idsviluppatore", id);
                 map.put("idtaskprogetto",idTP);
@@ -303,6 +303,18 @@ public class PanRichieste extends HttpServlet {
                     Databasee.connect();
                     
                     Databasee.insertRecord("collaboratore", map);
+                    Databasee.close();
+                }catch(NamingException e) {
+                    System.out.println(e );
+                }catch (SQLException e) {
+                    System.out.println(e );
+                }catch (Exception ex) {
+                        Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try{ 
+                    Databasee.connect();
+                    Databasee.deleteRichiesta(id, idCoord, idTP);
+               
                     Databasee.close();
                 }catch(NamingException e) {
                     System.out.println(e );
