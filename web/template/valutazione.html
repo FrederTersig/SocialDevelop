@@ -9,7 +9,9 @@
                 <select name="progetti">
                     <#if progetti ??>
                     <#list progetti as Progetti>
+                    <#if Progetti.scad == 0>
                     <option name="progetti" value="${Progetti.id}">${Progetti.titolo}</option>
+                    </#if>
                     </#list>
                     </#if>
                 </select>

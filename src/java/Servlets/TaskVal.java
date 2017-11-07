@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import static java.util.Objects.equals;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -156,17 +157,26 @@ public class TaskVal extends HttpServlet {
          }
           if("coll".equals(action)){
               int idtp=Integer.parseInt(request.getParameter("task"));
-              ResultSet collab=Databasee.selectRecord("collaboratore,sviluppatore","collaboratore.idtaskprogetto=" + idtp + " AND collaboratore.idsviluppatore=sviluppatore.id");
+              int idv=0;
+              ResultSet colla=Databasee.selectRecord("collaboratore,sviluppatore,valutazione","collaboratore.idtaskprogetto=" + idtp + " AND collaboratore.idsviluppatore=sviluppatore.id AND collaboratore.id=valutazione.idcollaboratore");
               ArrayList<Sviluppatore> coll=new ArrayList<Sviluppatore>();
+              if(!colla.next()){// è vuoto i
+                  ResultSet collab=Databasee.selectRecord("collaboratore,sviluppatore","collaboratore.idtaskprogetto=" + idtp + " AND collaboratore.idsviluppatore=sviluppatore.id");
               while(collab.next()){
                   int idc=collab.getInt("collaboratore.id");
                   String nome=collab.getString("sviluppatore.nome");
                   String cognome=collab.getString("sviluppatore.cognome");
+                  //idv=collab.getInt("valutazione.id");
+             
+                      
+                 
                   Sviluppatore c=new Sviluppatore(idc,nome,cognome);
                   coll.add(c);
+              
               }
               data.put("coll",coll);
               FreeMarker.process("listcoll.html", data, response, getServletContext());
+              }
           }
          
      } catch (Exception ex) {

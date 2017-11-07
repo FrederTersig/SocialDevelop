@@ -117,6 +117,11 @@ public class Databasee {
             String query ="SELECT COUNT(collaboratore.id) AS num FROM collaboratore, taskprogetto WHERE taskprogetto.id=" + idtaskprogetto + " AND collaboratore.idtaskprogetto=taskprogetto.id";
             return Databasee.executeQuery(query);
         }
+           
+              public static ResultSet contTaskProgetto(int idprogetto) throws SQLException{
+            String query ="SELECT COUNT(taskprogetto.id) AS num FROM taskprogetto WHERE taskprogetto.idprogetto=" + idprogetto;
+            return Databasee.executeQuery(query);
+        }
         
         public static ResultSet getSviluppGener(int id) throws SQLException{
             String query="SELECT sviluppatore.nome, sviluppatore.cognome FROM sviluppatore WHERE sviluppatore.id = "+id;

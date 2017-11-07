@@ -15,6 +15,7 @@ import Util.SecurityLayer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,12 +69,54 @@ public class Valuta extends HttpServlet {
             Databasee.connect();
             ResultSet prog=Databasee.selectRecord("sviluppatore,coordinatore,progetto", "sviluppatore.id=" + id + " AND sviluppatore.id=coordinatore.idsviluppatore AND coordinatore.id=progetto.idcoordinatore");
             ArrayList<Progetto> pro=new ArrayList<Progetto>(); 
+            
             while(prog.next()){
+                int cont=0;
+            int cont2=0;
+                ResultSet taskprog=Databasee.selectRecord("taskprogetto","taskprogetto.idprogetto=" + prog.getInt("progetto.id"));
+                ResultSet n=Databasee.contTaskProgetto(prog.getInt("progetto.id"));
+                while(n.next()){
+                    cont=n.getInt("num");
+                    System.out.println(cont);
+                }
+                while(taskprog.next()){
+                    ResultSet val=Databasee.selectRecord("taskprogetto,collaboratore,valutazione","collaboratore.idtaskprogetto=" + taskprog.getInt("id") + " AND collaboratore.id=valutazione.idcollaboratore");
+                    if(val.next()){
+                        System.out.println("dimmi che entri/////");
+                        cont2++;
+                        System.out.println(cont2);
+                    }
+                }
+                System.out.println(cont);
+                System.out.println(cont2);
+                if(cont!=cont2){
                 String nomp=prog.getString("titolo");
                 int idp=prog.getInt("progetto.id");
+                          String datascad=prog.getString("datascad");
+                            System.out.println(datascad);
+                            int scad=1;
+                            if(datascad!=null){
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                 java.util.Date daConfrontare = sdf.parse(datascad);
+
+                 // Catturo la data di oggi
+                 java.util.Date oggi = java.util.GregorianCalendar.getInstance().getTime( );
+
+                 // Faccio confronto
+                 if(oggi.compareTo(daConfrontare)<0) {
+                 System.out.println("in corso");
+                 scad=1;
+                 } else if(oggi.compareTo(daConfrontare)>0) {
+                     scad=0;
+                 System.out.println("finito");
+                 } else if(oggi.compareTo(daConfrontare) == 0) {
+                     scad=2;
+                 System.out.println("ultimo giorno");
+                 }}
                
-                Progetto pr=new Progetto(idp,nomp);
+                Progetto pr=new Progetto(idp,nomp,scad);
                 pro.add(pr);
+            }
             }
             data.put("progetti", pro);
             Databasee.close();
