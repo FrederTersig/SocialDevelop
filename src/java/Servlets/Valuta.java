@@ -71,6 +71,7 @@ public class Valuta extends HttpServlet {
             while(prog.next()){
                 String nomp=prog.getString("titolo");
                 int idp=prog.getInt("progetto.id");
+               
                 Progetto pr=new Progetto(idp,nomp);
                 pro.add(pr);
             }
@@ -192,6 +193,8 @@ public class Valuta extends HttpServlet {
             }
              if("valuta".equals(action)){
                  int idp=Integer.parseInt(request.getParameter("progetti"));
+                  HttpSession s = SecurityLayer.checkSession(request);
+                 s.setAttribute("idproge",idp);
                  ResultSet listtask=Databasee.selectRecord("taskprogetto,task", "taskprogetto.idprogetto=" + idp + " AND taskprogetto.idtask=task.id");
                  ArrayList<TaskProgetto> lit=new ArrayList<TaskProgetto>();
                  while(listtask.next()){
