@@ -34,20 +34,24 @@
                     <div class="alert alert-dark clearfix" role="alert">
                         <div class="d-inline-block float-left">Hai ricevuto una richiesta di collaborazione da ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} per ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}. </div> 
                         <div class="d-inline-block float-right row">
+                            <#if Richieste.getEccesso() == 0>
+                                <form method="post" role="form">
+                                    <button type="submit" class="btn btn-primary col-12" name="accettaProposta" value=""> ACCETTA</button>
+                                    <input type="hidden" name="value"  value="Accetta"> 
+                                    <input type="hidden" name="sviluppatore"  value="${Richieste.getIdSviluppatore()}"> 
+                                    <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"> 
+                                    <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
+                                </form>
+                            <#else>
+                                <button class="d-inline-block float-right btn btn-light" name="maxCapacity" value="">LIMITE MASSIMO COLLABORATORI</button>
+                            </#if>
                             <form method="post" role="form">
-                                <button type="submit" class="btn btn-primary col-12" name="accettaProposta" value=""> ACCETTA</button>
-                                <input type="hidden" name="value"  value="Accetta"> 
-                                <input type="hidden" name="sviluppatore"  value="${Richieste.getIdSviluppatore()}"> 
-                                <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"> 
-                                <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
-                            </form>
-                            <form method="post" role="form">
-                                <button type="submit" class="btn btn-danger col-12" name="rifiutaProposta" value=""> RIFIUTA </button>
-                                <input type="hidden" name="value"  value="deleteOfferta"> 
+                                    <button type="submit" class="btn btn-danger col-12" name="rifiutaProposta" value=""> RIFIUTA </button>
+                                    <input type="hidden" name="value"  value="deleteOfferta"> 
 
-                                <input type="hidden" name="sviluppatore"  value="${Richieste.getIdSviluppatore()}"> 
-                                <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"> 
-                                <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
+                                    <input type="hidden" name="sviluppatore"  value="${Richieste.getIdSviluppatore()}"> 
+                                    <input type="hidden" name="coordinatore"  value="${Richieste.getIdCoordinatore()}"> 
+                                    <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
                             </form>
                         </div>
                     </div>

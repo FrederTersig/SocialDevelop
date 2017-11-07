@@ -23,7 +23,7 @@ public class Richieste {
     private String dataCreazione;
     private String stato;
     private boolean tipo;
-    private int inviata;
+    private int inviata,eccesso;
     //Aggiunte per richieste "veloci"
     private String nomeSvil,cognSvil,nomeCoord,cognCoord,taskNome,progTitolo,skillNome; 
     //NOTA*** Manca data inizio/fine
@@ -44,8 +44,8 @@ public class Richieste {
     }
    
     
-    // Proposte
-    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto){
+    // Proposte SVILUPPATORE
+    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int eccesso){
         this.idSviluppatore=idSviluppatore;
         this.idCoordinatore=idCoordinatore;
         this.idTaskProgetto=idtaskprogetto;
@@ -55,9 +55,10 @@ public class Richieste {
         this.dataCreazione = dataCreazione;
         this.stato=stato;
         this.tipo=tipo;
+        this.eccesso=eccesso;
     }
-    //listaJob
-    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int inviata){
+    //Offerte Sviluppatore > listaJob
+    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int inviata,int eccesso){
         this.idSviluppatore=idSviluppatore;
         this.idCoordinatore=idCoordinatore;
         this.idTaskProgetto=idtaskprogetto;
@@ -68,8 +69,9 @@ public class Richieste {
         this.stato=stato;
         this.tipo=tipo;
         this.inviata=inviata;
+        this.eccesso=eccesso;
     }
-    public Richieste(String nomeSvil, String cognSvil, int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto){
+    public Richieste(String nomeSvil, String cognSvil, int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int eccesso){
         this.idSviluppatore=idSviluppatore;
         this.idCoordinatore=idCoordinatore;
         this.idTaskProgetto=idtaskprogetto;
@@ -81,6 +83,7 @@ public class Richieste {
         this.tipo=tipo;
         this.nomeSvil = nomeSvil;
         this.cognSvil = cognSvil;
+        this.eccesso = eccesso;
         
     }
     // Per le richieste generiche
@@ -99,7 +102,9 @@ public class Richieste {
         this.progTitolo = progTitolo;
         this.skillNome = skillNome;
     }
-    
+    public int getEccesso(){
+        return eccesso;
+    }
     public String getNomeSvil(){
         return nomeSvil;
     }

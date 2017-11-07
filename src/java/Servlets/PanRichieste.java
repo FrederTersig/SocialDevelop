@@ -105,24 +105,44 @@ public class PanRichieste extends HttpServlet {
             ArrayList<Richieste> offerte=null;
             try{
                 Databasee.connect();               
+                
+               
+                
                 ResultSet req = Databasee.getListaJob(id); // GIUSTA!!!
                 offerte = new ArrayList<Richieste>();
                 while(req.next()){
-                    int idCoordinatore=req.getInt("progetto.idcoordinatore");
                     int idTaskProgetto=req.getInt("taskprogetto.id");
+                    int numCollaboratori=req.getInt("taskprogetto.numcollaboratori");
+                    //FACCIO IL CHECK DEL NUMCOLLABORATORI: SE E' PIENO BISOGNA DIRLO!
+                    //INIZIO
+                    Integer n=null;
+                    ResultSet part=Databasee.contCollaboratori(idTaskProgetto);
+                    while(part.next()){
+                        int collat=part.getInt("num");
+                        n=new Integer(collat);
+                    }
+                    int taskEccesso=0;
+                    if(n >= numCollaboratori){
+                        taskEccesso=1;
+                    }
+                    //FINE
+                    
+                    int idCoordinatore=req.getInt("progetto.idcoordinatore");
+                    
                     String reqTitolo=req.getString("titolo");
                     String reqTask=req.getString("task.nome");
                     String reqSkill=req.getString("skill.nome");
                     int inviataOff=0;
                     String reqStato="Disponibile";
+                    //check per vedere se è già stato inviato questa richiesta
                     ResultSet check = Databasee.isInviteDone(id, idCoordinatore, idTaskProgetto);
-                        reqStato="Attesa";
-                        if(check.absolute(2)){
+                    reqStato="Attesa";
+                    if(check.absolute(2)){
                             inviataOff=1;
                             reqStato="Attesa";
-                        }              
+                    }              
                     boolean reqTipo=true; //equivale a 1
-                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, reqSkill,"2017-00-00",reqStato,reqTipo,idTaskProgetto,inviataOff);
+                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, reqSkill,"2017-00-00",reqStato,reqTipo,idTaskProgetto,inviataOff,taskEccesso);
                     offerte.add(r);
                     System.out.println("???" + r + inviataOff);
                 }
@@ -156,8 +176,24 @@ public class PanRichieste extends HttpServlet {
                         String reqTask=req.getString("task.nome");
                         String reqSkill=req.getString("skill.nome");
                         String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
-                        String reqStato=req.getString("stato");           
-                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro);
+                        String reqStato=req.getString("stato");         
+                        
+                        int numCollaboratori=req.getInt("taskprogetto.numcollaboratori");
+                        //FACCIO IL CHECK DEL NUMCOLLABORATORI: SE E' PIENO BISOGNA DIRLO!
+                        //INIZIO
+                        Integer n=null;
+                        ResultSet part=Databasee.contCollaboratori(reqIdTaskPro);
+                        while(part.next()){
+                            int collat=part.getInt("num");
+                            n=new Integer(collat);
+                        }
+                        int taskEccesso=0;
+                        if(n >= numCollaboratori){
+                            taskEccesso=1;
+                        }
+                        //FINE
+                        
+                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro,taskEccesso);
                         proposte.add(r);
                     }
                 }
