@@ -238,14 +238,42 @@ public class Valuta extends HttpServlet {
                  int idp=Integer.parseInt(request.getParameter("progetti"));
                   HttpSession s = SecurityLayer.checkSession(request);
                  s.setAttribute("idproge",idp);
-                 ResultSet listtask=Databasee.selectRecord("taskprogetto,task", "taskprogetto.idprogetto=" + idp + " AND taskprogetto.idtask=task.id");
+                 ResultSet prog=Databasee.selectRecord("sviluppatore,coordinatore,progetto", "sviluppatore.id=" + id + " AND sviluppatore.id=coordinatore.idsviluppatore AND coordinatore.id=progetto.idcoordinatore");
+            ArrayList<Progetto> pro=new ArrayList<Progetto>(); 
+             ArrayList<TaskProgetto> lit=new ArrayList<TaskProgetto>();
+            while(prog.next()){
+                int cont=0;
+            int cont2=0;
+                ResultSet taskprog=Databasee.selectRecord("taskprogetto,task","taskprogetto.idprogetto=" + prog.getInt("progetto.id") + " AND taskprogetto.idtask=task.id");
+                ResultSet n=Databasee.contTaskProgetto(prog.getInt("progetto.id"));
+                while(n.next()){
+                    cont=n.getInt("num");
+                    System.out.println(cont);
+                }
+                while(taskprog.next()){
+                    ResultSet val=Databasee.selectRecord("taskprogetto,collaboratore,valutazione","collaboratore.idtaskprogetto=" + taskprog.getInt("id") + " AND collaboratore.id=valutazione.idcollaboratore");
+                    if(val.next()){
+                        System.out.println("dimmi che entri/////");
+                        cont2++;
+                        System.out.println(cont2);
+                    } else {
+                        int idt=taskprog.getInt("taskprogetto.id");
+                     String nome=taskprog.getString("task.nome");
+                     TaskProgetto l=new TaskProgetto(idt,nome);
+                     lit.add(l);
+                    }
+                }}
+                 
+                 
+                 
+                 /*ResultSet listtask=Databasee.selectRecord("taskprogetto,task", "taskprogetto.idprogetto=" + idp + " AND taskprogetto.idtask=task.id");
                  ArrayList<TaskProgetto> lit=new ArrayList<TaskProgetto>();
                  while(listtask.next()){
                      int idt=listtask.getInt("taskprogetto.id");
                      String nome=listtask.getString("task.nome");
                      TaskProgetto l=new TaskProgetto(idt,nome);
                      lit.add(l);
-                 }
+                 }*/
                  data.put("listatask",lit);
             Databasee.close();
             FreeMarker.process("taskval.html", data, response, getServletContext());
