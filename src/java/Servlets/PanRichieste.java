@@ -107,10 +107,19 @@ public class PanRichieste extends HttpServlet {
                 ResultSet req = Databasee.getListaJob(id); // GIUSTA!!!
                 offerte = new ArrayList<Richieste>();
                 while(req.next()){
+                    //idsvil,idcoord,titolo,tasknome,skillnome,datacreazione,stato,tipo,idtaskprogetto
+                    
                     String reqTitolo=req.getString("titolo");
                     String reqTask=req.getString("task.nome");
                     String reqSkill=req.getString("skill.nome");
-                    Richieste r = new Richieste(reqTitolo, reqTask, reqSkill);
+                    
+  
+                    int idCoordinatore=req.getInt("progetto.idcoordinatore");
+                    int idTaskProgetto=req.getInt("taskprogetto.id");
+                    //data da inserire!
+                    String reqStato="Attesa";
+                    boolean reqTipo=true; //equivale a 1
+                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, reqSkill, "2017",reqStato,reqTipo,idTaskProgetto);
                     offerte.add(r);
                 }
                 Databasee.close();
@@ -216,6 +225,9 @@ public class PanRichieste extends HttpServlet {
                 }   
                 data.put("ricerca", SearchStringa);                
                 response.sendRedirect("listaCerca");
+            }else if("insertOfferta".equals(action)){
+                System.out.println("invia offerta!");
+                
             }
     }
 

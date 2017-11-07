@@ -230,10 +230,18 @@ public class Databasee {
         ** OVVIAMENTE se il determinato taskProgetto ha stato = 1, non viene visuualizzato perché significa che è stato COMPLETATO!!!!
         */
         public static ResultSet getListaJob(int idsvil) throws SQLException{
-            String query="SELECT progetto.titolo, task.nome, skill.nome FROM livello, skill, skillperognitask, task, skillscelte, taskprogetto, progetto WHERE livello.idsviluppatore = " + idsvil + " AND skill.id = livello.idskill AND skillperognitask.idskill = skill.id AND (task.id = skillperognitask.idtask) AND skillscelte.idskillperognitask = skillperognitask.id AND taskprogetto.id = skillscelte.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND taskprogetto.stato = 0";
+            String query="SELECT progetto.titolo, task.nome, skill.nome, progetto.idcoordinatore, taskprogetto.id FROM livello, skill, skillperognitask, task, skillscelte, taskprogetto, progetto WHERE livello.idsviluppatore = " + idsvil + " AND skill.id = livello.idskill AND skillperognitask.idskill = skill.id AND (task.id = skillperognitask.idtask) AND skillscelte.idskillperognitask = skillperognitask.id AND taskprogetto.id = skillscelte.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND taskprogetto.stato = 0";
             return Databasee.executeQuery(query);
         }
         
+        public static Boolean insertRichiesta(int idSvil, int idCoo, int idTP, String stato, boolean tipo ) throws SQLException{
+            String query="INSERT INTO `richieste` (`id`, `idsviluppatore`, `idcoordinatore`, `idtaskprogetto`, `datacreazione`, `stato`, `tipo`) VALUES (NULL, "+idSvil+","+idCoo +", "+idTP+", " + "2000-1-1" +","+ stato+", "+tipo+")";
+            return Databasee.updateQuery(query);
+        }
+        public static Boolean deleteRichiesta(int idrichiesta) throws SQLException{
+            String query="DELETE FROM `richieste` WHERE richieste.id = "+idrichiesta;
+            return Databasee.updateQuery(query);
+        }
         
         
         public static ResultSet selectSvilup() throws SQLException { //restituisce skill nome, livello e nome sviluppatore.

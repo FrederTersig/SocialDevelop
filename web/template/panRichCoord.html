@@ -6,10 +6,7 @@
 </#if>
 <!-- panRichieste si riferisce primariamente agli SVILUPPATORI -->
 <div class="jumbotron jumbotron-fluid">
-        <form method="post" role="form">
-            <button type="submit" class="btn btn-primary " name="PannelloSviluppatore" value=""> Sviluppatore > </button>
-            <input type="hidden" name="value"  value=""> 
-        </form>
+        <a class="btn btn-primary " href="panRichieste" title="PanRichieste"> Sviluppatore > </a>
     
     <div class="container">
         <h4 class="text-center"> Inviti </h4>
@@ -17,7 +14,12 @@
             <#if inviti ??>
                 <#list inviti as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <div class="d-inline-block float-left"> Hai invitato ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} a partecipare in ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()} </div> <h4 class="d-inline-block float-right"> ATTESA </h4>
+                        <div class="d-inline-block float-left"> Hai invitato ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} a partecipare in ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()} </div> 
+                        <form class="d-inline-block float-right" method="post" role="form">
+                            <!-- manca if -->
+                            <button type="submit" class="btn btn-danger " name="cancellaInvito" value=""> Annulla </button>
+                            <input type="hidden" name="value"  value="deleteInvito"> 
+                        </form>
                     </div>
                 </#list>
             </#if>
@@ -30,7 +32,9 @@
                         <div class="d-inline-block float-left">Hai ricevuto una richiesta di collaborazione da ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} per ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}. </div> 
                        
                         <form class="d-inline-block float-right" method="post" role="form">
-                            <button type="submit" class="btn btn-primary " name="inviaProposta" value=""> ACCETTA/RIFIUTA </button>
+                            <button type="submit" class="btn btn-primary " name="accettaDomanda" value=""> ACCETTA</button>
+                            <input type="hidden" name="value"  value=""> 
+                            <button type="submit" class="btn btn-danger " name="rifiutaDomanda" value=""> RIFIUTA </button>
                             <input type="hidden" name="value"  value=""> 
                         </form>
                     </div>

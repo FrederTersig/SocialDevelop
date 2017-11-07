@@ -42,6 +42,7 @@ public class Richieste {
         this.tipo=tipo;
     }
     
+    
     // Proposte
     public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto){
         this.idSviluppatore=idSviluppatore;
@@ -53,8 +54,6 @@ public class Richieste {
         this.dataCreazione = dataCreazione;
         this.stato=stato;
         this.tipo=tipo;
-        
-        
     }
     public Richieste(String nomeSvil, String cognSvil, int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto){
         this.idSviluppatore=idSviluppatore;
