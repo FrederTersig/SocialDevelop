@@ -115,7 +115,7 @@ public class Richieste {
         this.idSviluppatore=idSviluppatore;
     }
     
-    public int getIdSvilupaptore(){
+    public int getIdSviluppatore(){
         return idSviluppatore;
     }
     

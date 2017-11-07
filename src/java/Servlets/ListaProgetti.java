@@ -157,28 +157,26 @@ public class ListaProgetti extends HttpServlet {
                 System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
                 String EmailL = request.getParameter("email");
                 String PassL = request.getParameter("password");
-                
-                
                        //piccolo controllo per entrare nella pagina backend (ovviamente il controllo sarà molto più ampio)
-                       if(EmailL.equals("admin@admin.it") && PassL.equals("admin")){
-                           id = LoginValidate.validateOfficer(EmailL, PassL);
-                           try{ 
-                        HttpSession s = SecurityLayer.createSession(request, EmailL, id);
-                        System.out.println("Sessione Creata, Connesso!");
-                        data.put("nome",EmailL);
-                        data.put("id",id);
-                        //RequestDispatcher rd = request.getRequestDispatcher("index"); //<- dispatch di una richiesta ad un'altra servlet.
-                        s.setAttribute("id", id);
-                        //processRequest(request, response);
-                        
-                        response.sendRedirect("backend");
-                       // FreeMarker.process("backend.html", data, response, getServletContext());
-                    }catch(Exception e2){
-                        System.out.println("Errore nel creare la sessione");
-                        Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, e2);
-                    }
-                    
-                }
+                        if(EmailL.equals("admin@admin.it") && PassL.equals("admin")){
+                            id = LoginValidate.validateOfficer(EmailL, PassL);
+                            try{ 
+                                HttpSession s = SecurityLayer.createSession(request, EmailL, id);
+                                System.out.println("Sessione Creata, Connesso!");
+                                data.put("nome",EmailL);
+                                data.put("id",id);
+                                //RequestDispatcher rd = request.getRequestDispatcher("index"); //<- dispatch di una richiesta ad un'altra servlet.
+                                s.setAttribute("id", id);
+                                //processRequest(request, response);
+
+                                response.sendRedirect("backend");
+                               // FreeMarker.process("backend.html", data, response, getServletContext());
+                            }catch(Exception e2){
+                                System.out.println("Errore nel creare la sessione");
+                                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, e2);
+                            }
+
+                        }
                        
                        
                 id = LoginValidate.validate(EmailL, PassL);

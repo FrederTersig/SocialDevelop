@@ -227,7 +227,25 @@ public class PanRichieste extends HttpServlet {
                 response.sendRedirect("listaCerca");
             }else if("insertOfferta".equals(action)){
                 System.out.println("invia offerta!");
+                boolean a=false;
+                try{ //INSERT PROVA
+                    Databasee.connect();
+                    System.out.println("CONNESSO??");
+                    int idCoord_ = Integer.parseInt(request.getParameter("coordinatore_"));
+                    System.out.println("CONNESSO??" + idCoord_);
+                    int idTP_ = Integer.parseInt(request.getParameter("taskprog_"));
+                    System.out.println("CONNESSO??" + idTP_);
+                    Databasee.insertRichiesta(id, idCoord_, idTP_, "Attesa"); // ID sviluppatore + TRUE SE  E' SVILUPPATORE! iN QUESTO CASO SI!!! GIUSTISSIMA!!!!
+                    System.out.println("RISULTATO EEEEEEEEEEEEEEEEE " + a);
+                    
+                    Databasee.close();
+                }catch(NamingException e) {
+                }catch (SQLException e) {
+                }catch (Exception ex) {
+                        Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
+                FreeMarker.process("panRichieste.html", data, response, getServletContext());
             }
     }
 

@@ -23,6 +23,8 @@
                         <form class="d-inline-block float-right" method="post" role="form">
                             <button type="submit" class="btn btn-primary " name="inviaOfferta" value=""> INVIA OFFERTA </button>
                             <input type="hidden" name="value"  value="insertOfferta"> 
+                            <input type="hidden" name="coordinatore_"  value="${Richieste.getIdCoordinatore()}"> 
+                            <input type="hidden" name="taskprog_"  value="${Richieste.getIdTaskProgetto()}"> 
                             
                             <button type="submit" class="btn btn-danger " name="cancellaOfferta" value=""> ANNULLA </button>
                             <input type="hidden" name="value"  value="deleteOfferta"> 
