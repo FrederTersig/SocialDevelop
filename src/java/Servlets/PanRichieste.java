@@ -126,7 +126,6 @@ public class PanRichieste extends HttpServlet {
                     
                     String reqTitolo=req.getString("titolo");
                     String reqTask=req.getString("task.nome");
-                    String reqSkill=req.getString("skill.nome");
                     int inviataOff=0;
                     String reqStato="Disponibile";
                     //check per vedere se è già stato inviato questa richiesta
@@ -137,7 +136,7 @@ public class PanRichieste extends HttpServlet {
                             reqStato="Attesa";
                     }              
                     boolean reqTipo=true; //equivale a 1
-                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, reqSkill,"2017-00-00",reqStato,reqTipo,idTaskProgetto,inviataOff,taskEccesso);
+                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, "2017-00-00",reqStato,reqTipo,idTaskProgetto,inviataOff,taskEccesso);
                     offerte.add(r);
                     System.out.println("???" + r + inviataOff);
                 }
@@ -169,7 +168,6 @@ public class PanRichieste extends HttpServlet {
                         int reqIdTaskPro = req.getInt("idtaskprogetto");
                         String reqTitolo=req.getString("progetto.titolo");                
                         String reqTask=req.getString("task.nome");
-                        String reqSkill=req.getString("skill.nome");
                         String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
                         String reqStato=req.getString("stato");         
                         
@@ -188,7 +186,7 @@ public class PanRichieste extends HttpServlet {
                         }
                         //FINE
                         
-                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro,taskEccesso);
+                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro,taskEccesso);
                         proposte.add(r);
                     }
                 }

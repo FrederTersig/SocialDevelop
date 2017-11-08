@@ -62,8 +62,7 @@ public class PanRichCoord extends HttpServlet {
                 System.out.println("S DIVERSA DA NULL! ADESSO ID VIENE CAMBIATO!! GUARDA!");
                 if(s.getAttribute("id") != null){
                     id = (int) s.getAttribute("id");
-                }
-                else{
+                }else{
                     id=0;
                 }
                 System.out.println("ID ?? > " + id );
@@ -91,7 +90,7 @@ public class PanRichCoord extends HttpServlet {
                 System.out.println("id coordinatore FINALE >>>>>>>>>" + idCoordinatore);
 
                 //INIZIO disponibili
-                ResultSet disp= Databasee.getListaSvil(idCoordinatore);
+                ResultSet disp= Databasee.getListaSvil(idCoordinatore,id);
                 disponibili = new ArrayList<Richieste>();
                 while(disp.next()){
                     int idTaskProgetto=disp.getInt("taskprogetto.id");
@@ -104,16 +103,18 @@ public class PanRichCoord extends HttpServlet {
                         n=new Integer(collat);
                     }
                     
-                    if(n >= numCollaboratori){
+                    if(n < numCollaboratori){
 
                         int inviataOff=0;
                         int idSviluppatore=disp.getInt("sviluppatore.id");
                         String nome=disp.getString("sviluppatore.nome");
+                        System.out.println("SVILUPPATORE/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+                        System.out.println(idSviluppatore);
                         String cognome=disp.getString("sviluppatore.cognome");
                         String titolo=disp.getString("progetto.titolo");
                         String taskNome=disp.getString("task.nome");
                         //check per vedere se è già stato inviato questa richiesta
-                        ResultSet check = Databasee.isInviteDone(id, idCoordinatore, idTaskProgetto);
+                        ResultSet check = Databasee.isInviteDone(idSviluppatore, idCoordinatore, idTaskProgetto);
                         if(check.absolute(2)){
                                 inviataOff=1;
                         }              
@@ -143,7 +144,6 @@ public class PanRichCoord extends HttpServlet {
                             int reqIdTaskPro = req.getInt("idtaskprogetto");
                             String reqTitolo=req.getString("progetto.titolo");                
                             String reqTask=req.getString("task.nome");
-                            String reqSkill=req.getString("skill.nome");
                             String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
                             String reqStato=req.getString("stato");
                             
@@ -162,7 +162,7 @@ public class PanRichCoord extends HttpServlet {
                             }
                             //FINE
 
-                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro, taskEccesso);
+                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro, taskEccesso);
                             inviti.add(r);
                         }
                     }
@@ -186,7 +186,6 @@ public class PanRichCoord extends HttpServlet {
                             int reqIdTaskPro = req2.getInt("idtaskprogetto");
                             String reqTitolo=req2.getString("progetto.titolo");                
                             String reqTask=req2.getString("task.nome");
-                            String reqSkill=req2.getString("skill.nome");
                             String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
                             String reqStato=req2.getString("stato");
                             
@@ -205,7 +204,7 @@ public class PanRichCoord extends HttpServlet {
                             }
                             //FINE
 
-                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqSkill, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro, taskEccesso);
+                            Richieste r = new Richieste(nomeS,cognS,reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro, taskEccesso);
                             domande.add(r);
                         }
                     }
@@ -343,7 +342,7 @@ public class PanRichCoord extends HttpServlet {
             }else if("insertOfferta".equals(action)){
                 System.out.println("invia offerta!");
                 Map<String, Object> map = new HashMap<String, Object>();
-                ArrayList<Richieste> offerte=null;
+                
                 int idCoordinatore=0;
                 try{ //INSERT PROVA
                     Databasee.connect();
@@ -371,12 +370,14 @@ public class PanRichCoord extends HttpServlet {
                     int idSvil = Integer.parseInt(request.getParameter("sviluppatore"));
                     int idTP = Integer.parseInt(request.getParameter("taskprog"));
                     
-                    map.put("idsviluppatore", idSvil);
+                    map.put("idsviluppatore",idSvil);
                     map.put("idcoordinatore",idCoordinatore);
                     map.put("idtaskprogetto",idTP);
                     map.put("stato","Attesa");
                     map.put("tipo",0);
                     map.put("datacreazione",today);
+                    System.out.println("--------------------------------------------------------------------");
+                    System.out.println("eccolo >" + map);
                     Databasee.insertRecord("richieste", map);
  
                     Databasee.close();

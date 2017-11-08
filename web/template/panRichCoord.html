@@ -16,14 +16,14 @@
                 <#list disponibili as Richieste>
                     <#if Richieste.getInviata() == 0>
                         <div class="alert alert-dark clearfix" role="alert">
-                            <div class="d-inline-block float-left">${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} preparato per: ${Richieste.getProgTitolo()} / ${Richieste.getTaskNome()} </div> 
+                            <div class="d-inline-block float-left">${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} ${Richieste.getIdSviluppatore()}  preparato per: ${Richieste.getProgTitolo()} / ${Richieste.getTaskNome()} </div> 
                             <!-- SE esiste questa stessa richiesta mandata dallo stesso sviluppatore, mostra ANNULLA OFFERTA -->
 
                             <form class="d-inline-block float-right" method="post" role="form">
-                                    <button type="submit" class="btn btn-primary " name="inviaOfferta" value=""> INVIA OFFERTA </button>
-                                    <input type="hidden" name="value"  value="insertOfferta"/> 
-                                    <input type="hidden" name="sviluppatore" value="${Richieste.getIdSviluppatore()}"/>
-                                    <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"/> 
+                                    <button type="submit" class="btn btn-primary " name="inviaOfferta" value="">  INVIA OFFERTA </button>
+                                    <input type="hidden" name="value"  value="insertOfferta"> 
+                                    <input type="hidden" name="sviluppatore" value="${Richieste.getIdSviluppatore()}">
+                                    <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"> 
                             </form>
 
 
@@ -40,7 +40,7 @@
             <#if inviti ??>
                 <#list inviti as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <div class="d-inline-block float-left"> Hai invitato ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} a partecipare in ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()} </div> 
+                        <div class="d-inline-block float-left"> Hai invitato ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} a partecipare in ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} </div> 
                         <form class="d-inline-block float-right" method="post" role="form">
                             <!-- manca if -->
                             <button type="submit" class="btn btn-danger " name="cancellaInvito" value=""> Annulla </button>
@@ -58,7 +58,7 @@
             <#if domande ??>
                 <#list domande as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <div class="d-inline-block float-left">Hai ricevuto una richiesta di collaborazione da ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} per ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}. </div> 
+                        <div class="d-inline-block float-left">Hai ricevuto una richiesta di collaborazione da ${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} per ${Richieste.getProgTitolo()}/ ${Richieste.getTaskNome()} </div> 
                         <div class="d-inline-block float-right row">
                             <#if Richieste.getEccesso() == 0>
                                 <form method="post" role="form">

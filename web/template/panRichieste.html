@@ -19,7 +19,7 @@
                 <#list offerte as Richieste>
                 
                     <div class="alert alert-dark clearfix" role="alert">
-                        <div class="d-inline-block float-left">${Richieste.getProgTitolo()} / ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()} </div> 
+                        <div class="d-inline-block float-left">${Richieste.getProgTitolo()} / ${Richieste.getTaskNome()} </div> 
                         <!-- SE esiste questa stessa richiesta mandata dallo stesso sviluppatore, mostra ANNULLA OFFERTA -->
                         <#if Richieste.getEccesso() == 0>
                             <form class="d-inline-block float-right" method="post" role="form">
@@ -48,7 +48,7 @@
             <#if proposte ??>
                 <#list proposte as Richieste>
                     <div class="alert alert-dark clearfix" role="alert">
-                        <div class="d-inline-block float-left">Sei stato invitato in "${Richieste.getProgTitolo()}" per collaborare in " ${Richieste.getTaskNome()} / ${Richieste.getSkillNome()}". </div> 
+                        <div class="d-inline-block float-left">Sei stato invitato in "${Richieste.getProgTitolo()}" per collaborare in " ${Richieste.getTaskNome()} ". </div> 
                        
                         <div class="d-inline-block float-right row">
                             <#if Richieste.getEccesso() == 0>
