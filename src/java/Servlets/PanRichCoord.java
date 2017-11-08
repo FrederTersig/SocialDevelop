@@ -90,7 +90,7 @@ public class PanRichCoord extends HttpServlet {
                 System.out.println("id coordinatore FINALE >>>>>>>>>" + idCoordinatore);
 
                 //INIZIO disponibili
-                ResultSet disp= Databasee.getListaSvil(idCoordinatore);
+                ResultSet disp= Databasee.getListaSvil(idCoordinatore,id);
                 disponibili = new ArrayList<Richieste>();
                 while(disp.next()){
                     int idTaskProgetto=disp.getInt("taskprogetto.id");
@@ -103,7 +103,7 @@ public class PanRichCoord extends HttpServlet {
                         n=new Integer(collat);
                     }
                     
-                    if(n >= numCollaboratori){
+                    if(n < numCollaboratori){
 
                         int inviataOff=0;
                         int idSviluppatore=disp.getInt("sviluppatore.id");
