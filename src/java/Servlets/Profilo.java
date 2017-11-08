@@ -125,7 +125,7 @@ public class Profilo extends HttpServlet {
             ArrayList<Valutazione> detValutazione = null;
             try{
                 Databasee.connect();
-                ResultSet ex = Databasee.getValutazioniProf(idPro); //****************************************************************
+                ResultSet ex = Databasee.getValutazioniProf2(idPro); //****************************************************************
                 detValutazione = new ArrayList<Valutazione>();
                 while(ex.next()){
                    int punteggio = ex.getInt("punteggio");
