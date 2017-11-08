@@ -15,7 +15,7 @@
  <legend>Skill richieste</legend><br>
  <#if nomes ??>
                     <#list nomes as Nomes>
-                    <input type="checkbox" name="skill" value="${Nomes.id}" onclick="unlock(this, '${Nomes.id}')"/> ${Nomes.nome}<input type="number" name="livmin" id="${Nomes.id}" disabled="disabled">
+                    <input type="checkbox" name="skill" value="${Nomes.id}" onclick="unlock(this, '${Nomes.id}')"/> ${Nomes.nome}<input type="number" min="1" max="10" name="livmin" id="${Nomes.id}" disabled="disabled">
  <br />
  </#list>
                        </#if> 

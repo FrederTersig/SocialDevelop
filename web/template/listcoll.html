@@ -12,7 +12,7 @@ and open the template in the editor.
                     <#list coll as Coll>
                     <div class="row">
                         
-                        <div class="col-md-4"> <input type="hidden" name="idc" value="${Coll.id}">${Coll.nome}&nbsp;${Coll.cognome}</div><div class="col-md-4 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" name="punteggio"></div>
+                        <div class="col-md-4"> <input type="hidden" name="idc" value="${Coll.id}">${Coll.nome}&nbsp;${Coll.cognome}</div><div class="col-md-4 allineamento"><input class="dimen" placeholder="PREPARAZIONE" min="1" max="5" type="number" name="punteggio"></div>
                     
                         <br />
  </#list>

@@ -44,7 +44,7 @@
                     <#list nomeskill as Nomeskill>
                     <div class="row">
                         
-                        <div class="col-md-6"><input type="checkbox" name="skill" value="${Nomeskill.id}" onclick="unlock(this, '${Nomeskill.id}')"/> ${Nomeskill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" name="punteggio" id="${Nomeskill.id}" disabled="disabled"></div>
+                        <div class="col-md-6"><input type="checkbox" name="skill" value="${Nomeskill.id}" onclick="unlock(this, '${Nomeskill.id}')"/> ${Nomeskill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" min="1" max="10" name="punteggio" id="${Nomeskill.id}" disabled="disabled"></div>
                     </div>
                         <br />
  </#list>
