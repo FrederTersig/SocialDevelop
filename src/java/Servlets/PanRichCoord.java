@@ -72,6 +72,7 @@ public class PanRichCoord extends HttpServlet {
                 data.put("id", id);
             }
             //Inizio Nuovo pannello
+            ArrayList<Richieste> disponibili=null; // viene creata una richiesta dal coordinatore -> 0
             ArrayList<Richieste> inviti=null; // tipo richiesta = 0 > inviata dal coordinatore
             ArrayList<Richieste> domande=null; // tipo richiesta = 1 > inviata dallo sviluppatore
             int idCoordinatore = 0;
@@ -87,8 +88,41 @@ public class PanRichCoord extends HttpServlet {
                     }
                 }
                 System.out.println("id coordinatore FINALE >>>>>>>>>" + idCoordinatore);
-                //if(idCoordinatore > -1){
+
+                //INIZIO disponibili
+                ResultSet disp= Databasee.getListaSvil(idCoordinatore);
+                disponibili = new ArrayList<Richieste>();
+                while(disp.next()){
+                    int idTaskProgetto=disp.getInt("taskprogetto.id");
+                    int numCollaboratori=disp.getInt("taskprogetto.numcollaboratori");
+                    //FACCIO IL CHECK DEL NUMCOLLABORATORI: SE E' PIENO BISOGNA DIRLO!
+                    Integer n=null;
+                    ResultSet part=Databasee.contCollaboratori(idTaskProgetto);
+                    while(part.next()){
+                        int collat=part.getInt("num");
+                        n=new Integer(collat);
+                    }
+                    
+                    if(n >= numCollaboratori){
+
+                        int inviataOff=0;
+                        int idSviluppatore=disp.getInt("sviluppatore.id");
+                        String nome=disp.getString("sviluppatore.nome");
+                        String cognome=disp.getString("sviluppatore.cognome");
+                        String titolo=disp.getString("progetto.titolo");
+                        String taskNome=disp.getString("task.nome");
+                        //check per vedere se è già stato inviato questa richiesta
+                        ResultSet check = Databasee.isInviteDone(id, idCoordinatore, idTaskProgetto);
+                        if(check.absolute(2)){
+                                inviataOff=1;
+                        }              
+
+                        Richieste r = new Richieste(idSviluppatore,nome,cognome,titolo,idTaskProgetto, taskNome,inviataOff);
+                        disponibili.add(r);
+                    }     
+                }
                 
+                //INIZIO INVITI
                     ResultSet req = Databasee.getRichieste(idCoordinatore, false); // ID sviluppatore + TRUE SE  E' SVILUPPATORE! iN QUESTO CASO SI!!! GIUSTISSIMA!!!!
                     inviti = new ArrayList<Richieste>();
                     while(req.next()){
@@ -182,6 +216,7 @@ public class PanRichCoord extends HttpServlet {
             }catch (Exception ex) {
                     Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
             }
+            data.put("disponibili",disponibili);
             data.put("inviti",inviti);
             data.put("domande",domande);
             data.put("idCoordina", idCoordinatore);

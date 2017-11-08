@@ -9,6 +9,32 @@
         <a class="btn btn-primary " href="panRichieste" title="PanRichieste"> Sviluppatore > </a>
     
     <div class="container">
+        <!-- INIZIO PROVA -->
+        <h4 class="text-center"> Sviluppatori Disponibili </h4>
+        <div class="col-12 bg-info req_container" id="req_tab">
+            <#if disponibili ??>
+                <#list disponibili as Richieste>
+                    <#if Richieste.getInviata() == 0>
+                        <div class="alert alert-dark clearfix" role="alert">
+                            <div class="d-inline-block float-left">${Richieste.getNomeSvil()} ${Richieste.getCognSvil()} preparato per: ${Richieste.getProgTitolo()} / ${Richieste.getTaskNome()} </div> 
+                            <!-- SE esiste questa stessa richiesta mandata dallo stesso sviluppatore, mostra ANNULLA OFFERTA -->
+
+                            <form class="d-inline-block float-right" method="post" role="form">
+                                    <button type="submit" class="btn btn-primary " name="inviaOfferta" value=""> INVIA OFFERTA </button>
+                                    <input type="hidden" name="value"  value="insertOfferta"/> 
+                                    <input type="hidden" name="sviluppatore" value="${Richieste.getIdSviluppatore()}"/>
+                                    <input type="hidden" name="taskprog"  value="${Richieste.getIdTaskProgetto()}"/> 
+                            </form>
+
+
+                        </div>
+                    </#if>
+                </#list>
+            </#if>
+        </div>
+        
+        
+        <!-- FINE PROVA -->
         <h4 class="text-center"> Inviti </h4>
         <div class="col-12 bg-info req_container" id="req_tab">
             <#if inviti ??>

@@ -238,6 +238,10 @@ public class Databasee {
             String query="SELECT progetto.titolo, task.nome, skill.nome, progetto.idcoordinatore, taskprogetto.id, taskprogetto.numcollaboratori FROM livello, skill, skillperognitask, task, skillscelte, taskprogetto, progetto WHERE livello.idsviluppatore = " + idsvil + " AND skill.id = livello.idskill AND skillperognitask.idskill = skill.id AND (task.id = skillperognitask.idtask) AND skillscelte.idskillperognitask = skillperognitask.id AND taskprogetto.id = skillscelte.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND taskprogetto.stato = 0";
             return Databasee.executeQuery(query);
         }
+        public static ResultSet getListaSvil(int idcoord) throws SQLException{
+            String query="SELECT DISTINCT sviluppatore.id, sviluppatore.nome, sviluppatore.cognome, progetto.titolo, taskprogetto.id, taskprogetto.numcollaboratori, task.nome FROM sviluppatore,coordinatore,progetto, taskprogetto,task,skillscelte,skillperognitask,skill,livello WHERE coordinatore.id = 1 AND progetto.idcoordinatore = coordinatore.id AND taskprogetto.idprogetto = progetto.id AND task.id = taskprogetto.idtask AND skillscelte.idtaskprogetto = taskprogetto.id AND skillperognitask.id = skillscelte.idskillperognitask AND skill.id = skillperognitask.idskill AND livello.idskill = skill.id AND sviluppatore.id = livello.idsviluppatore";
+            return Databasee.executeQuery(query);
+        }
         
         public static Boolean insertRichiesta(int idSvil, int idCoo, int idTP, String stato) throws SQLException{
             String query="IINSERT INTO `richieste` (`id`, `idsviluppatore`, `idcoordinatore`, `idtaskprogetto`, `datacreazione`, `stato`, `tipo`) VALUES (NULL, '10', '2', '5', '2017-11-05', 'Attesa', '1');";
