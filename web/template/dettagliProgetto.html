@@ -4,107 +4,120 @@
 <#else>
     <#include "logHeader.html">
 </#if>
-    <div class="row nomprog">
-        <div class="col">
-            <h1><center>PROGETTO1</center></h1>
 
-            <hr width="800">
-        </div>
-    </div>
-   
-    <div class="row progetto border rounded ml-3 mr-3">
-        <div class="col-4">
-            <img src="RDC.png" class="rounded-circle imgprofilo mt-4 ml-4">
-        </div>     
-        <div class="col mt-5">
-                        
-            <#if progettodettaglio ??>
-                <#list progettodettaglio as Progetto>
-                    <p>Nome del progetto: ${Progetto.getTitolo()}</p>
-                    <p>Coordinatore del progetto: ${Progetto.getNomeCoord()}  ${Progetto.getCognomeCoord()}</p>
-                    <p>Descrizione del progetto: ${Progetto.getDescrizione()}</p>              
-                </#list>
-            </#if>
-        </div>
+
+    <!-- Parte di "descrizione" della pagina -->
+    <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <p><b>TASK:</b></p>                
-            <#if taskprogetto ??>
-            <#if idcoordinatore ??>
-            <#list idcoordinatore as IdCoordinatore>
-                <#list taskprogetto as TaskProgetto>
-                
-                <a href="task?idt=${TaskProgetto.id}&idc=${IdCoordinatore.id}"><div class="row">
-                        <div class="col-7">${TaskProgetto.getNome()}</div>
-                        <div class="col-2">${TaskProgetto.getnumCollaboratori()}</div>
-                        <div class="col-2">
-                                <#if TaskProgetto.getStato() == true>
-                                    In Sviluppo
-                                <#else>
-                                    Completato
-                                </#if>
-                        </div>
-                    </div>
-                </a>
-                </#list>
-                </#list>
-                </#if>
-            </#if>
-        </div>
-        <!-- SEZIONE DEI COMMENTI DEL PROGETTO! -->
-        
-            
-            
-        
-        <div class="container">
-            <!-- Container dei messaggi presenti nel task -->
-            <div class="d-flex flex-column">
-                
-                <div class="p-2">
-                    <!-- INIZIO COMMENTO -->
-                    <#if commenti ??>
-                        <#list commenti as Commenti>
-                            <#if collabora != false || Commenti.getVisibilita() != false>
-                                    <div class="row" style="background-color:grey;">
-                                        <div class="card border-dark" style="max-width:10rem;">
-                                            <img class="card-img-top" src="./img/utenteA.png" alt="fotoUtente"/>
-                                            <div class="card-body">
-                                                <div class="card-title">
-                                                    ${Commenti.getCreatoreNome()}<br>
-                                                    ${Commenti.getCreatoreCognome()}<br>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    <!-- Fine Carta -->
-                                        <div class="col-10 text-left mt-3 ">
-                                            <p>${Commenti.getTesto()}</p>
-                                        </div> 
-                                    </div>
-                                    <!-- FINE DEL COMMENTO!! -->
-                                    <hr><!-- Barra di separazione tra risposte -->
-                            </#if>
+
+            <div class="row progetto border rounded ml-3 mr-3">
+                <div class="col mt-5">
+
+                    <#if progettodettaglio ??>
+                        <#list progettodettaglio as Progetto>
+                            <h2 class="text-center">${Progetto.getTitolo()}</h2>
+                            <hr>
+                            <div class="text-center">
+                                <p>Coordinatore del progetto: ${Progetto.getNomeCoord()}  ${Progetto.getCognomeCoord()}</p>
+                                <p>Descrizione del progetto: ${Progetto.getDescrizione()}</p>   
+                            </div>
                         </#list>
                     </#if>
-                </div><!-- FINE del primo FLEX (div con classe p-2) -->
-                
-                <!-- Inizia la parte della creazione della risposta/commento -->
-              
-                    <#if collabora != false>
-                        <form method="post" role="form">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="check" value="no">
-                                    Visibile a tutti
-                                </label>
-                            </div>
-                                <textarea class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" name="comment" id="inlineFormInputName2" placeholder="Scrivi qui la tua risposta"></textarea>
-                                <button type="submit" class="btn btn-primary">Rispondi</button>
-                                <input type="hidden" name="value"  value="commenta">
-                        </form>
-                    </#if>
+                </div>
+                <br>
+                <div class="container">
+                    <h4 class="text-left">Task presenti nel progetto:</h4>  
+                    <p><i>Clicca sul nome del task per consultarne i dettagli</i></p>
+                    <hr>
                     
-        
-            </div>
+
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Nome del task</th>
+                                <th>Numero Massimo Collaboratori</th>
+                                <th>In sviluppo/completato</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <#if taskprogetto ??>
+                                    <#if idcoordinatore ??>
+                                        <#list idcoordinatore as IdCoordinatore>
+                                            <#list taskprogetto as TaskProgetto>
+                                                <tr>
+                                                    <td><a href="task?idt=${TaskProgetto.id}&idc=${IdCoordinatore.id}">${TaskProgetto.getNome()}</a></td>
+                                                    <td>${TaskProgetto.getnumCollaboratori()}</td>
+                                                    <td>
+                                                        <#if TaskProgetto.getStato() == false>
+                                                            In Sviluppo
+                                                        <#else>
+                                                            Completato
+                                                        </#if>
+                                                    </td>
+                                                </tr>
+                                            </#list>
+                                        </#list>
+                                    </#if>
+                                </#if>
+                            </tbody>
+                        </table>
+                        
+                </div>
+                <!-- SEZIONE DEI COMMENTI DEL PROGETTO! -->
+             </div>
         </div>
-        <!-- FINE SEZIONE DEI COMMENTI -->
     </div>
+    <div class="container">
+            <div class="container-fluid">
+                <!-- Container dei messaggi presenti nel task -->
+                <div class="d-flex flex-column">
+
+                    <div class="p-2">
+                        <!-- INIZIO COMMENTO -->
+                        <#if commenti ??>
+                            <#list commenti as Commenti>
+                                <#if collabora != false || Commenti.getVisibilita() != false>
+                                        <div class="row" style="background-color:grey;">
+                                            <div class="card border-dark" style="max-width:10rem;">
+                                                <img class="card-img-top" src="./img/utenteA.png" alt="fotoUtente"/>
+                                                <div class="card-body">
+                                                    <div class="card-title">
+                                                        ${Commenti.getCreatoreNome()}<br>
+                                                        ${Commenti.getCreatoreCognome()}<br>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        <!-- Fine Carta -->
+                                            <div class="col-10 text-left mt-3 ">
+                                                <p>${Commenti.getTesto()}</p>
+                                            </div> 
+                                        </div>
+                                        <!-- FINE DEL COMMENTO!! -->
+                                        <hr><!-- Barra di separazione tra risposte -->
+                                </#if>
+                            </#list>
+                        </#if>
+                    </div><!-- FINE del primo FLEX (div con classe p-2) -->
+
+                    <!-- Inizia la parte della creazione della risposta/commento -->
+
+                        <#if collabora != false>
+                            <form method="post" role="form">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="check" value="no">
+                                        Visibile a tutti
+                                    </label>
+                                </div>
+                                    <textarea class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" name="comment" id="inlineFormInputName2" placeholder="Scrivi qui la tua risposta"></textarea>
+                                    <button type="submit" class="btn btn-primary">Rispondi</button>
+                                    <input type="hidden" name="value"  value="commenta">
+                            </form>
+                        </#if>
+
+
+                </div>
+            </div>
+            <!-- FINE SEZIONE DEI COMMENTI -->
+        </div>
 <#include "footer.html">

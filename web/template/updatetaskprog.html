@@ -2,43 +2,44 @@
 
     <#include "logHeader.html">
 
-<div class="registrati">
-    <h1 class="centro">AGGIORNA TASK</h1>
-    <p class="testoreg">aggiorna i dati del task</p>
-  <hr>
-  <form method="post" action="updatetaskprogetto">
-      <div class="row">
-          <#if desc ??>
-          <#list desc as Desc>
-          <div class="col-md-6">
-        Descrizione attuale: ${Desc.descrizione}<input type="text" name="descrizione" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVA DESCRIZIONE">
-          </div>
-           <div class="col-md-6">
-        Numero collaboratori attuale: ${Desc.numCollaboratori}<input type="text" name="nc" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO NUMERO DI COLLABORATOTI">
-           </div>
-          </#list>
-          </#if>
-            <input type="hidden" name="value" value="registra">
-            </div>
-        <br>
-      <fieldset>
- <legend>AGGIUNGI ALTRE SKILL</legend><br>
- <#if skill ??>
-                    <#list skill as Skill>
-                    <div class="row">
-                        
-                        <div class="col-md-6"><input type="checkbox" name="skill" value="${Skill.id}" onclick="unlock(this, '${Skill.id}')"/> ${Skill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" name="punteggio" id="${Skill.id}" disabled="disabled"></div>
-                    </div>
-                        <br />
- </#list>
-                       </#if> 
- 
-</fieldset><br>
-        <button type="submit" class="btn btn-primary">INVIA</button>
-    </form>
+<div class="jumbotron">
+    <div class="jumbotron-fluid">
+                    <h1 class="centro">AGGIORNA TASK</h1>
+                    <p class="testoreg">aggiorna i dati del task</p>
+                  <hr>
+                  <form method="post" action="updatetaskprogetto">
+                      <div class="row">
+                          <#if desc ??>
+                          <#list desc as Desc>
+                          <div class="col-md-6">
+                        Descrizione attuale: ${Desc.descrizione}<input type="text" name="descrizione" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVA DESCRIZIONE">
+                          </div>
+                           <div class="col-md-6">
+                        Numero collaboratori attuale: ${Desc.numCollaboratori}<input type="text" name="nc" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO NUMERO DI COLLABORATOTI">
+                           </div>
+                          </#list>
+                          </#if>
+                            <input type="hidden" name="value" value="registra">
+                            </div>
+                        <br>
+                      <fieldset>
+                 <legend>AGGIUNGI ALTRE SKILL</legend><br>
+                 <#if skill ??>
+                                    <#list skill as Skill>
+                                    <div class="row">
+
+                                        <div class="col-md-6"><input type="checkbox" name="skill" value="${Skill.id}" onclick="unlock(this, '${Skill.id}')"/> ${Skill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" name="punteggio" id="${Skill.id}" disabled="disabled"></div>
+                                    </div>
+                                        <br />
+                 </#list>
+                                       </#if> 
+
+                </fieldset><br>
+                        <button type="submit" class="btn btn-primary">INVIA</button>
+                    </form>
 
  
-  
+    </div>
 </div>
 
 

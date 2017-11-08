@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 
-    <#include "logHeader.html">
+<#include "logHeader.html">
 
-<div class="registrati">
-    <h1 class="centro">AGGIORNA PROFILO</h1>
-    <p class="testoreg">aggiorna i tuoi dati</p>
-  <hr>
-  <form method="post" action="updateprofilo">
-      <div class="row">
-          <#if svi ??>
-          <#list svi as Svi>
-          <div class="col-md-6">
-        indirizzo attuale: ${Svi.nome}<input type="text" name="indirizzo" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO INDIRIZZO">
-          </div>
-           <div class="col-md-6">
-        telefono attuale: ${Svi.cognome}<input type="text" name="telefono" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO TELEFONO">
-           </div>
-          </#list>
-          </#if>
-            <input type="hidden" name="value" value="registra">
-            </div>
-        <br>
-      <fieldset>
- <legend>AGGIUNGI ALTRE SKILL</legend><br>
- <#if skill ??>
+<div class="jumbotron">
+    <div class="jumbotron-fluid">
+        <h1 class="text-center">AGGIORNA PROFILO</h1>
+        <p class="testoreg">aggiorna i tuoi dati</p>
+        <hr>
+        <form method="post" action="updateprofilo">
+                <div class="row">
+                        <#if svi ??>
+                        <#list svi as Svi>
+                        <div class="col-md-6">
+                      indirizzo attuale: ${Svi.nome}<input type="text" name="indirizzo" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO INDIRIZZO">
+                        </div>
+                         <div class="col-md-6">
+                      telefono attuale: ${Svi.cognome}<input type="text" name="telefono" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NUOVO TELEFONO">
+                         </div>
+                        </#list>
+                        </#if>
+                          <input type="hidden" name="value" value="registra">
+                  </div>
+              <br>
+            <fieldset>
+                <legend>AGGIUNGI ALTRE SKILL</legend><br>
+                <#if skill ??>
                     <#list skill as Skill>
-                    <div class="row">
-                        
-                        <div class="col-md-6"><input type="checkbox" name="skill" value="${Skill.id}" onclick="unlock(this, '${Skill.id}')"/> ${Skill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" name="punteggio" id="${Skill.id}" disabled="disabled"></div>
-                    </div>
-                        <br />
- </#list>
-                       </#if> 
+                               <div class="row">
+
+                                   <div class="col-md-6"><input type="checkbox" name="skill" value="${Skill.id}" onclick="unlock(this, '${Skill.id}')"/> ${Skill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" name="punteggio" id="${Skill.id}" disabled="disabled"></div>
+                               </div>
+                                   <br />
+                    </#list>
+                </#if> 
+
+            </fieldset><br>
+            <button type="submit" class="btn btn-primary">INVIA</button>
+        </form>
+        <a href="upload">CARICA UNA NUOVA IMMAGINE PROFILO</a><br>
+        <a href="uploadcurriculum">CARICA UN CURRICULUM</a><br>
  
-</fieldset><br>
-        <button type="submit" class="btn btn-primary">INVIA</button>
-    </form>
-  <a href="upload">CARICA UNA NUOVA IMMAGINE PROFILO</a><br>
-  <a href="uploadcurriculum">CARICA UN CURRICULUM</a><br>
- 
-  
+    </div>
 </div>
-
-
-  <#include "footer.html">
+<#include "footer.html">

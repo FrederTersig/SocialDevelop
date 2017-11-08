@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 
     <#include "logHeader.html">
+        <div class="jumbotron">
+            <div class="jumbotron-fluid">
+                <h1 class="">CREA UN NUOVO PROGETTO</h1>
+                <p class="testoreg">Crea un nuovo progetto per in modo da offrire lavoro a tutti gli svilupaptori interessati</p>
+                <hr>
+                <form method="POST">
+                    <input type="text" name="nome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NOME PROGETTO"><br>
+                    <input type="date" name="data" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="DATA SCADENZA"><br>
+                    <textarea class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" name="descrizione" id="inlineFormInputName2" placeholder="DESCRIZIONE"></textarea>
+                    <br>
 
-        <div class="creanewp">
-            <h1 class="">CREA UN NUOVO PROGETTO</h1>
-            <p class="testoreg">Crea un nuovo progetto per in modo da offrire lavoro a tutti gli svilupaptori interessati</p>
-            <hr>
-            <form method="POST">
-                <input type="text" name="nome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NOME PROGETTO"><br>
-                <input type="date" name="data" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="DATA SCADENZA"><br>
-                <textarea class="form-control mb-2 mr-sm-2 mb-sm-0 areatesto" name="descrizione" id="inlineFormInputName2" placeholder="DESCRIZIONE"></textarea>
-                <br>
-     
-               
-                <br>
-                <button type="submit" class="btn btn-primary">VAI AD AGGIUNGERE TASK</button>
-            </form>
-        </div> <!-- chiusura creap -->
+
+                    <br>
+                    <button type="submit" class="btn btn-primary">VAI AD AGGIUNGERE TASK</button>
+                </form>
+            </div> <!-- chiusura creap -->
+        </div>
 <#include "footer.html">

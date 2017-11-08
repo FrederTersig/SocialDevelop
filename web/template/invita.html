@@ -2,9 +2,9 @@
 
 <#include "logHeader.html">
 
- <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-7">Lista svilupaptori</h1>
+    <div class="jumbotron">
+      <div class="jumbotron-fluid">
+        <h1 class="display-7">Lista sviluppatori</h1>
         <p class="lead">Ecco gli sviluppatori che fanno al caso tuo.</p>
       </div>
     </div>
@@ -12,19 +12,19 @@
     <div class="container">
          
         <form method="POST" action="invita">
-  <fieldset>
- <legend>Linguaggi conosciuti</legend><br>
- <#if nominati ??>
+        <fieldset>
+                <legend>Linguaggi conosciuti</legend><br>
+                <#if nominati ??>
                     <#list nominati as Nominati>
                     <div class="row">
                         
                         <div class="col-md-6"><input type="checkbox" name="idsv" value="${Nominati.id}" /> ${Nominati.nome}&nbsp;${Nominati.cognome}</div><div class="col-md-6 allineamento"></div>
                     </div>
                         <br />
- </#list>
-                       </#if> 
+                    </#list>
+                </#if> 
  
-</fieldset><br>
+        </fieldset><br>
         <button type="submit" name="ancora" value="inv" class="btn btn-primary">INVITA</button>
         <button type="submit" name="ancora" value="fine" class="btn btn-primary">FINE</button>
         <button type="submit" name="ancora" value="ind" class="btn btn-primary">TORNA AD AGGIUNGERE TASK</button>

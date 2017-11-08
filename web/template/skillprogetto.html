@@ -1,6 +1,6 @@
  <#include "logHeader.html">
-<div class="container">
-        <div class="creanewp">
+<div class="jumbotron">
+        <div class="jumbotron-fluid">
             <#if nomtask ??>
             <#list nomtask as Nomtask>
             <h1 class="">TASK SELEZIONATO: ${Nomtask.nome} </h1>
@@ -10,36 +10,35 @@
             <hr>
             <form method="POST" action="skillprogetto">
                 <div class="row">
-                <div class="col">
-                    <fieldset>
- <legend>Skill richieste</legend><br>
- <#if nomes ??>
-                    <#list nomes as Nomes>
-                    <input type="checkbox" name="skill" value="${Nomes.id}" onclick="unlock(this, '${Nomes.id}')"/> ${Nomes.nome}<input type="number" min="1" max="10" name="livmin" id="${Nomes.id}" disabled="disabled">
- <br />
- </#list>
-                       </#if> 
- 
-</fieldset><br>
-                </div></div>
+                    <div class="col">
+                        <fieldset>
+                        <legend>Skill richieste</legend><br>
+                        <#if nomes ??>
+                                           <#list nomes as Nomes>
+                                           <input type="checkbox" name="skill" value="${Nomes.id}" onclick="unlock(this, '${Nomes.id}')"/> ${Nomes.nome}<input type="number" min="1" max="10" name="livmin" id="${Nomes.id}" disabled="disabled">
+                        <br />
+                        </#list>
+                                              </#if> 
 
-                   
-
-              
+                       </fieldset><br>
+                    </div>
                 </div>
+
                 <br>
                 <div class="row">
                     <div class="col">
-                <button type="submit" name="fine" value="indietro" class="btn btn-primary">SELEZIONA SKILL E AGGIUNGI UN ALTRO TASK</button>
+                        <button type="submit" name="fine" value="indietro" class="btn btn-primary">SELEZIONA SKILL E AGGIUNGI UN ALTRO TASK</button>
                  
                     </div>
                     <div class="col">
                        <button type="submit" name="fine" value="fine" class="btn btn-primary">SELEZIONA SKILL E FINE</button> 
-                </div>
+                    </div>
                      <div class="col">
                        <button type="submit" name="fine" value="invita" class="btn btn-primary">INVITA QUALCHE SVILUPPATORE</button> 
+                    </div>
                 </div>
             </form>
         </div> <!-- chiusura creap -->
+</div>
 
 <#include "footer.html">

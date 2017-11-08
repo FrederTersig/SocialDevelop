@@ -5,22 +5,26 @@
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
---><form method="POST" action="listcoll">
-      <fieldset>
- <legend>Valuta i collaboratori del task scelto</legend><br>
- <#if coll ??>
-                    <#list coll as Coll>
-                    <div class="row">
-                        
-                        <div class="col-md-4"> <input type="hidden" name="idc" value="${Coll.id}">${Coll.nome}&nbsp;${Coll.cognome}</div><div class="col-md-4 allineamento"><input class="dimen" placeholder="PREPARAZIONE" min="1" max="5" type="number" name="punteggio"></div>
-                    
-                        <br />
- </#list>
-                       </#if> 
- 
-</fieldset><br>
-        <button type="submit" name="value" value="valuta" class="btn btn-primary" onClick="Modulo()">VALUTA</button>
-    </form>
+-->
+<div class="jumbotron">
+    <div class="jumbotron-fluid">
+    <form method="POST" action="listcoll">
+          <fieldset>
+     <legend>Valuta i collaboratori del task scelto</legend><br>
+     <#if coll ??>
+                        <#list coll as Coll>
+                        <div class="row">
 
+                            <div class="col-md-4"> <input type="hidden" name="idc" value="${Coll.id}">${Coll.nome}&nbsp;${Coll.cognome}</div><div class="col-md-4 allineamento"><input class="dimen" placeholder="PREPARAZIONE" min="1" max="5" type="number" name="punteggio"></div>
+
+                            <br />
+     </#list>
+                           </#if> 
+
+    </fieldset><br>
+            <button type="submit" name="value" value="valuta" class="btn btn-primary" onClick="Modulo()">VALUTA</button>
+    </form>
+    </div>
+</div>
 
 <#include "footer.html">

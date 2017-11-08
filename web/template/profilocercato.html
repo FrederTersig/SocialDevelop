@@ -85,6 +85,8 @@
     <div class="container-fluid">
         <div class="container">
             <span class="text-center"><h2>Valutazione</h2></span>
+            <#if valutazioni ??>
+                      
                 <table class="table table-hover table-inverse">
                   <thead class="thead">
                       <tr>
@@ -95,9 +97,8 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <#if valutazioni ??>
-                      <#list valutazioni as Valutazione>
                       
+                      <#list valutazioni as Valutazione>
                       <tr>
                         <th scope="row">${Valutazione.getNomeProg()}</th>
                         <td>${Valutazione.getCoordCognome()}, ${Valutazione.getCoordNome()}</td>
@@ -105,10 +106,11 @@
                         <td>${Valutazione.getDescrizione()}</td>
                       </tr>
                       </#list>
-                      </#if>
+                      
                      
                   </tbody>
                 </table>
+            </#if>
 
             
         </div>

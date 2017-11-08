@@ -4,56 +4,67 @@
 <#else>
     <#include "logHeader.html">
 </#if>
-<div class="registrati">
-    <h1 class="centro">REGISTRATI</h1>
+<div class="jumbotron">
+    <h1 class="text-center">REGISTRATI</h1>
     <p class="testoreg">Crea un nuovo account per poter usufruire di tutti i servizi che il nostro sito offre</p>
-  <hr>
-  <form method="post">
-      <div class="row">
-          <div class="col-md-6">
-        <input type="text" name="Nome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NOME" required>
-          </div>
-          <div class="col-md-6">
-        <input type="text" name="Cognome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="COGNOME" required>
-          </div></div>
-      <br>
-          <div class="row">
-              <div class="col-md-6">
-        <input type="email" name="Email" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="E-MAIL" required>
-              </div>
-              <div class="col-md-6">
-        <input type="password" name="Pass" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="PASSWORD" required>
-              </div></div>
-      <br>
-      <div class="row">
-          <div class="col-md-4">
-        <input type="number" name="Telefono" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="TELEFONO" required>
-          </div>
-          <div class="col-md-4">
-        <input type="date" name="DataNascita" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="DATA DI NASCITA" required>
-         </div>
-      <div class="col-md-4">
-              <input type="text" name="Indirizzo" class="form-control" placeholder="RESIDENZA" required>
-            </div>
-            <input type="hidden" name="value" value="registra">
-            </div>
-        </div><br>
-      <fieldset>
- <legend>Linguaggi conosciuti</legend><br>
- <#if nomeskill ??>
-                    <#list nomeskill as Nomeskill>
-                    <div class="row">
-                        
-                        <div class="col-md-6"><input type="checkbox" name="skill" value="${Nomeskill.id}" onclick="unlock(this, '${Nomeskill.id}')"/> ${Nomeskill.nome}</div><div class="col-md-6 allineamento"><input class="dimen" placeholder="PREPARAZIONE" type="number" min="1" max="10" name="punteggio" id="${Nomeskill.id}" disabled="disabled"></div>
+    <hr>
+    
+        <form method="post">
+                  <div class="row">
+                      <div class="col-md-6">
+                    <input type="text" name="Nome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="NOME" required>
+                      </div>
+                      <div class="col-md-6">
+                    <input type="text" name="Cognome" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="COGNOME" required>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-md-6">
+                            <input type="email" name="Email" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="E-MAIL" required>
+                      </div>
+                      <div class="col-md-6">
+                            <input type="password" name="Pass" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="PASSWORD" required>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-md-4">
+                          <input type="tel" pattern="[\+]\d{2}[\(]\d{3}[\)]\d{3}[\-]\d{4}" title="Numero Di Telefono (Formato: +99(999)999-9999)" name="Telefono" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="TELEFONO" required>
+                      </div>
+                      <div class="col-md-4">
+                    <input type="date" name="DataNascita" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInputName2" placeholder="DATA DI NASCITA" required>
+                     </div>
+                  <div class="col-md-4">
+                          <input type="text" name="Indirizzo" class="form-control" placeholder="RESIDENZA" required>
+                        </div>
+                        <input type="hidden" name="value" value="registra">
+                  </div>
+                  <br>
+
+              <fieldset>
+                    <div class="container-fluid">
+                        <h4>Linguaggi conosciuti</h4><br>
+                        <#if nomeskill ??>
+                            <#list nomeskill as Nomeskill>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="checkbox" name="skill" value="${Nomeskill.id}" onclick="unlock(this, '${Nomeskill.id}')"/> 
+                                    ${Nomeskill.nome}
+                                </div>
+                                <div class="col-md-6">
+                                    <input class="dimen" placeholder="PREPARAZIONE" type="number" min="1" max="10" name="punteggio" id="${Nomeskill.id}" disabled="disabled">
+                                </div>
+                            </div>
+                                <br>
+                            </#list>
+                        </#if> 
                     </div>
-                        <br />
- </#list>
-                       </#if> 
- 
-</fieldset><br>
-        <button type="submit" class="btn btn-primary">INVIA</button>
-    </form>
-</div>
+              </fieldset><br>
+              <div>
+                <button type="submit" class="btn btn-primary">INVIA LA TUA REGISTRAZIONE</button>
+              </div>
+        </form>
+    </div>
 
-
-  <#include "footer.html">
+<#include "footer.html">

@@ -1,24 +1,18 @@
 <#include "headerbe.html">
 
-
-        <div class="container contenitore">
+    <div class="jumbotron">
+        <div class="jumbotron-fluid">
             <div class="row">
-               
-                
-                       <div class="col">
+                <div class="col">
                     <h2>SKILL GIA' PRESENTI</h2>
-                    
-                    
-                   <ul>
+                    <ul>
                         <#if nomeskill ??>
-                    <#list nomeskill as Nomeskill>
-                       <li>${Nomeskill.nome}</li>
-                       </#list>
-                       </#if>
-                    </ul>
-                    
-                </div>
-                
+                        <#list nomeskill as Nomeskill>
+                            <li>${Nomeskill.nome}</li>
+                        </#list>
+                        </#if>
+                    </ul>  
+                </div> 
                 <div class="col">
                     <h2>AGGIUNGI UNA SKILL</h2>
                     <form method="POST" action="addskill">
@@ -28,6 +22,8 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
         
         
         

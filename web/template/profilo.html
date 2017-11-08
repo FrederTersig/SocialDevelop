@@ -13,44 +13,48 @@
                   <div class="card border-dark" style="max-width: 50rem;">
                         <div class="card-header">
                                 
-                                     <#if profiloSv ??>
-                        <#list profiloSv as Sviluppatore>
-                        <#if Sviluppatore.getImmagine() ??>
-                                    <img height="200" width="200" src="${Sviluppatore.getImmagine()}" alt="fotoUtente" class="rounded-circle"/>
-                                    <#else>
-                                    <img height="200" width="200" src="template/img/default.jpg" alt="fotoUtente" class="rounded-circle"/>
-                                    </#if>
-                                    </#list>
-                        </#if>
+                                <#if profiloSv ??>
+                                        <#list profiloSv as Sviluppatore>
+                                            <#if Sviluppatore.getImmagine() ??>
+                                                <img height="200" width="200" src="${Sviluppatore.getImmagine()}" alt="fotoUtente" class="rounded-circle"/>
+                                            <#else>
+                                                <img height="200" width="200" src="template/img/default.jpg" alt="fotoUtente" class="rounded-circle"/>
+                                            </#if>
+                                        </#list>
+                                </#if>
                                
                         </div>		
                   </div>
-                    <a href="updateprofilo">MODIFICA PROFILO</a><br>
-                   
+                    <hr>
+                    <p><b>MENU' SVILUPPATORE</b></p>
+                                <p>
+                                    <a href="updateprofilo">MODIFICA PROFILO</a>
+                                </p>
                                 <#if profiloSv ??>
-                        <#list profiloSv as Sviluppatore>
-                        <#if Sviluppatore.getCurriculum() ??>
-                        <a href="${Sviluppatore.getCurriculum()}">VISUALIZZA CURRICULUM</a><br><br><br>
-                     </#if>
+                                    <#list profiloSv as Sviluppatore>
+                                        <#if Sviluppatore.getCurriculum() ??>
+                                            <a href="${Sviluppatore.getCurriculum()}">VISUALIZZA CURRICULUM</a><br><br><br>
+                                        </#if>
                                     </#list>
-                        </#if>
-                             
-                        
-                         <#if coord==1>
-                         <p><b>MENU' COORDINATORE</b></p>
-                    <a href="modificaprogetti">MODIFICA PROGETTI</a><br>
-                    <a href="valutazione">VALUTA COLLABORATORI</a><br>
-                    <a href="elimina">ELIMINA COLLABORATORI</a><br>
-                    </#if>
-                        
-                  
+                                </#if>
+
+                                <hr>
+                                <#if coord==1>
+                                    <p><b>MENU' COORDINATORE</b></p>
+                                    <p>
+                                        <a href="modificaprogetti">MODIFICA PROGETTI</a><br>
+                                        <a href="valutazione">VALUTA COLLABORATORI</a><br>
+                                        <a href="elimina">ELIMINA COLLABORATORI</a><br>
+                                    </p>
+                                </#if>
                 </div>
                 <!-- Fine Carta Profilo -->
                
                 <!-- Inizio Dati Anagrafici -->
                 <div class="col-9">
-                    <h3 class="text-center">Dati Anagrafici</h3><br><br>
-                    <div class="row">
+                    <h3 class="text-left">Dati Anagrafici</h3><br><br>
+                    <hr>
+                    <div class="row text-left">
                         <#if profiloSv ??>
                         <#list profiloSv as Sviluppatore>
                         <div class="col-6">
@@ -67,6 +71,7 @@
                         </#list>
                         </#if>
                     </div>
+                    <hr>
                 </div>
                 <!-- Fine Dati Anagrafici -->
             </div>
@@ -99,6 +104,8 @@
     <div class="container-fluid">
         <div class="container">
             <span class="text-center"><h2>Valutazione</h2></span>
+            <#if valutazioni ??>
+
                 <table class="table table-hover table-inverse">
                   <thead class="thead">
                       <tr>
@@ -109,7 +116,6 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <#if valutazioni ??>
                       <#list valutazioni as Valutazione>
                       
                       <tr>
@@ -119,10 +125,11 @@
                         <td>${Valutazione.getDescrizione()}</td>
                       </tr>
                       </#list>
-                      </#if>
+
                      
                   </tbody>
                 </table>
+            </#if>
 
             
         </div>

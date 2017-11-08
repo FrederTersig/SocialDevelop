@@ -6,25 +6,27 @@
 </#if>
     <!-- Parte di "descrizione" della pagina -->
     <div class="jumbotron">
-        <div class="row">
-            <div class="col-8">
-              
-                <h2 class="font-weight-bold text-left"> <#if nomeprogetto ??><#list nomeprogetto as NomeProgetto>${NomeProgetto.titolo}</#list></#if> > <#if nometask ??><#list nometask as NomeTask>${NomeTask.nome}</#list></#if></h2>
-           
-                <#if taskprogetto ??>
-                <#list taskprogetto as TaskProgetto>
-                <p class="text-left">${TaskProgetto.descrizione}</p><br><br>
-                <p>NUMERO COLLABORATORI: ${numcol}/${TaskProgetto.numCollaboratori}</p>
-                </#list>
-                </#if>
-                <#if id != 0>
-                <form method="POST">
-                     <input type="hidden" name="value" value="candidati">
-                    <input type="submit" class="btn btn-primary" name="cand" value="CANDIDATI">
-                </form>
-                </#if>
+        <div class="jumbotron-fluid">
+            <div class="row">
+                <div class="col-8">
+
+                    <h2 class="font-weight-bold text-left"> <#if nomeprogetto ??><#list nomeprogetto as NomeProgetto>${NomeProgetto.titolo}</#list></#if> > <#if nometask ??><#list nometask as NomeTask>${NomeTask.nome}</#list></#if></h2>
+
+                    <#if taskprogetto ??>
+                    <#list taskprogetto as TaskProgetto>
+                    <p class="text-left">${TaskProgetto.descrizione}</p><br><br>
+                    <p>NUMERO COLLABORATORI: ${numcol}/${TaskProgetto.numCollaboratori}</p>
+                    </#list>
+                    </#if>
+                    <#if id != 0>
+                    <form method="POST">
+                         <input type="hidden" name="value" value="candidati">
+                        <input type="submit" class="btn btn-primary" name="cand" value="CANDIDATI">
+                    </form>
+                    </#if>
+                </div>
+
             </div>
-        
         </div>
     </div>
 

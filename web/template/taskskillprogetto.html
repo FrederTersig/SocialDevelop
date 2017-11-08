@@ -1,6 +1,6 @@
  <#include "logHeader.html">
-
-        <div class="creanewp">
+ <div class="jumbotron">
+        <div class="jumbotron-fluid">
             <h1 class="">SELEZIONA UN TASK DA AGGIUNGERE AL TUO PROGETTO</h1>
             <p class="testoreg">inizia a popolare il tuo progetto con i task che hai intenzione di far svolgere ai tuoi dipendenti</p>
             <hr>
@@ -9,11 +9,11 @@
                 <div class="col">
                     <label>TASK</label>
                         <select name="idt" class="form-control">
-                          <#if task ??>
-                    <#list task as Task>
-                          <option value="${Task.id}">${Task.id} - ${Task.nome}</option>
-                          </#list>
-                          </#if>
+                            <#if task ??>
+                                <#list task as Task>
+                                    <option value="${Task.id}">${Task.id} - ${Task.nome}</option>
+                                </#list>
+                            </#if>
                         
                         </select>
                     </div>
@@ -56,4 +56,5 @@
                 </div>
             </form>
         </div> <!-- chiusura creap -->
+ </div>
 <#include "footer.html">

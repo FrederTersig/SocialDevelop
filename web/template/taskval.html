@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
     <#include "logHeader.html">
+        <div class="jumbotron">
+                <div class="jumbotron-fluid">
+                    <h1 class="">LISTA TASK DEL PROGETTO</h1>
+                    <p class="testoreg">Scegli un task da modificare</p>
+                    <hr>
+                    <form method="POST" action="taskval">
+                        <select name="task">
+                            <#if listatask ??>
+                            <#list listatask as ListaTask>
+                            <option name="task" value="${ListaTask.numCollaboratori}">${ListaTask.descrizione}</option>
+                            </#list>
+                            </#if>
+                        </select>
 
-        <div class="creanewp">
-            <h1 class="">LISTA TASK DEL PROGETTO</h1>
-            <p class="testoreg">Scegli un task da modificare</p>
-            <hr>
-            <form method="POST" action="taskval">
-                <select name="task">
-                    <#if listatask ??>
-                    <#list listatask as ListaTask>
-                    <option name="task" value="${ListaTask.numCollaboratori}">${ListaTask.descrizione}</option>
-                    </#list>
-                    </#if>
-                </select>
-            
-                <button type="submit" name="value" value="coll" class="btn btn-primary">VALUTA COLLABORATORI</button>
-                
-            </form>
-        </div> <!-- chiusura creap -->
+                        <button type="submit" name="value" value="coll" class="btn btn-primary">VALUTA COLLABORATORI</button>
+
+                    </form>
+                </div> <!-- chiusura creap -->
+        </div>
 <#include "footer.html">

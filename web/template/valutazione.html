@@ -1,27 +1,28 @@
 <!DOCTYPE html>
     <#include "logHeader.html">
+        <div class="jumbotron">
+            <div class="jumbotron-fluid">
+                <h1 class="text-center">LISTA PROGETTI DI CUI SEI COORDINATORE</h1>
+                <p class="testoreg">Scegli un progetto da modificare</p>
+                <hr>
+                <#if progetti ??>
+                <form method="POST">
+                    <select name="progetti">
 
-        <div class="creanewp">
-            <h1 class="">LISTA PROGETTI DI CUI SEI COORDINATORE</h1>
-            <p class="testoreg">Scegli un progetto da modificare</p>
-            <hr>
-            <#if progetti ??>
-            <form method="POST">
-                <select name="progetti">
-                    
-                    <#list progetti as Progetti>
-                    <#if Progetti.scad == 0>
-                    <option name="progetti" value="${Progetti.id}">${Progetti.titolo}</option>
-                    </#if>
-                    </#list>
-                    
-                </select>
-            
-                <button type="submit" name="value" value="valuta" class="btn btn-primary">VALUTA</button>
-                
-            </form>
-            <#else>
-            NON HAI PROGETTI DA VALUTARE
-            </#if>
-        </div> <!-- chiusura creap -->
+                        <#list progetti as Progetti>
+                        <#if Progetti.scad == 0>
+                        <option name="progetti" value="${Progetti.id}">${Progetti.titolo}</option>
+                        </#if>
+                        </#list>
+
+                    </select>
+
+                    <button type="submit" name="value" value="valuta" class="btn btn-primary">VALUTA</button>
+
+                </form>
+                <#else>
+                NON HAI PROGETTI DA VALUTARE
+                </#if>
+            </div> <!-- chiusura creap -->
+        </div>
 <#include "footer.html">
