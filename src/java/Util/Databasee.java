@@ -241,7 +241,7 @@ public class Databasee {
         ** OVVIAMENTE se il determinato taskProgetto ha stato = 1, non viene visuualizzato perché significa che è stato COMPLETATO!!!!
         */
         public static ResultSet getListaJob(int idsvil) throws SQLException{ // RIGUARDA
-            String query="SELECT DISTINCT progetto.titolo, task.nome, progetto.idcoordinatore, taskprogetto.id, taskprogetto.numcollaboratori FROM livello, skill, skillperognitask, task, skillscelte, taskprogetto, progetto WHERE livello.idsviluppatore = " + idsvil + " AND skill.id = livello.idskill AND skillperognitask.idskill = skill.id AND (task.id = skillperognitask.idtask) AND skillscelte.idskillperognitask = skillperognitask.id AND taskprogetto.id = skillscelte.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND taskprogetto.stato = 0";
+            String query="SELECT DISTINCT progetto.titolo, task.nome, progetto.idcoordinatore, taskprogetto.id, taskprogetto.numcollaboratori FROM livello, skill, skillperognitask, task, skillscelte, taskprogetto, progetto, sviluppatore, coordinatore WHERE livello.idsviluppatore = " + idsvil + " AND skill.id = livello.idskill AND skillperognitask.idskill = skill.id AND (task.id = skillperognitask.idtask) AND skillscelte.idskillperognitask = skillperognitask.id AND taskprogetto.id = skillscelte.idtaskprogetto AND progetto.id = taskprogetto.idprogetto AND taskprogetto.stato = 0 AND NOT(progetto.idcoordinatore = coordinatore.id AND coordinatore.idsviluppatore = " + idsvil + ")";
             return Databasee.executeQuery(query);
         }
         public static ResultSet getListaSvil(int idcoord, int idsvil) throws SQLException{
