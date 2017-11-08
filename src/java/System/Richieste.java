@@ -39,7 +39,7 @@ public class Richieste {
     }
     //Richieste r = new Richieste(idSviluppatore,nome,cognome,titolo,idTaskProgetto,numCollaboratori, taskNome);
     public Richieste(int idSviluppatore, String nomeSvil, String cognSvil,String progTitolo, int idTaskProgetto, String taskNome, int inviata){
-        this.id=idSviluppatore;
+        this.idSviluppatore=idSviluppatore;
         this.nomeSvil=nomeSvil;
         this.cognSvil=cognSvil;
         this.progTitolo=progTitolo;
@@ -55,39 +55,37 @@ public class Richieste {
    
     
     // Proposte SVILUPPATORE
-    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int eccesso){
+    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int eccesso){
         this.idSviluppatore=idSviluppatore;
         this.idCoordinatore=idCoordinatore;
         this.idTaskProgetto=idtaskprogetto;
         this.taskNome = taskNome;
         this.progTitolo = progTitolo;
-        this.skillNome = skillNome;
         this.dataCreazione = dataCreazione;
         this.stato=stato;
         this.tipo=tipo;
         this.eccesso=eccesso;
     }
     //Offerte Sviluppatore > listaJob
-    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int inviata,int eccesso){
+    public Richieste(int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int inviata,int eccesso){
         this.idSviluppatore=idSviluppatore;
         this.idCoordinatore=idCoordinatore;
         this.idTaskProgetto=idtaskprogetto;
         this.taskNome = taskNome;
         this.progTitolo = progTitolo;
-        this.skillNome = skillNome;
+  
         this.dataCreazione = dataCreazione;
         this.stato=stato;
         this.tipo=tipo;
         this.inviata=inviata;
         this.eccesso=eccesso;
     }
-    public Richieste(String nomeSvil, String cognSvil, int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String skillNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int eccesso){
+    public Richieste(String nomeSvil, String cognSvil, int idSviluppatore, int idCoordinatore, String progTitolo, String taskNome, String dataCreazione, String stato, boolean tipo, int idtaskprogetto, int eccesso){
         this.idSviluppatore=idSviluppatore;
         this.idCoordinatore=idCoordinatore;
         this.idTaskProgetto=idtaskprogetto;
         this.taskNome = taskNome;
         this.progTitolo = progTitolo;
-        this.skillNome = skillNome;
         this.dataCreazione = dataCreazione;
         this.stato=stato;
         this.tipo=tipo;
