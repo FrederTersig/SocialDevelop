@@ -26,6 +26,40 @@
         <url-pattern> /index </url-pattern>
     </servlet-mapping>
     
+      <!-- ELIMINA -->
+    <servlet>
+        <servlet-name> Elimina </servlet-name>
+        <servlet-class> Servlets.Elimina </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>  Elimina </servlet-name>
+        <url-pattern> /elimina </url-pattern>
+    </servlet-mapping>
+    
+       <!-- ELIMINA2 -->
+    <servlet>
+        <servlet-name> Elimina2 </servlet-name>
+        <servlet-class> Servlets.Elimina2 </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>  Elimina2 </servlet-name>
+        <url-pattern> /elimina2 </url-pattern>
+    </servlet-mapping>
+    
+    
+     <!-- ELIMINA3 -->
+    <servlet>
+        <servlet-name> Elimina3 </servlet-name>
+        <servlet-class> Servlets.Elimina3 </servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>  Elimina3 </servlet-name>
+        <url-pattern> /elimina3 </url-pattern>
+    </servlet-mapping>
+    
         <!-- INVITA -->
     <servlet>
         <servlet-name> Invita </servlet-name>
