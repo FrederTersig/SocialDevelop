@@ -136,7 +136,7 @@ public class PanRichieste extends HttpServlet {
                             reqStato="Attesa";
                     }              
                     boolean reqTipo=true; //equivale a 1
-                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask, "2017-00-00",reqStato,reqTipo,idTaskProgetto,inviataOff,taskEccesso);
+                    Richieste r = new Richieste(id,idCoordinatore,reqTitolo, reqTask,reqStato,reqTipo,idTaskProgetto,inviataOff,taskEccesso);
                     offerte.add(r);
                     System.out.println("???" + r + inviataOff);
                 }
@@ -167,8 +167,7 @@ public class PanRichieste extends HttpServlet {
                         int reqIdSvil=req.getInt("idsviluppatore");                
                         int reqIdTaskPro = req.getInt("idtaskprogetto");
                         String reqTitolo=req.getString("progetto.titolo");                
-                        String reqTask=req.getString("task.nome");
-                        String reqDataCreazione="abc"; //SBAGLIATO VISTO CHE IL TIPO E' DATE!!!!                  
+                        String reqTask=req.getString("task.nome");                 
                         String reqStato=req.getString("stato");         
                         
                         int numCollaboratori=req.getInt("taskprogetto.numcollaboratori");
@@ -186,7 +185,7 @@ public class PanRichieste extends HttpServlet {
                         }
                         //FINE
                         
-                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqDataCreazione, reqStato, reqTipo, reqIdTaskPro,taskEccesso);
+                        Richieste r = new Richieste(reqIdSvil,reqIdCoord, reqTitolo, reqTask, reqStato, reqTipo, reqIdTaskPro,taskEccesso);
                         proposte.add(r);
                     }
                 }
