@@ -24,6 +24,15 @@
 			document.getElementById(el2).disabled = 'disabled';
 		}
 	}
+        
+        function Modulo() {
+            var punteggio = document.modulo.punteggio.value;
+            if ((punteggio == "") || (punteggio == "undefined")) {
+        alert("Il campo Nome è obbligatorio.");
+        document.modulo.punteggio.focus();
+        return false;
+    }
+        }
 </script>
     
     
