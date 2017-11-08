@@ -219,6 +219,7 @@ public class Elimina extends HttpServlet {
             }
              if("elimina".equals(action)){
                  int idp=Integer.parseInt(request.getParameter("progetti"));
+                 int cont=0;
                   HttpSession s = SecurityLayer.checkSession(request);
                  s.setAttribute("idproge",idp);
                  ArrayList<TaskProgetto> lit=new ArrayList<TaskProgetto>();
@@ -230,6 +231,7 @@ public class Elimina extends HttpServlet {
                          ncol=nc.getInt("num");
                      }
                      if(ncol!=0){
+                         cont++;
                              int idt=task.getInt("taskprogetto.id");
                      String nome=task.getString("task.nome");
                      TaskProgetto l=new TaskProgetto(idt,nome);
@@ -273,7 +275,10 @@ public class Elimina extends HttpServlet {
                      TaskProgetto l=new TaskProgetto(idt,nome);
                      lit.add(l);
                  }*/
-                 data.put("listatask",lit);
+                 if(cont==0){
+                     data.put("listatask",null);
+                 }else{
+                 data.put("listatask",lit);}
             Databasee.close();
             FreeMarker.process("elimina2.html", data, response, getServletContext());
              }
