@@ -30,6 +30,7 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -338,6 +339,55 @@ public class PanRichCoord extends HttpServlet {
                 }catch (Exception ex) {
                         Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                response.sendRedirect("panRichCoord");
+            }else if("insertOfferta".equals(action)){
+                System.out.println("invia offerta!");
+                Map<String, Object> map = new HashMap<String, Object>();
+                ArrayList<Richieste> offerte=null;
+                int idCoordinatore=0;
+                try{ //INSERT PROVA
+                    Databasee.connect();
+                    System.out.println("prendo coordinatore id");
+                    ResultSet cord = Databasee.getCoordId(id);
+                    System.out.println("idCoordinatore preso?");
+                    while(cord.next()){
+                        System.out.println("Quanti ID Coordinatore?");
+                        int i = cord.getInt(1);
+                        if(i > -1){
+                            idCoordinatore = i;
+                        }
+                    }
+                    //Altra prova
+                    Calendar c = Calendar.getInstance();
+                    System.out.println(c.getTime());	/* Rappresentazione come stringa in base al tuo Locale */
+                    System.out.println(c.get(Calendar.YEAR)); /* Ottieni l'anno */
+                    System.out.println(c.get(Calendar.MONTH)); /* Ottieni il mese */
+                    System.out.println(c.get(Calendar.DAY_OF_MONTH)); /* Ottieni il giorno */
+                    int year=c.get(Calendar.YEAR);
+                    int month= c.get(Calendar.MONTH)+1;
+                    int day=c.get(Calendar.DAY_OF_MONTH);
+                    String today=year + "/" + month + "/" + day;
+                    
+                    int idSvil = Integer.parseInt(request.getParameter("sviluppatore"));
+                    int idTP = Integer.parseInt(request.getParameter("taskprog"));
+                    
+                    map.put("idsviluppatore", idSvil);
+                    map.put("idcoordinatore",idCoordinatore);
+                    map.put("idtaskprogetto",idTP);
+                    map.put("stato","Attesa");
+                    map.put("tipo",0);
+                    map.put("datacreazione",today);
+                    Databasee.insertRecord("richieste", map);
+ 
+                    Databasee.close();
+                }catch(NamingException e) {
+                    System.out.println(e );
+                }catch (SQLException e) {
+                    System.out.println(e );
+                }catch (Exception ex) {
+                        Logger.getLogger(Richieste.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 response.sendRedirect("panRichCoord");
             }
     }
