@@ -5,7 +5,9 @@
  */
 package Servlets;
 
+import System.Admin;
 import System.Progetto;
+import System.Sviluppatore;
 import System.TaskProgetto;
 import Util.Databasee;
 import Util.FreeMarker;
@@ -109,6 +111,86 @@ public class ModificaProgetti extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
      try {
+          Databasee.connect();
+         String action = request.getParameter("value");
+         if("login".equals(action)){ // SE il metodo post è il login....
+             System.out.println("IL TIPO DI POST E' UN LOGIN!!! ");
+             String EmailL = request.getParameter("email");
+             String PassL = request.getParameter("password");
+             //piccolo controllo per entrare nella pagina backend (ovviamente il controllo sarà molto più ampio)
+             if(EmailL.equals("admin@admin.it") && PassL.equals("admin")){
+                 id = LoginValidate.validateOfficer(EmailL, PassL);
+                 try{
+                     HttpSession s = SecurityLayer.createSession(request, EmailL, id);
+                     System.out.println("Sessione Creata, Connesso!");
+                     data.put("nome",EmailL);
+                     data.put("id",id);
+                     //RequestDispatcher rd = request.getRequestDispatcher("index"); //<- dispatch di una richiesta ad un'altra servlet.
+                     s.setAttribute("id", id);
+                     //processRequest(request, response);
+                     
+                     response.sendRedirect("backend");
+                     // FreeMarker.process("backend.html", data, response, getServletContext());
+                 }catch(Exception e2){
+                     System.out.println("Errore nel creare la sessione");
+                     Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, e2);
+                 }
+                 
+             }
+             
+             
+             id = LoginValidate.validate(EmailL, PassL);
+             if (id == 0) { //data.put("id",id); è inutile perché nel caso in cui non ci si connetta non ci serve registrare l'id e la mail
+                 // ID == 0 significa che non si è connessi! appare scritta  "non connesso!"
+                 data.put("nome","");
+                 data.put("id",0);
+                 //out.println("<script type=\"text/javascript\">");
+                 //out.println("alert('User or password incorrect');");
+                 //out.println("</script>");
+                 FreeMarker.process("listaProgetti.html", data, response, getServletContext());
+             } else {
+                 try{
+                     HttpSession s = SecurityLayer.createSession(request, EmailL, id);
+                     System.out.println("Sessione Creata, Connesso!");
+                     data.put("nome",EmailL);
+                     data.put("id",id);
+                     //RequestDispatcher rd = request.getRequestDispatcher("index"); //<- dispatch di una richiesta ad un'altra servlet.
+                     s.setAttribute("id", id);
+                     processRequest(request, response);
+                     FreeMarker.process("listaProgetti.html", data, response, getServletContext());
+                 }catch(Exception e2){
+                     System.out.println("Errore nel creare la sessione");
+                     Logger.getLogger(Sviluppatore.class.getName()).log(Level.SEVERE, null, e2);
+                 }
+             }
+         }else if("logout".equals(action)){ // Inizio del logout
+             System.out.println("CLICCATO LOGOUT!");
+             try{
+                 SecurityLayer.disposeSession(request); //chiude la sessione
+                 id=0; //azzera l'id per il template
+                 data.put("id",id);
+                 //processRequest(request, response);
+                 //FreeMarker.process("listaProgetti.html", data, response, getServletContext());
+                 response.sendRedirect("index");
+             }catch(Exception e3){
+                 e3.printStackTrace();
+             }}
+         if("search".equals(action)){
+             System.out.println("COMINCIA LA RICERCA!");
+             String SearchStringa = request.getParameter("ricerca");
+             System.out.println("RICERCA IN CORSO::::: >>>" + SearchStringa);
+             HttpSession s = SecurityLayer.checkSession(request);
+             if(s != null){//condizione per vedere se la sessione esiste.
+                 s.setAttribute("ricerca",SearchStringa);
+             }else{
+                 HttpSession z = request.getSession(true);
+                 z.setAttribute("ricerca",SearchStringa);
+             }
+             data.put("ricerca", SearchStringa);
+             response.sendRedirect("listaCerca");
+         }
+         
+         
          String m=request.getParameter("m");
          Databasee.connect();
          HttpSession s = SecurityLayer.checkSession(request);
