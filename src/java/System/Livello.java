@@ -22,6 +22,12 @@ public class Livello {
         this.idSkill=idSkill;
     }
     
+      public Livello(int preparazione){
+        
+        this.preparazione=preparazione;
+       
+    }
+    
 
     
     public int getId(){
