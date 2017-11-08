@@ -1,7 +1,9 @@
-Nella cartella lib ci sono le librerie principali che ci servono. Quando fai l'import del progetto la cartella lib non la devi importare. Una volta che hai importato il progetto (senza la cartella lib), se non ci sono già, dentro netbeans clicchi col tasto destro sulla directory libraries che la trovi all'interno del progetto, e poi fai Add JAR e lì importi tutte le librerie che trovi dentro la cartella lib.
-
-Per quanto riguarda il progetto, una volta che l'hai caricato in netbeans, nella cartella Source Packages ci sono tutti i file JAVA. Nella Sottodirectory Servlets dobbiamo metterci tutte le servlet. Al momento ci sta solo Home, che è il file JAVA del progetto del compagno mio che hai anche tu e poi HOMEE che invece è il nostro su cui sto lavorando per far vedere la nostra homepage.
-
-Nella sottodirectory System ci sono tutti i file JAVA che corrispondo alle nostre entità. All'interno ci stanno solo metodo costruttore e metodi get e set.
-
-Infine in Util ci sta FreeMarker.java e SecurityLayer.java che ce l'ha dati il prof quindi non dobbiamo toccarle penso. Poi abbiamo Database.java e DataUtil.java che sono i file del progetto del compagno mio mentre DataUtile.java e Databasee.java che invece sono quelli su cui sto lavorando io. Databasee dovrà contenere tutte le query scritte proprio in sql (SELECT * FROM WHERE) e DataUtile diciamo che implementa delle funzioni del sito.
+Piattaforma SocialDevelop
+Questa piattaforma permette di far incontrare persone che hanno idee di sviluppo con sviluppatori freelance disponibili e iscritti sul sito.
+La piattaforma permette l'iscrizione al sito, la creazione di nuovi progetti, l'invito di sviluppatori ai progetti, la valutazione degli sviluppatori (chiamati Collaboratori SE collaborano alla realizzazione di un progetto e se quindi accettano l'invito per entrare nel progetto) per il lavoro fatto, la consultazione delle SKILL che hanno gli sviluppatori, ecc.
+La piattaforma permette invece agli sviluppatori di proporsi nei progetti in base alle skill richieste nei Task (compiti) del progetto, di consultare la lista di progetti e di ricercarli. 
+Gli utenti registrati al sito hanno la possibilità di usufruire del servizio del pannello delle richieste che permette di gestire questi "inviti" e di mandarne altri a progetti in base alle proprie skill. Se si è coordinatori si ha a disposizione un altro pannello delle richieste esclusivo per i coordinatori che permette di mandare inviti agli utenti in base  alle loro skill e accettare/rifiutare quelle ricevute o annullare quelle inviate.
+Inoltre la piattaforma ha un account admin che può essere usato per creare/inserire nuovi task & nuove skill.
+Ogni utente registrato può creare nuovi progetti, scegliendo le task, le skill, la descrizione e gli sviluppatori da invitare.
+Ogni utente registrato ha un profilo dove vengono caricate le informazioni personali, un immagine personale(avatar), il curriculum vitae in formato PDF, ecc.
+Ogni progetto ha una lista di commenti (visibili o non dagli utenti NON collaboratori O da "anonimi", dipende se il commento viene messo visibile o meno) scritti dal coordinatore O da uno o più collaboratori. 
