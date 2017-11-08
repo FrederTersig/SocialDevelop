@@ -69,7 +69,7 @@ public class Valuta extends HttpServlet {
             Databasee.connect();
             ResultSet prog=Databasee.selectRecord("sviluppatore,coordinatore,progetto", "sviluppatore.id=" + id + " AND sviluppatore.id=coordinatore.idsviluppatore AND coordinatore.id=progetto.idcoordinatore");
             ArrayList<Progetto> pro=new ArrayList<Progetto>(); 
-            
+            int cont3=0;
             while(prog.next()){
                 int cont=0;
             int cont2=0;
@@ -89,7 +89,9 @@ public class Valuta extends HttpServlet {
                 }
                 System.out.println(cont);
                 System.out.println(cont2);
+                
                 if(cont!=cont2){
+                    
                 String nomp=prog.getString("titolo");
                 int idp=prog.getInt("progetto.id");
                           String datascad=prog.getString("datascad");
@@ -109,6 +111,8 @@ public class Valuta extends HttpServlet {
                  } else if(oggi.compareTo(daConfrontare)>0) {
                      scad=0;
                  System.out.println("finito");
+                 cont3++;
+                    System.out.println(cont3 + "+++++++++++" );
                  } else if(oggi.compareTo(daConfrontare) == 0) {
                      scad=2;
                  System.out.println("ultimo giorno");
@@ -118,7 +122,11 @@ public class Valuta extends HttpServlet {
                 pro.add(pr);
             }
             }
+            if(cont3==0){
+                data.put("progetti", null);
+            }else{
             data.put("progetti", pro);
+            }
             Databasee.close();
              FreeMarker.process("valutazione.html", data, response, getServletContext());
         }

@@ -5,19 +5,23 @@
             <h1 class="">LISTA PROGETTI DI CUI SEI COORDINATORE</h1>
             <p class="testoreg">Scegli un progetto da modificare</p>
             <hr>
+            <#if progetti ??>
             <form method="POST">
                 <select name="progetti">
-                    <#if progetti ??>
+                    
                     <#list progetti as Progetti>
                     <#if Progetti.scad == 0>
                     <option name="progetti" value="${Progetti.id}">${Progetti.titolo}</option>
                     </#if>
                     </#list>
-                    </#if>
+                    
                 </select>
             
                 <button type="submit" name="value" value="valuta" class="btn btn-primary">VALUTA</button>
                 
             </form>
+            <#else>
+            NON HAI PROGETTI DA VALUTARE
+            </#if>
         </div> <!-- chiusura creap -->
 <#include "footer.html">
