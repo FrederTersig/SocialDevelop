@@ -5,17 +5,24 @@
             <h1 class="">LISTA TASK DEL PROGETTO</h1>
             <p class="testoreg">Scegli un task da modificare</p>
             <hr>
+            <#if listatask ??>
             <form method="POST" action="elimina2">
+                 
                 <select name="task">
-                    <#if listatask ??>
+                   
                     <#list listatask as ListaTask>
                     <option name="task" value="${ListaTask.numCollaboratori}">${ListaTask.descrizione}</option>
                     </#list>
-                    </#if>
+                    <button type="submit" name="value" value="elcol" class="btn btn-primary">VAI AD ELIMINARE UN COLLABORATORE</button>
+                    
+                    
                 </select>
-            
-                <button type="submit" name="value" value="elcol" class="btn btn-primary">VAI AD ELIMINARE UN COLLABORATORE</button>
+          
                 
             </form>
+                   <#else>
+                    <p><b>I TASK SONO TUTTI VUOTI</b></p>
+            </#if>
+                
         </div> <!-- chiusura creap -->
 <#include "footer.html">

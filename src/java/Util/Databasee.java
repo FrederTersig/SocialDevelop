@@ -186,6 +186,12 @@ public class Databasee {
             
         }
         
+          public static ResultSet getValutazioniProf2(int idsviluppatore) throws SQLException{
+            String query="SELECT valutazione.punteggio, collaboratore.id, taskprogetto.descrizione, progetto.titolo, sviluppatore.nome, sviluppatore.cognome FROM collaboratore, valutazione, taskprogetto, progetto, coordinatore, sviluppatore WHERE collaboratore.idsviluppatore =" + idsviluppatore + " AND valutazione.idcollaboratore = collaboratore.id AND collaboratore.idtaskprogetto=taskprogetto.id AND taskprogetto.idprogetto=progetto.id AND progetto.idcoordinatore=coordinatore.id AND coordinatore.idsviluppatore=sviluppatore.id";
+            return Databasee.executeQuery(query);
+            
+        }
+        
         //Query che dato un idSviluppatore OPPURE un idcoordinatore mi ridà la lista delle richieste/inviti/domande/ecc che hanno.
         // SE sviluppatore = TRUE allora trattiamo l'id immesso come se fosse dello sviluppatore, altrimenti lo trattiamo come coordinatore.
         public static ResultSet getRichieste(int id, boolean sviluppatore) throws SQLException{
