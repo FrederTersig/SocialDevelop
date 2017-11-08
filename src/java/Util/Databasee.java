@@ -254,6 +254,14 @@ public class Databasee {
             return Databasee.updateQuery(query);
         }
         
+           public static boolean deleteRecord(String table, String condition) throws SQLException {
+        // Generazione query
+        String query = "DELETE FROM " + table + " WHERE " + condition;
+        // Esecuzione query
+        return Databasee.updateQuery(query);
+    }
+        
+        
         public static ResultSet isInviteDone(int ids,int idc, int idtp) throws SQLException{
             String query="SELECT DISTINCT IF ( richieste.idsviluppatore = " + ids + " AND richieste.idcoordinatore = " + idc + " AND richieste.idtaskprogetto = " + idtp + " , true, false) FROM richieste";
             return Databasee.executeQuery(query);

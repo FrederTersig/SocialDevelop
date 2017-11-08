@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<#include "logHeader.html">
+
+ <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-7">ELIMINA COLLABORATORI</h1>
+        <p class="lead">questi sono i collaboratori che partecipano al task</p>
+      </div>
+    </div>
+
+    <div class="container">
+         
+        <form method="POST" action="elimina3">
+  <fieldset>
+ <legend>Linguaggi conosciuti</legend><br>
+ <#if listacol ??>
+                    <#list listacol as Listacol>
+                    <div class="row">
+                        
+                        <div class="col-md-6"><input type="checkbox" name="idcol" value="${Listacol.id}" /> ${Listacol.nome}&nbsp;${Listacol.cognome}</div><div class="col-md-6 allineamento"></div>
+                    </div>
+                        <br />
+ </#list>
+                       </#if> 
+ 
+</fieldset><br>
+        <button type="submit" name="value" value="delete" class="btn btn-primary">ELIMINA</button>
+        
+        </form>
+    </div>
+
+<#include "footer.html">
