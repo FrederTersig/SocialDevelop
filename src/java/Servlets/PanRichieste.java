@@ -105,16 +105,12 @@ public class PanRichieste extends HttpServlet {
             ArrayList<Richieste> offerte=null;
             try{
                 Databasee.connect();               
-                
-               
-                
                 ResultSet req = Databasee.getListaJob(id); // GIUSTA!!!
                 offerte = new ArrayList<Richieste>();
                 while(req.next()){
                     int idTaskProgetto=req.getInt("taskprogetto.id");
                     int numCollaboratori=req.getInt("taskprogetto.numcollaboratori");
                     //FACCIO IL CHECK DEL NUMCOLLABORATORI: SE E' PIENO BISOGNA DIRLO!
-                    //INIZIO
                     Integer n=null;
                     ResultSet part=Databasee.contCollaboratori(idTaskProgetto);
                     while(part.next()){
@@ -125,8 +121,7 @@ public class PanRichieste extends HttpServlet {
                     if(n >= numCollaboratori){
                         taskEccesso=1;
                     }
-                    //FINE
-                    
+
                     int idCoordinatore=req.getInt("progetto.idcoordinatore");
                     
                     String reqTitolo=req.getString("titolo");

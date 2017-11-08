@@ -37,6 +37,16 @@ public class Richieste {
         this.stato=stato;
         this.tipo=tipo;
     }
+    //Richieste r = new Richieste(idSviluppatore,nome,cognome,titolo,idTaskProgetto,numCollaboratori, taskNome);
+    public Richieste(int idSviluppatore, String nomeSvil, String cognSvil,String progTitolo, int idTaskProgetto, String taskNome, int inviata){
+        this.id=idSviluppatore;
+        this.nomeSvil=nomeSvil;
+        this.cognSvil=cognSvil;
+        this.progTitolo=progTitolo;
+        this.idTaskProgetto=idTaskProgetto;
+        this.taskNome=taskNome;
+        this.inviata=inviata;
+    }
     
     public Richieste(boolean tipo){
       

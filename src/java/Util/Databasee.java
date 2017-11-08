@@ -239,7 +239,7 @@ public class Databasee {
             return Databasee.executeQuery(query);
         }
         public static ResultSet getListaSvil(int idcoord) throws SQLException{
-            String query="SELECT DISTINCT sviluppatore.id, sviluppatore.nome, sviluppatore.cognome, taskprogetto.id, taskprogetto.numcollaboratori, task.nome FROM sviluppatore,coordinatore,progetto, taskprogetto,task,skillscelte,skillperognitask,skill,livello WHERE coordinatore.id = 1 AND progetto.idcoordinatore = coordinatore.id AND taskprogetto.idprogetto = progetto.id AND task.id = taskprogetto.idtask AND skillscelte.idtaskprogetto = taskprogetto.id AND skillperognitask.id = skillscelte.idskillperognitask AND skill.id = skillperognitask.idskill AND livello.idskill = skill.id AND sviluppatore.id = livello.idsviluppatore";
+            String query="SELECT DISTINCT sviluppatore.id, sviluppatore.nome, sviluppatore.cognome, progetto.titolo, taskprogetto.id, taskprogetto.numcollaboratori, task.nome FROM sviluppatore,coordinatore,progetto, taskprogetto,task,skillscelte,skillperognitask,skill,livello WHERE coordinatore.id = 1 AND progetto.idcoordinatore = coordinatore.id AND taskprogetto.idprogetto = progetto.id AND task.id = taskprogetto.idtask AND skillscelte.idtaskprogetto = taskprogetto.id AND skillperognitask.id = skillscelte.idskillperognitask AND skill.id = skillperognitask.idskill AND livello.idskill = skill.id AND sviluppatore.id = livello.idsviluppatore";
             return Databasee.executeQuery(query);
         }
         
